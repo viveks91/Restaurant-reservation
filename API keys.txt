@@ -1,0 +1,11 @@
+YELP API:
+
+Consumer Key =  SxXtR6E12mQKnrbG0qK­AA
+Consumer Secret  =  _IIDtcgXG­Zk2Okp2Q4yaBlw4Nc
+Token  =  Qr4VbEDI5eoxfHEfngPJTMUI1fPnb5gf
+Token Secret =  NcsbnBx­7rCfAc3Do8E4XG2NbWA
+
+Google Place API:
+
+API Key = AIzaSyApupOnC2_qT2S_5Sw82cLtMxX3Y7fWPUY
+
