@@ -67,7 +67,7 @@ CREATE TABLE `Favorites` (
 # Dump of table Follower
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Follower`;
+DROP TABLE IF EXISTS `Following`;
 
 CREATE TABLE `Following` (
   `userName` varchar(225) NOT NULL,
