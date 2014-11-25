@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.21)
 # Database: Restaurant_Reservation
-# Generation Time: 2014-11-25 01:31:46 +0000
+# Generation Time: 2014-11-25 05:40:52 +0000
 # ************************************************************
 
 
@@ -44,10 +44,10 @@ CREATE TABLE `Address` (
 DROP TABLE IF EXISTS `Category`;
 
 CREATE TABLE `Category` (
-  `id` int(11) unsigned NOT NULL,
-  `type` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `pk_res_fk` FOREIGN KEY (`id`) REFERENCES `Restaurant` (`id`)
+  `type` varchar(100) NOT NULL DEFAULT '',
+  `restaurantId` int(11) unsigned NOT NULL,
+  KEY `rest_fk` (`restaurantId`),
+  CONSTRAINT `rest_fk` FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
