@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.21)
 # Database: Restaurant_Reservation
-# Generation Time: 2014-11-25 05:40:52 +0000
+# Generation Time: 2014-11-25 08:14:50 +0000
 # ************************************************************
 
 
@@ -45,9 +45,7 @@ DROP TABLE IF EXISTS `Category`;
 
 CREATE TABLE `Category` (
   `type` varchar(100) NOT NULL DEFAULT '',
-  `restaurantId` int(11) unsigned NOT NULL,
-  KEY `rest_fk` (`restaurantId`),
-  CONSTRAINT `rest_fk` FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE
+  UNIQUE KEY `type` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -133,7 +131,11 @@ CREATE TABLE `Restaurant` (
   `website` varchar(500) DEFAULT NULL,
   `openingTime` time DEFAULT NULL,
   `closingTime` time DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `capacity` int(10) NOT NULL,
+  `type` varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `type_fk` (`type`),
+  CONSTRAINT `type_fk` FOREIGN KEY (`type`) REFERENCES `Category` (`type`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
