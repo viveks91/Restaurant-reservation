@@ -1,14 +1,41 @@
-package Models;
+package models;
 
-import java.sql.Time;
+import java.io.Serializable;
+//import java.sql.Date;
+//import java.sql.Time;
+import java.util.Date;
 
-public class Restaurant {
+
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+/**
+ * Entity implementation class for Entity: Restaurant
+ * @author Vivek
+ *
+ */
+
+@Entity
+@NamedQuery(name="Restaurant.findByAll", query="select r from Restaurant r where r.name = :name and "
+		+ "r.addressId = :addressId and r.type = :type and r.website =:website")
+public class Restaurant implements Serializable {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	private Integer phoneNo;
 	private String website;
-	private Time openingTime;
-	private Time closingTime;
+	
+	@Temporal(TemporalType.TIME)
+	private Date openingTime;
+	@Temporal(TemporalType.TIME)
+	private Date closingTime;
 	private Integer capacity;
 	private String type;
 	private Integer addressId;
@@ -36,16 +63,16 @@ public class Restaurant {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	public Time getOpeningTime() {
+	public Date getOpeningTime() {
 		return openingTime;
 	}
-	public void setOpeningTime(Time openingTime) {
+	public void setOpeningTime(Date openingTime) {
 		this.openingTime = openingTime;
 	}
-	public Time getClosingTime() {
+	public Date getClosingTime() {
 		return closingTime;
 	}
-	public void setClosingTime(Time closingTime) {
+	public void setClosingTime(Date closingTime) {
 		this.closingTime = closingTime;
 	}
 	public Integer getCapacity() {
@@ -67,7 +94,7 @@ public class Restaurant {
 		this.addressId = addressId;
 	}
 	public Restaurant(Integer id, String name, Integer phoneNo, String website,
-			Time openingTime, Time closingTime, Integer capacity, String type,
+			Date openingTime, Date closingTime, Integer capacity, String type,
 			Integer addressId) {
 		super();
 		this.id = id;
@@ -81,7 +108,7 @@ public class Restaurant {
 		this.addressId = addressId;
 	}
 	public Restaurant(String name, Integer phoneNo, String website,
-			Time openingTime, Time closingTime, Integer capacity, String type,
+			Date openingTime, Date closingTime, Integer capacity, String type,
 			Integer addressId) {
 		super();
 		this.name = name;

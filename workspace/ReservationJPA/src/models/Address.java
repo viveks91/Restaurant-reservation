@@ -1,22 +1,34 @@
-package Models;
+package models;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 /**
- * Address POJO
+ * Entity implementation class for Entity: Address
  * @author Vivek
  *
  */
-
-public class Address {
-	private Integer id;
+@Entity
+@NamedQuery(name="Address.findByAll", query="select a from Address a where a.street = :street and "
+		+ "a.apt_no = :apt_no and a.city = :city and a.state =:state and a.zip =:zip")
+public class Address implements Serializable {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 	private String street;
 	private String apt_no;
 	private String city;
 	private String state;
 	private String zip;
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getStreet() {
@@ -70,6 +82,14 @@ public class Address {
 	}
 	public Address() {
 		super();
+	}
+	public Address(String street, String city, String state, String zip) {
+		super();
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.apt_no = null;
 	}
 	
 

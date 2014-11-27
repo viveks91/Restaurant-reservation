@@ -58,8 +58,8 @@ CREATE TABLE `Favorites` (
   `userName` varchar(225) NOT NULL,
   `restaurantId` int(11) unsigned NOT NULL,
   PRIMARY KEY (`userName`, `restaurantId`),
-  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE,
-  FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE
+  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -73,8 +73,8 @@ CREATE TABLE `Following` (
   `userName` varchar(225) NOT NULL,
   `following` varchar(225) NOT NULL,
   PRIMARY KEY (`userName`, `following`),
-  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE,
-  FOREIGN KEY (`following`) REFERENCES `User` (`userName`) ON DELETE CASCADE
+  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`following`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -106,8 +106,8 @@ CREATE TABLE `Reservation` (
   `restaurantId` int(11) unsigned NOT NULL,
   `userName` varchar(225) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE
+  FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -120,16 +120,16 @@ DROP TABLE IF EXISTS `Restaurant`;
 CREATE TABLE `Restaurant` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(225) NOT NULL,
-  `phoneNo.` int(50) DEFAULT NULL,
+  `phoneNo` int(50) DEFAULT NULL,
   `website` varchar(500) DEFAULT NULL,
   `openingTime` time DEFAULT NULL,
   `closingTime` time DEFAULT NULL,
   `capacity` int(10) NOT NULL,
   `type` varchar(100) NOT NULL,
-  `addressId` int(11),
+  `addressId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`type`) REFERENCES `Category` (`type`) ON UPDATE CASCADE,
-  FOREIGN KEY (`addressId`) REFERENCES `Address` (`id`) ON DELETE SET NULL
+  FOREIGN KEY (`type`) REFERENCES `Category` (`type`)  ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`addressId`) REFERENCES `Address` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -147,8 +147,8 @@ CREATE TABLE `Reviews` (
   `date` datetime DEFAULT NULL,
   `restaurantId` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE SET NULL
+  FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE SET NULL ON UPDATE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -164,7 +164,7 @@ CREATE TABLE `TimeSlot` (
   `closeTime` time DEFAULT NULL,
   `capacity` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `pk_rest_time_fk` FOREIGN KEY (`id`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE
+  FOREIGN KEY (`id`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -178,10 +178,10 @@ CREATE TABLE `User` (
   `phoneNo.` int(12) DEFAULT NULL,
   `email_Id` varchar(225) NOT NULL,
   `userName` varchar(225) NOT NULL,
-  `addressId` int(11),
+  `addressId` int(11) NOT NULL,
   PRIMARY KEY (`userName`),
-  FOREIGN KEY (`userName`) REFERENCES `Person` (`userName`) ON DELETE CASCADE,
-  FOREIGN KEY (`addressId`) REFERENCES `Address` (`id`) ON DELETE SET NULL
+  FOREIGN KEY (`userName`) REFERENCES `Person` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`addressId`) REFERENCES `Address` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
