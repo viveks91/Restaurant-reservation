@@ -3,8 +3,10 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.InheritanceType;
 
 /**
  * 
@@ -12,7 +14,7 @@ import javax.persistence.NamedQuery;
  *
  */
 @Entity
-
+@Inheritance(strategy=InheritanceType.JOINED)
 @NamedQueries({
 	@NamedQuery(
 		name="Person.findPersonByLastName",
