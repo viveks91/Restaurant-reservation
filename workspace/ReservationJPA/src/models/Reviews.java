@@ -17,12 +17,12 @@ import javax.persistence.TemporalType;
 
 @NamedQueries({
 	@NamedQuery(
-		name="Reviews.deleteReviewByUserName",
-		query="delete from Reviews r where r.userName = :userName"
+		name="Reviews.deleteReviewByRestaurantId",
+		query="delete from Reviews r where r.restaurantId = :restaurantId"
 	),
 	@NamedQuery(
-		name="Reviews.updateCommentByUserName",
-        query="update Reviews r set r.comments = :comments where r.userName = :userName"
+		name="Reviews.findCommentByUserNameAndRestaurantId",
+        query="select r from Reviews r where r.userName = :userName and r.restaurantId = :restaurantId"
 	),
 	@NamedQuery(
 			name="Reviews.findAllReviewsByUserName",

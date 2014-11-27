@@ -34,13 +34,12 @@ public class ReviewsDAO {
 		em.getTransaction().commit();
 	}
 	
-	public List<Reviews> deleteByUserName(String userName) {
+	public void deleteByRestaurantId(int rid) {
 		em.getTransaction().begin();
-		Query q = em.createNamedQuery("Reviews.deleteReviewByUserName");
-		q.setParameter("userName", userName);
-		List<Reviews> reviews = q.getResultList();
+		Query q = em.createNamedQuery("Reviews.deleteReviewByRestaurantId");
+		q.setParameter("restaurantId", rid);
+		q.executeUpdate();
 		em.getTransaction().commit();
-		return reviews;
 	}
 	
 	public Reviews updateByReviewId(int id, String newComment) {
@@ -52,16 +51,17 @@ public class ReviewsDAO {
 		return reviews;
 	}
 	
-	public List<Reviews> updateByUserName(String userName, String newComment) {
+	public int updateByUserNameAndRestaurantId(String userName, int rid, String newComment) {
 		em.getTransaction().begin();
-		Query q = em.createNamedQuery("Reviews.updateCommentByUserName");
+		Query q = em.createNamedQuery("Reviews.findCommentByUserNameAndRestaurantId");
 		q.setParameter("userName", userName);
-		q.setParameter("comments", newComment);
-		q.executeUpdate();
+		q.setParameter("restaurantId", rid);
+		Reviews review = (Reviews) q.getSingleResult();
+		review.setComments(newComment);
+		em.merge(review);
 		em.getTransaction().commit();
-		return null;
+		return review.getId();
 	}
-	
 	
 	public Reviews findByReviewId(int id) {
 		em.getTransaction().begin();
@@ -88,14 +88,7 @@ public class ReviewsDAO {
 		return reviews;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		ReviewsDAO dao = new ReviewsDAO();
 		Reviews r1 = new Reviews ("pre27361",2, "dsfsfd", new Date(), 1);
 		Reviews r2 = new Reviews ("pre2736", 6, "cvxcv", new Date(), 1);
@@ -105,6 +98,6 @@ public class ReviewsDAO {
 		//dao.updateByUserName("pre27", "very nice");
 		List<Reviews> r5 = dao.findByUserName("pre2736");
 		System.out.println(r5);
-	}
+	}*/
 
 }
