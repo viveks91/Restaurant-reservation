@@ -9,7 +9,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import models.Address;
 import models.Reservation;
 
 public class ReservationDAO implements Serializable {
@@ -21,13 +20,22 @@ public class ReservationDAO implements Serializable {
 		em = factory.createEntityManager();
 	}
 	
-	public Reservation create(Reservation reservation) {
+	/**
+	 * Creates the reservation entity
+	 * @param reservation
+	 * @return id
+	 */
+	public int create(Reservation reservation) {
 		em.getTransaction().begin();
 		em.persist(reservation);
 		em.getTransaction().commit();
-		return reservation;
+		return reservation.getId();
 	}
 	
+	/**
+	 * Deletes the reservation with the given id
+	 * @param id
+	 */
 	public void deleteById(int id) {
 		em.getTransaction().begin();
 		Reservation reservation = em.find(Reservation.class, id);
@@ -35,6 +43,10 @@ public class ReservationDAO implements Serializable {
 		em.getTransaction().commit();
 	}
 	
+	/**
+	 * deletes the reservations with the given restaurant id
+	 * @param rid
+	 */
 	public void deleteByRestaurantId(int rid) {
 		em.getTransaction().begin();
 		Query q = em.createNamedQuery("Reservation.findReservationIdByRestaurantId");
@@ -48,6 +60,11 @@ public class ReservationDAO implements Serializable {
 		em.getTransaction().commit();
 	}
 	
+	/**
+	 * Finds all the reservations with the given restaurant id
+	 * @param rid
+	 * @return List<Reservation>
+	 */
 	public List<Reservation> findByRestaurantId(int rid) {
 		em.getTransaction().begin();
 		Query q = em.createNamedQuery("Reservation.findReservationsByRestaurantId");
@@ -57,6 +74,10 @@ public class ReservationDAO implements Serializable {
 		return found_reservations;
 	}
 	
+	/**
+	 * deletes the reservations with the given username
+	 * @param userName
+	 */
 	public void deleteByUserName(String userName) {
 		em.getTransaction().begin();
 		Query q = em.createNamedQuery("Reservation.findReservationIdByUserName");
@@ -70,28 +91,42 @@ public class ReservationDAO implements Serializable {
 		em.getTransaction().commit();
 	}
 	
+	/**
+	 * Finds all the reservations with the given username
+	 * @param userName
+	 * @return List<Reservation>
+	 */
 	public List<Reservation> findByUserName(String userName) {
 		em.getTransaction().begin();
 		Query q = em.createNamedQuery("Reservation.findReservationsByUserName");
-		q.setParameter("rId", userName);
+		q.setParameter("username", userName);
 		List<Reservation> found_reservations = q.getResultList();
 		em.getTransaction().commit();
 		return found_reservations;
 	}
 	
-	public int updateById(int id, int people_count, Date time,
-			int restaurantId, String userName) {
+	/**
+	 * Updates the reservation with the given id to given values
+	 * @param id
+	 * @param people_count
+	 * @param time
+	 * @return id
+	 */
+	public int updateById(int id, int people_count, Date time) {
 		em.getTransaction().begin();
 		Reservation reservation = em.find(Reservation.class, id);
 		reservation.setPeople_count(people_count);
-		reservation.setRestaurantId(restaurantId);
 		reservation.setTime(time);
-		reservation.setUserName(userName);
 		em.merge(reservation);
 		em.getTransaction().commit();
 		return id;
 	}
 	
+	/**
+	 * Finds the reservation with the given id
+	 * @param id
+	 * @return Reservation
+	 */
 	public Reservation findById(int id) {
 		em.getTransaction().begin();
 		Reservation reservation = em.find(Reservation.class, id);

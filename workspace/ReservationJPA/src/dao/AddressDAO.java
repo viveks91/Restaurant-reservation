@@ -18,13 +18,28 @@ public class AddressDAO implements Serializable {
 		em = factory.createEntityManager();
 	}
 	
-	public Address create(Address address) {
+	/**
+	 * Creates the Address entity
+	 * @param address
+	 * @return id
+	 */
+	public int create(Address address) {
 		em.getTransaction().begin();
 		em.persist(address);
 		em.getTransaction().commit();
-		return address;
+		return address.getId();
 	}
 	
+	/**
+	 * Updates the address with the given id to the given values
+	 * @param id
+	 * @param street
+	 * @param apt_no
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @return id
+	 */
 	public int updateById(int id, String street, String apt_no, String city, 
 			String state, String zip) {
 		em.getTransaction().begin();
@@ -39,6 +54,10 @@ public class AddressDAO implements Serializable {
 		return id;
 	}
 	
+	/**
+	 * Deletes the Address with the given id
+	 * @param id
+	 */
 	public void deleteById(int id) {
 		em.getTransaction().begin();
 		Address address = em.find(Address.class, id);
@@ -46,6 +65,11 @@ public class AddressDAO implements Serializable {
 		em.getTransaction().commit();
 	}
 	
+	/**
+	 * Finds the address equal to the given address
+	 * @param address
+	 * @return List<Address>
+	 */
 	public List<Address> findByAddress(Address address) {
 		em.getTransaction().begin();
 		Query q = em.createNamedQuery("Address.findByAll");
@@ -59,6 +83,11 @@ public class AddressDAO implements Serializable {
 		return found_address;
 	}
 	
+	/**
+	 * Finds the address with the given id
+	 * @param id
+	 * @return Address
+	 */
 	public Address findById(int id) {
 		em.getTransaction().begin();
 		Address address = em.find(Address.class, id);

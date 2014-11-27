@@ -9,7 +9,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import models.Address;
 import models.Restaurant;
 
 /**
@@ -26,13 +25,31 @@ public class RestaurantDAO implements Serializable {
 		em = factory.createEntityManager();
 	}
 	
-	public Restaurant create(Restaurant restaurant) {
+	/**
+	 * Creates the restaurant entity
+	 * @param restaurant
+	 * @return id
+	 */
+	public int create(Restaurant restaurant) {
 		em.getTransaction().begin();
 		em.persist(restaurant);
 		em.getTransaction().commit();
-		return restaurant;
+		return restaurant.getId();
 	}
 	
+	/**
+	 * Updates the restaurants with given id to the given values
+	 * @param id
+	 * @param name
+	 * @param phoneNo
+	 * @param website
+	 * @param openingTime
+	 * @param closingTime
+	 * @param capacity
+	 * @param type
+	 * @param addressId
+	 * @return id
+	 */
 	public int updateById(Integer id, String name, Integer phoneNo, String website,
 			Date openingTime, Date closingTime, Integer capacity, String type,
 			Integer addressId) {
@@ -51,6 +68,11 @@ public class RestaurantDAO implements Serializable {
 		return id;
 	}
 	
+	/**
+	 * Finds the restaurant with given id
+	 * @param id
+	 * @return Restaurant
+	 */
 	public Restaurant findById(int id) {
 		em.getTransaction().begin();
 		Restaurant restaurant = em.find(Restaurant.class, id);
@@ -58,6 +80,11 @@ public class RestaurantDAO implements Serializable {
 		return restaurant;
 	}
 	
+	/**
+	 * Finds the restaurants equal to the given restaurant
+	 * @param restaurant
+	 * @return List<Restaurant>
+	 */
 	public List<Restaurant> findByRestaurant(Restaurant restaurant) {
 		em.getTransaction().begin();
 		Query q = em.createNamedQuery("Restaurant.findByAll");
@@ -70,6 +97,10 @@ public class RestaurantDAO implements Serializable {
 		return found_restaurant;
 	}
 	
+	/**
+	 * Deletes restaurant with given id
+	 * @param id
+	 */
 	public void deleteById(int id) {
 		em.getTransaction().begin();
 		Restaurant restaurant = em.find(Restaurant.class, id);

@@ -16,13 +16,22 @@ public class CategoryDAO implements Serializable {
 		em = factory.createEntityManager();
 	}
 	
-	public Category create(Category type) {
+	/**
+	 * Creates the category entity
+	 * @param type
+	 * @return String
+	 */
+	public String create(Category category) {
 		em.getTransaction().begin();
-		em.persist(type);
+		em.persist(category);
 		em.getTransaction().commit();
-		return type;
+		return category.getType();
 	}
 	
+	/**
+	 * Deletes the category with the given type
+	 * @param type
+	 */
 	public void deleteByType(String type) {
 		em.getTransaction().begin();
 		Category found_type = em.find(Category.class, type);
@@ -30,6 +39,11 @@ public class CategoryDAO implements Serializable {
 		em.getTransaction().commit();
 	}
 	
+	/**
+	 * Finds the category with the given type
+	 * @param type
+	 * @return Category
+	 */
 	public Category findByType(String type) {
 		em.getTransaction().begin();
 		Category found_type = em.find(Category.class, type);
