@@ -5,6 +5,8 @@
 	<class>models.Category</class>
 	<class>models.Restaurant</class>
 	<class>models.Reservation</class>
+	<class>models.Person</class>
+	<class>models.Reviews</class>
 		<properties>
 		    <property name="eclipselink.jdbc.password" value=""/>
 			<property name="javax.persistence.jdbc.user" value="root"/>

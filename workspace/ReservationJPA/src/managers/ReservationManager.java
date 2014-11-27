@@ -91,14 +91,11 @@ public class ReservationManager implements Serializable{
 		return updated_id;
 	}
 
-/*	public static void main(String[] args)
+	public static void main(String[] args)
 	{
 		Reservation a1 = new Reservation(10, new Date(),4, "asd");
 		ReservationManager manager = new ReservationManager();
-		List<Reservation> a2 = manager.findReservationByUserName("asd");
-		for(int i=0; i< a2.size(); i++) {
-			System.out.println(a2.get(i).getPeople_count());
-		}
-		manager.updateAddressById(5, "15 Ave", "E501","Seattle", "WA", "98122");
-	}*/
+		manager.removeReservationByUserName("asd");
+
+	}
 }

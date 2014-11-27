@@ -22,8 +22,10 @@ import javax.persistence.TemporalType;
  */
 
 @Entity
-@NamedQuery(name="Restaurant.findByAll", query="select r from Restaurant r where r.name = :name and "
-		+ "r.addressId = :addressId and r.type = :type and r.website =:website")
+@NamedQuery(
+		name="Restaurant.findByAll", 
+		query="select r from Restaurant r where r.name = :name and "
+				+ "r.addressId = :addressId and r.type = :type and r.website =:website")
 public class Restaurant implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

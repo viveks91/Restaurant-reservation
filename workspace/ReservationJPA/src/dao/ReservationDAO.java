@@ -51,12 +51,7 @@ public class ReservationDAO implements Serializable {
 		em.getTransaction().begin();
 		Query q = em.createNamedQuery("Reservation.findReservationIdByRestaurantId");
 		q.setParameter("rId", rid);
-		List<Integer> found_reservations = q.getResultList();
-		Integer id;
-		for(int i=0;i< found_reservations.size();i++) {
-			id = found_reservations.get(i);
-			deleteById(id);
-		}
+		q.executeUpdate();
 		em.getTransaction().commit();
 	}
 	
@@ -80,14 +75,9 @@ public class ReservationDAO implements Serializable {
 	 */
 	public void deleteByUserName(String userName) {
 		em.getTransaction().begin();
-		Query q = em.createNamedQuery("Reservation.findReservationIdByUserName");
+		Query q = em.createNamedQuery("Reservation.deleteReservationsByUserName");
 		q.setParameter("username", userName);
-		List<Integer> found_reservations = q.getResultList();
-		Integer id;
-		for(int i=0;i< found_reservations.size();i++) {
-			id = found_reservations.get(i);
-			deleteById(id);
-		}
+		q.executeUpdate();
 		em.getTransaction().commit();
 	}
 	
@@ -133,7 +123,5 @@ public class ReservationDAO implements Serializable {
 		em.getTransaction().commit();
 		return reservation;
 	}
-	
-	
 
 }

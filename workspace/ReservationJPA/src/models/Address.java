@@ -14,7 +14,9 @@ import javax.persistence.NamedQuery;
  *
  */
 @Entity
-@NamedQuery(name="Address.findByAll", query="select a from Address a where a.street = :street and "
+@NamedQuery(
+		name="Address.findByAll", 
+		query="select a from Address a where a.street = :street and "
 		+ "a.apt_no = :apt_no and a.city = :city and a.state =:state and a.zip =:zip")
 public class Address implements Serializable {
 	@Id

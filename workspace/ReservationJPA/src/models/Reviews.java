@@ -31,7 +31,7 @@ import javax.persistence.TemporalType;
 	@NamedQuery(
 			name="Reviews.findAllReviewsByRestaurantId",
 	        query="select r from Reviews r where r.restaurantId = :restaurantId"
-		),
+		)
 })
 
 public class Reviews {

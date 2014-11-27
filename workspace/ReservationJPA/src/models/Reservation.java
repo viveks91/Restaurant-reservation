@@ -17,10 +17,25 @@ import javax.persistence.TemporalType;
  */
 
 @Entity
-@NamedQueries({	@NamedQuery(name="Reservation.findReservationIdByRestaurantId", query="select r.id from Reservation r where r.restaurantId = :rId"),
-	@NamedQuery(name="Reservation.findReservationsByRestaurantId", query="select r from Reservation r where r.restaurantId = :rId"),
-	@NamedQuery(name="Reservation.findReservationIdByUserName", query="select r.id from Reservation r where r.userName = :username"),
-	@NamedQuery(name="Reservation.findReservationsByUserName", query="select r from Reservation r where r.userName = :username")})
+@NamedQueries({	
+	@NamedQuery(
+			name="Reservation.findReservationIdByRestaurantId", 
+			query="select r.id from Reservation r where r.restaurantId = :rId"),
+	@NamedQuery(
+			name="Reservation.findReservationsByRestaurantId", 
+			query="select r from Reservation r where r.restaurantId = :rId"),
+	@NamedQuery(
+			name="Reservation.findReservationIdByUserName", 
+			query="select r.id from Reservation r where r.userName = :username"),
+	@NamedQuery(
+			name="Reservation.findReservationsByUserName", 
+			query="select r from Reservation r where r.userName = :username"),
+	@NamedQuery(
+			name="Reservation.deleteReservationsByUserName", 
+			query="delete from Reservation r where r.userName = :username"),
+	@NamedQuery(
+			name="Reservation.deleteReservationsByRestaurantId", 
+			query="delete from Reservation r where r.restaurantId = :rId")})
 public class Reservation implements Serializable {
 	@Id
 	private int id;
