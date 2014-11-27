@@ -140,7 +140,7 @@ CREATE TABLE `Restaurant` (
 DROP TABLE IF EXISTS `Reviews`;
 
 CREATE TABLE `Reviews` (
-  `id` int(10) NOT NULL,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `userName` varchar(225),
   `ratings` int(2) DEFAULT NULL,
   `comments` varchar(500) DEFAULT NULL,
