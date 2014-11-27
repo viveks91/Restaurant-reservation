@@ -8,9 +8,9 @@ import models.Reservation;
 import dao.ReservationDAO;
 
 public class ReservationManager implements Serializable{
-	
+
 	private ReservationDAO rsvtn_dao = new ReservationDAO();
-	
+
 	/**
 	 * Creates the given reservation entity
 	 * @param reservation
@@ -20,7 +20,7 @@ public class ReservationManager implements Serializable{
 		rsvtn_dao.create(reservation);
 		return reservation.getId();
 	}
-	
+
 	/**
 	 * Finds the reservation with the given id
 	 * @param id
@@ -30,7 +30,7 @@ public class ReservationManager implements Serializable{
 		Reservation reservation = rsvtn_dao.findById(id);
 		return reservation;
 	}
-	
+
 	/**
 	 * Finds all the reservations with the given restaurant id
 	 * @param rid
@@ -40,7 +40,7 @@ public class ReservationManager implements Serializable{
 		List<Reservation> reservation = rsvtn_dao.findByRestaurantId(rid);
 		return reservation;
 	}
-	
+
 	/**
 	 * Finds all the reservations with the given username
 	 * @param userName
@@ -50,7 +50,7 @@ public class ReservationManager implements Serializable{
 		List<Reservation> reservation = rsvtn_dao.findByUserName(userName);
 		return reservation;
 	}
-	
+
 	/**
 	 * Deletes Reservation with the given id
 	 * @param id
@@ -58,7 +58,7 @@ public class ReservationManager implements Serializable{
 	public void removeReservationById (int id) {
 		if(findReservationById(id) != null) rsvtn_dao.deleteById(id);
 	}
-	
+
 	/**
 	 * Deletes all Reservations with the given restaurant id
 	 * @param rid
@@ -66,7 +66,7 @@ public class ReservationManager implements Serializable{
 	public void removeReservationByRestaurantId (int rid) {
 		rsvtn_dao.deleteByRestaurantId(rid);
 	}
-	
+
 	/**
 	 * Deletes all Reservations with the given username
 	 * @param userName
@@ -74,7 +74,7 @@ public class ReservationManager implements Serializable{
 	public void removeReservationByUserName (String userName) {
 		rsvtn_dao.deleteByUserName(userName);;
 	}
-	
+
 	/**
 	 * Updates the reservation with the given id to given values
 	 * @param id
@@ -91,11 +91,11 @@ public class ReservationManager implements Serializable{
 		return updated_id;
 	}
 
-	public static void main(String[] args)
+/*	public static void main(String[] args)
 	{
 		Reservation a1 = new Reservation(10, new Date(),4, "asd");
 		ReservationManager manager = new ReservationManager();
 		manager.removeReservationByUserName("asd");
 
-	}
+	}*/
 }
