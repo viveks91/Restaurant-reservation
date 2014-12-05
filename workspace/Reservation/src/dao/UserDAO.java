@@ -1,15 +1,16 @@
 package dao;
 
+import java.io.Serializable;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import models.Person;
 import models.User;
 
-public class UserDAO {
+public class UserDAO implements Serializable {
 
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Restaurant_Reservation");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
 	EntityManager em = null;
 	
 	public UserDAO()	{
@@ -50,14 +51,13 @@ public class UserDAO {
 	
 	
 	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		UserDAO dao = new UserDAO();
-		//User u1 = new User("pre2718","1233","ksjdfh","miss","asdsda",123231,1);
-		//dao.createUser(u1);
+		User u1 = new User("pre718","1233","ksjdfh","miss","asdsda",123231,1);
+		dao.createUser(u1);
 		//dao.deleteByUserName("pre271");
 		//dao.updateByUserName("pre2718", 2876, "jdhgf", 1);
-		User u1 = dao.findByUserName("pre2718");
 		System.out.println(u1);
 	}
-
+*/
 }

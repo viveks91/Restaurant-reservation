@@ -18,7 +18,7 @@ import models.Restaurant;
  */
 public class RestaurantDAO implements Serializable {
 	
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("ReservationJPA");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
 	EntityManager em = null;
 	
 	public RestaurantDAO()	{

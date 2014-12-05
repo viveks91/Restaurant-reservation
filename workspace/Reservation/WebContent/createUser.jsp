@@ -5,18 +5,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create New User</title>
+<script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
 <h1>Create New User</h1>
-<INPUT TYPE="text" id="FirstName" placeholder="FirstName" class="form-control"/>
-<INPUT TYPE="text" id="LastName" placeholder="LastName" class="form-control"/>
-<INPUT TYPE="text" id="Address" placeholder="Address" class="form-control"/>
-<INPUT TYPE="text" id="UserName" placeholder="UserName" class="form-control"/> 
-<INPUT TYPE="password" id="Password" placeholder="Password" class="form-control"/> 
-<INPUT TYPE="text" id="PhoneNo" placeholder="PhoneNo" class="form-control"/>
-<INPUT TYPE="text" id="Email" placeholder="Email" class="form-control"/>
+<INPUT TYPE="text" id="firstName" placeholder="FirstName" class="form-control"/>
+<INPUT TYPE="text" id="lastName" placeholder="LastName" class="form-control"/>
+<INPUT TYPE="text" id="addressId" placeholder="Address" class="form-control"/>
+<INPUT TYPE="text" id="userName" placeholder="UserName" class="form-control"/> 
+<INPUT TYPE="password" id="password" placeholder="Password" class="form-control"/> 
+<INPUT TYPE="text" id="phoneNo" placeholder="PhoneNo" class="form-control"/>
+<INPUT TYPE="text" id="emailId" placeholder="Email" class="form-control"/>
 
 <button id="create" class="btn btn-primary btn-block">Create</button>
 <script>
@@ -29,13 +30,13 @@
 	
 	function createHandler() {
 		var newUser = {
-				"FirstName":$("#FirstName").val(),
-				"LastName":$("#LastName").val(),
-				"Address":$("#Address").val(),
-				"UserName":$("#UserName").val(),
-				"Password":$("#Password").val(),
-				"PhoneNo":$("#PhoneNo").val(),
-				"Email":$("#Email").val()
+				"firstName":$("#firstName").val(),
+				"lastName":$("#lastName").val(),
+				"addressId":$("#addressId").val(),
+				"userName":$("#userName").val(),
+				"password":$("#password").val(),
+				"phoneNo":$("#phoneNo").val(),
+				"emailId":$("#emailId").val()
 		};
 		createUser(newUser);
 	}

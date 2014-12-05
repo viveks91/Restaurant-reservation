@@ -5,13 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
 <h1>Search a Restaurant</h1>
-<form action="" method="post">
-<label>Restaurant Name</label> <INPUT TYPE="text" name="restaurantName" class="form-control"/> 
+<form action="/Restaurant/createUser.jsp" method="post">
+<INPUT TYPE="text" id="" name="restaurantName" class="form-control"/> 
 <label>Location</label> <INPUT TYPE="text" name="locationName" class="form-control"/>
 
 <button class="btn btn-primary btn-block">Search</button>
