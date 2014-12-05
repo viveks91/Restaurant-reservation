@@ -10,7 +10,7 @@ import javax.persistence.Query;
 import models.Person;
 
 public class PersonDAO {
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Restaurant_Reservation");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
 	EntityManager em = null;
 	
 	public PersonDAO()	{

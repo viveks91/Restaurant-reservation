@@ -6,12 +6,14 @@ import javax.ws.rs.Path;
 
 import models.User;
 import dao.UserDAO;
+import dao.AddressDAO;
 
 // /rest/user
 @Path("/user")
 public class UserWebService {
 	
-	UserDAO dao = new UserDAO();
+	UserDAO usrDao = new UserDAO();
+	AddressDAO addrDao = new AddressDAO();
 	
 	// /rest/user
 /*	@GET
@@ -35,7 +37,8 @@ public class UserWebService {
 	@Path("/")
 	@Consumes("application/json")
 	public void createUser(User newUser) {
-		dao.createUser(newUser);
+		System.out.print(newUser.getFirstName());
+	//	usrDao.createUser(newUser);
 	}
 /*	@PUT
 	@Path("/{id}")

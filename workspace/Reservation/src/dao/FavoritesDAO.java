@@ -20,7 +20,7 @@ import models.Reviews;
  */
 public class FavoritesDAO {
 
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Restaurant_Reservation");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
 	EntityManager em = null;
 	
 	public FavoritesDAO()	{

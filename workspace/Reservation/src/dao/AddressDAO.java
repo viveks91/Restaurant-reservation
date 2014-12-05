@@ -11,7 +11,7 @@ import javax.persistence.Query;
 import models.Address;
 
 public class AddressDAO implements Serializable {
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("ReservationJPA");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
 	EntityManager em = null;
 	
 	public AddressDAO()	{

@@ -9,7 +9,7 @@ import javax.persistence.Persistence;
 import models.Category;
 
 public class CategoryDAO implements Serializable {
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("ReservationJPA");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
 	EntityManager em = null;
 	
 	public CategoryDAO()	{

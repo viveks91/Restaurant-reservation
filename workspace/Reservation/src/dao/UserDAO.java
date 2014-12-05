@@ -17,11 +17,11 @@ public class UserDAO implements Serializable {
 		em = factory.createEntityManager();
 	}
 	
-	public User createUser(User user) {
+	public String createUser(User user) {
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
-		return user;
+		return user.getUserName();
 	}
 	
 	public void deleteByUserName(String username) {
@@ -31,7 +31,7 @@ public class UserDAO implements Serializable {
 		em.getTransaction().commit();
 	}
 	
-	public User updateByUserName(String userName, int phoneNo, String emailId, int addressId) {
+	public String updateByUserName(String userName, int phoneNo, String emailId, int addressId) {
 		em.getTransaction().begin();
 		User user = em.find(User.class, userName);
 		user.setPhoneNo(phoneNo);
@@ -39,7 +39,7 @@ public class UserDAO implements Serializable {
 		user.setAddressId(addressId);
 		em.merge(user);
 		em.getTransaction().commit();
-		return user;
+		return user.getUserName();
 	}
 	
 	public User findByUserName(String userName) {
