@@ -10,16 +10,53 @@
 <body>
 <div class="container">
 <h1>Create New User</h1>
-<form action="" method="post">
-<label>FirstName</label><INPUT TYPE="text" name="FirstName" class="form-control"/>
-<label>LastName</label> <INPUT TYPE="text" name="LastName" class="form-control"/>
-<label>Address</label> <INPUT TYPE="text" name="Address" class="form-control"/>
-<label>UserName</label> <INPUT TYPE="text" name="UserName" class="form-control"/> 
-<label>Password</label> <INPUT TYPE="password" name="Password" class="form-control"/> 
-<label>PhoneNo</label> <INPUT TYPE="text" name="PhoneNo" class="form-control"/>
-<label>Email</label> <INPUT TYPE="text" name="Email" class="form-control"/>
+<INPUT TYPE="text" id="FirstName" placeholder="FirstName" class="form-control"/>
+<INPUT TYPE="text" id="LastName" placeholder="LastName" class="form-control"/>
+<INPUT TYPE="text" id="Address" placeholder="Address" class="form-control"/>
+<INPUT TYPE="text" id="UserName" placeholder="UserName" class="form-control"/> 
+<INPUT TYPE="password" id="Password" placeholder="Password" class="form-control"/> 
+<INPUT TYPE="text" id="PhoneNo" placeholder="PhoneNo" class="form-control"/>
+<INPUT TYPE="text" id="Email" placeholder="Email" class="form-control"/>
 
-<button class="btn btn-primary btn-block">Create</button>
+<button id="create" class="btn btn-primary btn-block">Create</button>
+<script>
+
+	$(function(){
+
+		$("#create").click(createHandler);
+		
+	});
+	
+	function createHandler() {
+		var newUser = {
+				"FirstName":$("#FirstName").val(),
+				"LastName":$("#LastName").val(),
+				"Address":$("#Address").val(),
+				"UserName":$("#UserName").val(),
+				"Password":$("#Password").val(),
+				"PhoneNo":$("#PhoneNo").val(),
+				"Email":$("#Email").val()
+		};
+		createUser(newUser);
+	}
+	
+	
+	function createUser(user) {
+		
+		$.ajax({
+			url : "http://localhost:8080/Reservation/rest/user",
+			type:"post",
+			data: JSON.stringify(user),
+			dataType: "json",
+			contentType: "application/json",
+			success:function(response) {
+				console.log(response);
+			}
+		});
+		
+	}
+
+</script>
 </div>
 
 </body>
