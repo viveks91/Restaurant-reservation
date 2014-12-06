@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create New User</title>
+<title>Create New Account</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
@@ -20,9 +20,9 @@
     <label class="col-xs-3" for="lg">Account Type</label>
     
         <div class="form-group form-group-lg">
-          <label class="col-xs-2" for="lg">User<input type="radio" id="usertype" name="accountType" value="user" checked></label>
+          <label class="col-xs-2" for="lg">User<div class="col-xs-1"><input type="radio" id="usertype" name="accountType" value="user" checked></div></label>
 
-          <label>Admin<input type="radio" id="admintype" name="accountType" value="admin"></label>
+          <label>Admin<div class="col-xs-1"><input type="radio" id="admintype" name="accountType" value="admin"></div></label>
         </div>
 </form><hr>
 
@@ -79,12 +79,10 @@
     <label class="col-sm-3 control-label" for="lg">Email ID</label>
     <div class="col-sm-9">
       <INPUT TYPE="text" id="emailId" placeholder="Enter your email id" class="form-control" maxlength="225"/>
+      <hr>
+      <button id="create" class="btn btn-success btn-block" >Create</button>
     </div>
   </div>
-  
-   <div class="button" style="text-align:center;">
-   <button id="create" class="btn btn-success btn-lg" >Create</button>
-   </div>
   
 </form>
 
