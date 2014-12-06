@@ -17,13 +17,13 @@ import javax.persistence.NamedQuery;
 @NamedQuery(
 		name="Address.findByAll", 
 		query="select a from Address a where a.street = :street and "
-		+ "a.apt_no = :apt_no and a.city = :city and a.state =:state and a.zip =:zip")
+		+ "a.apt_No = :apt_No and a.city = :city and a.state =:state and a.zip =:zip")
 public class Address implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String street;
-	private String apt_no;
+	private String apt_No;
 	private String city;
 	private String state;
 	private String zip;
@@ -39,11 +39,11 @@ public class Address implements Serializable {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	public String getApt_no() {
-		return apt_no;
+	public String getapt_No() {
+		return apt_No;
 	}
-	public void setApt_no(String apt_no) {
-		this.apt_no = apt_no;
+	public void setapt_No(String apt_No) {
+		this.apt_No = apt_No;
 	}
 	public String getCity() {
 		return city;
@@ -63,21 +63,21 @@ public class Address implements Serializable {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
-	public Address(Integer id, String street, String apt_no, String city,
+	public Address(Integer id, String street, String apt_No, String city,
 			String state, String zip) {
 		super();
 		this.id = id;
 		this.street = street;
-		this.apt_no = apt_no;
+		this.apt_No = apt_No;
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
 	}
-	public Address(String street, String apt_no, String city, String state,
+	public Address(String street, String apt_No, String city, String state,
 			String zip) {
 		super();
 		this.street = street;
-		this.apt_no = apt_no;
+		this.apt_No = apt_No;
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
@@ -91,7 +91,7 @@ public class Address implements Serializable {
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
-		this.apt_no = null;
+		this.apt_No = null;
 	}
 	
 

@@ -22,17 +22,37 @@
 
 # Dump of table Address
 # ------------------------------------------------------------
-
+DROP TABLE IF EXISTS `City`;
+DROP TABLE IF EXISTS `State`;
+DROP TABLE IF EXISTS `ZIP`;
 DROP TABLE IF EXISTS `Address`;
+
+CREATE TABLE `City` (
+  `city` varchar(20) NOT NULL,
+  PRIMARY KEY (`city`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `State` (
+  `state` varchar(20) NOT NULL,
+  PRIMARY KEY (`state`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `ZIP` (
+  `zip` varchar(20) NOT NULL,
+  PRIMARY KEY (`zip`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Address` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `street` varchar(225) NOT NULL,
   `apt_No` varchar(10) DEFAULT NULL,
+  `street` varchar(225) NOT NULL,
   `city` varchar(20) NOT NULL,
   `state` varchar(20) NOT NULL,
   `zip` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`city`) REFERENCES `City` (`city`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  FOREIGN KEY (`state`) REFERENCES `State` (`state`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  FOREIGN KEY (`zip`) REFERENCES `ZIP` (`zip`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -64,7 +84,7 @@ CREATE TABLE `Favorites` (
 
 
 
-# Dump of table Follower
+# Dump of table Following
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Following`;
@@ -185,7 +205,7 @@ CREATE TABLE `TimeSlot` (
 DROP TABLE IF EXISTS `User`;
 
 CREATE TABLE `User` (
-  `phoneNo` int(12) DEFAULT NULL,
+  `phoneNo` varchar(12) DEFAULT NULL,
   `emailId` varchar(225) NOT NULL DEFAULT '',
   `userName` varchar(225) NOT NULL,
   `addressId` int(11) DEFAULT NULL,

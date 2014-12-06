@@ -13,7 +13,7 @@ import javax.persistence.Id;
 public class User extends Person{
 
 	private String emailId;
-	private int phoneNo;
+	private String phoneNo;
 	private int addressId;
 	
 	
@@ -30,15 +30,15 @@ public class User extends Person{
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	public int getPhoneNo() {
+	public String getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(int phoneNo) {
+	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 	
 	public User(String userName, String password, String firstName,
-			String lastName, String emailId, int phoneNo, int addressId) {
+			String lastName, String emailId, String phoneNo, int addressId) {
 		super(userName, password, firstName, lastName);
 		this.emailId = emailId;
 		this.phoneNo = phoneNo;

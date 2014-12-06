@@ -10,6 +10,9 @@
 	<class>models.Following</class>
 	<class>models.Favorites</class>
 	<class>models.User</class>
+	<class>models.City</class>
+	<class>models.ZIP</class>
+	<class>models.State</class>
 		<properties>
 		    <property name="eclipselink.jdbc.password" value=""/>
 			<property name="javax.persistence.jdbc.user" value="root"/>

@@ -1,13 +1,29 @@
 package managers;
 
 import java.io.Serializable;
+import java.util.List;
 
 import models.Address;
+import models.City;
+import models.State;
+import models.ZIP;
 import dao.AddressDAO;
+import dao.CityDAO;
+import dao.StateDAO;
+import dao.ZIPDAO;
 
 public class AddressManager implements Serializable {
 	
 	private AddressDAO addr_dao = new AddressDAO();
+	CityDAO citydao = null;
+	StateDAO statedao = null;
+	ZIPDAO zipdao = null;
+	
+	public AddressManager() {
+		citydao = new CityDAO();
+		statedao = new StateDAO();
+		zipdao = new ZIPDAO();
+	}
 	
 	/**
 	 * Creates an address entity
@@ -16,9 +32,25 @@ public class AddressManager implements Serializable {
 	 */
 	public int createAddress (Address address) {
 		// Create only if the address does not already exist
-		if(addr_dao.findByAddress(address).isEmpty())
-			addr_dao.create(address);
-		return address.getId();
+		List<Address> addresses= null;
+		if((addresses = addr_dao.findByAddress(address)).isEmpty()) {
+
+		City city = new City(address.getCity());
+		State state = new State(address.getState());
+		ZIP zip = new ZIP(address.getZip());
+		
+		if(citydao.findByCity(city.getCity()) == null)
+			citydao.create(city);
+		
+		if(statedao.findByState(state.getState()) == null)
+			statedao.create(state);
+		
+		if(zipdao.findByZip(zip.getZip()) == null)
+			zipdao.create(zip);
+		
+		addr_dao.create(address); }
+
+		return addresses.get(0).getId();
 	}
 	
 	/**
@@ -49,11 +81,11 @@ public class AddressManager implements Serializable {
 		return updated_id;
 	}
 	
-	public static void main(String[] args)
+/*	public static void main(String[] args)
 	{
-		Address a1 = new Address("16 Ave", "E501","Seattle", "WA", "98122");
+		Address a1 = new Address("g", "g","g", "g", "g");
 		AddressManager manager = new AddressManager();
-		manager.createAddress(a1);
-	}
+		System.out.println(manager.createAddress(a1));
+	}*/
 
 }

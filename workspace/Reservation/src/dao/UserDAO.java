@@ -31,7 +31,7 @@ public class UserDAO implements Serializable {
 		em.getTransaction().commit();
 	}
 	
-	public String updateByUserName(String userName, int phoneNo, String emailId, int addressId) {
+	public String updateByUserName(String userName, String phoneNo, String emailId, int addressId) {
 		em.getTransaction().begin();
 		User user = em.find(User.class, userName);
 		user.setPhoneNo(phoneNo);
@@ -53,11 +53,11 @@ public class UserDAO implements Serializable {
 	
 /*	public static void main(String[] args) {
 		UserDAO dao = new UserDAO();
-		User u1 = new User("pre718","1233","ksjdfh","miss","asdsda",123231,1);
-		dao.createUser(u1);
+		//User u1 = new User("pre718","1233","ksjdfh","miss","asdsda",123231,1);
+		//dao.createUser(u1);
 		//dao.deleteByUserName("pre271");
 		//dao.updateByUserName("pre2718", 2876, "jdhgf", 1);
-		System.out.println(u1);
-	}
-*/
+		System.out.println(dao.findByUserName("vvek91"));
+	}*/
+
 }

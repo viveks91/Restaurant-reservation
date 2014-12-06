@@ -4,15 +4,15 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
-import models.User;
-import dao.UserDAO;
+import models.Person;
+import dao.PersonDAO;
 
 // /rest/user
-@Path("/user")
-public class UserWebService {
+@Path("/admin")
+public class AdminWebService {
 	
-	UserDAO usrDao = new UserDAO();
-	
+	PersonDAO psnDao = new PersonDAO();
+
 	// /rest/user
 /*	@GET
 	@Produces("application/json")
@@ -34,14 +34,10 @@ public class UserWebService {
 	@POST
 	@Path("/create")
 	@Consumes("application/json")
-	public String createUser (User newUser) {
-//		System.out.print(newUser.getAddressId());
-		if (usrDao.findByUserName(newUser.getUserName())== null) {
-			usrDao.createUser(newUser);
-//			System.out.println(newUser.getUserName());
-			return newUser.getUserName();
-		}
-			return "exists";
+	public void createPerson(Person newPerson) {
+		System.out.print(newPerson.getFirstName());
+		
+	//	usrDao.createUser(newUser);
 	}
 	
 /*	@PUT
@@ -51,3 +47,4 @@ public class UserWebService {
 		dao.updateUser(id, newUser);
 	}*/
 }
+
