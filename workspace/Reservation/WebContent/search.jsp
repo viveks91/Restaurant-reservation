@@ -11,14 +11,46 @@
 <body>
 <div class="container">
 <h1>Search a Restaurant</h1>
-<form action="/Restaurant/createUser.jsp" method="post">
-<INPUT TYPE="text" id="" name="restaurantName" class="form-control"/> 
-<label>Location</label> <INPUT TYPE="text" name="locationName" class="form-control"/>
+<INPUT TYPE="text" id="name" placeholder="restaurantName" class="form-control"/>
 
-<button class="btn btn-primary btn-block">Search</button>
+<INPUT TYPE="text" id="location" placeholder="location" class="form-control"/> 
+<button id="search" class="btn btn-primary btn-block">Search</button>
+
+<script>
+
+	$(function(){
+
+		$("#search").click(searchRestaurant);
+		
+	});
+	
+
+	function searchRestaurant() {
+		var restaurantName = $("#name").val();
+		var location = $("#location").val();
+		var searchParameters = restaurantName+","+location;
+		alert("Location :"+location);
+		alert("RestaurantName :"+restaurantName);
+		alert("searchParameters: "+searchParameters);
+		
+		$.ajax({
+			url : "http://localhost:8080/Reservation/rest/search/"+searchParameters,
+			type:"put",
+			data: JSON.stringify(restaurantName),
+			dataType: "json",
+			contentType: "application/json",
+			success:function(response) {
+				//console.log(response);
+				alert("response" + JSON.stringify(response));
+				//responseHandler(response);
+			}
+		});
+		
+	}
+	
+	
+	
+</script>
 </div>
-
-
-</form>
 </body>
 </html>

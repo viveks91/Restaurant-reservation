@@ -9,16 +9,43 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import javax.net.ssl.HttpsURLConnection;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+// /rest/search
+@Path("/search")
 public class RestaurantSearchWebServiceClient {
 
 	private String urlAPIPlaces = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={NAME}+in+{LOCATION}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
 	private String urlAPIPlaceDetails ="https://maps.googleapis.com/maps/api/place/details/json?placeid={PLACE}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
+	
+	@PUT
+	@Path("/{searchParameters}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public RestaurantSearch getParameters(@PathParam("searchParameters") String searchParameters){
+		System.out.println("Name got from UI:"+searchParameters);
+		String[] parts = searchParameters.split(",");
+		String restaurantName= parts[0];
+		String location = parts[1];
+		System.out.println("RestaurantName: "+restaurantName);
+		System.out.println("Location: "+location);
+		
+		RestaurantSearchWebServiceClient client = new RestaurantSearchWebServiceClient();
+		RestaurantSearch searchResult = client.getRestaurantByNameAndLocation(restaurantName, location);
+		System.out.println("Address: "+searchResult.getAddress());
+		return searchResult;
+	}
 	
 	public RestaurantSearch getRestaurantByNameAndLocation(String name, String location) {
 		String urlStr = urlAPIPlaces.replace("{NAME}+in+{LOCATION}", name
@@ -40,6 +67,13 @@ public class RestaurantSearchWebServiceClient {
 			try {
 				JSONObject root = (JSONObject) parser.parse(json);
 				JSONArray results = (JSONArray) root.get("results");
+				System.out.println("length"+results.size());
+//				for (int i=0;i<=results.size();i++)
+//				{
+//					JSONObject firstRestaurant = (JSONObject) results.get(i);
+//					String restaurantId = firstRestaurant.get("place_id").toString();
+//					RestaurantSearch restaurant = getPlaceDetails(restaurantId);
+//				}
 				JSONObject firstRestaurant = (JSONObject) results.get(0);
 				String restaurantId = firstRestaurant.get("place_id").toString();
 				RestaurantSearch restaurant = getPlaceDetails(restaurantId);
@@ -122,7 +156,7 @@ public class RestaurantSearchWebServiceClient {
 		String location = "Seattle";
 		RestaurantSearchWebServiceClient client = new RestaurantSearchWebServiceClient();
 		RestaurantSearch searchResults = client.getRestaurantByNameAndLocation(name, location);
-		
+		System.out.println("Address: "+searchResults.getAddress());
 	}
 
 }
