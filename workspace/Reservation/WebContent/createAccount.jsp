@@ -12,17 +12,17 @@
 
 <body>
 <div class="col-lg-6">
-<h1>Create Account</h1><hr>
+<h1 style="font-size:300%;">Create Account</h1><hr>
 
 
 <form class="form-horizontal" role="form">
 
-    <label class="col-xs-3" for="lg">Account Type</label>
+    <label class="col-xs-4" for="lg" style="font-size:120%;">Account Type</label>
     
         <div class="form-group form-group-lg">
-          <label class="col-xs-2" for="lg">User<div class="col-xs-1"><input type="radio" id="usertype" name="accountType" value="user" checked></div></label>
+          <label class="col-xs-2" for="lg" style="font-size:110%;">User<div class="col-xs-1"><input type="radio" id="usertype" name="accountType" value="user" checked></div></label>
 
-          <label>Admin<div class="col-xs-1"><input type="radio" id="admintype" name="accountType" value="admin"></div></label>
+          <label style="font-size:110%;">Admin<div class="col-xs-1" ><input type="radio" id="admintype" name="accountType" value="admin"></div></label>
         </div>
 </form><hr>
 
@@ -149,8 +149,11 @@
 				"userName" : $("#userName").val(),
 				"password" : $("#password").val(),
 			};
-			createAdmin(newAdmin);
-			alert("Admin created!");
+			var username = createAdmin(newAdmin);
+			if (username == "exists")
+				alert("Username already exists. Try again!");
+			else
+				alert("Admin created!");
 		}
 
 	}
@@ -189,6 +192,7 @@
 	}
 
 	function createAdmin(admin) {
+		var adusername = "exists";
 
 		$.ajax({
 			url : "http://localhost:8080/Reservation/rest/admin/create",
@@ -196,11 +200,12 @@
 			data : JSON.stringify(admin),
 			dataType : "json",
 			contentType : "application/json",
+			async : false,
 			success : function(response) {
-				console.log(response);
+				adusername = response;
 			}
 		});
-
+		return adusername;
 	}
 </script>
 </div>

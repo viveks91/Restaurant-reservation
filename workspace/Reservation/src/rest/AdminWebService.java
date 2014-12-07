@@ -34,10 +34,14 @@ public class AdminWebService {
 	@POST
 	@Path("/create")
 	@Consumes("application/json")
-	public void createPerson(Person newPerson) {
-		System.out.print(newPerson.getFirstName());
-		
-	//	usrDao.createUser(newUser);
+	public String createPerson(Person newAdmin) {
+		if (psnDao.findByUserName(newAdmin.getUserName())== null) {
+			psnDao.create(newAdmin);
+//			System.out.println(newUser.getUserName());
+			return newAdmin.getUserName();
+		}
+		//System.out.print(newPerson.getFirstName());
+		return "exists";
 	}
 	
 /*	@PUT
