@@ -1,26 +1,40 @@
 package rest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
+import models.Person;
 import models.User;
 import dao.UserDAO;
+import dao.PersonDAO;
 
+class Login {
+	public String userName;
+	public String password;
+}
 // /rest/user
 @Path("/user")
 public class UserWebService {
 	
 	UserDAO usrDao = new UserDAO();
+	PersonDAO psnDao = new PersonDAO();
 	
-	// /rest/user
-/*	@GET
+	//rest/user/login
+	@POST
+	@Consumes("application/json")
 	@Produces("application/json")
-	@Path("/")
-	public List<User> getAllUsers() {
-		return dao.findAllUsers();
+	@Path("/login")
+	public Login loginFunc (Login login) {
+		String userName = login.userName;
+		String password = login.password;
+		return login;
+		//Person person = psnDao.findByUserName(login.userName);
 	}
-	@GET
+	
+	/*@GET
 	@Produces("application/json")
 	@Path("/{id}")
 	public User getUserForId(@PathParam("id") int id) {
@@ -35,10 +49,9 @@ public class UserWebService {
 	@Path("/create")
 	@Consumes("application/json")
 	public String createUser (User newUser) {
-//		System.out.print(newUser.getAddressId());
+		System.out.print(newUser.getAddressId());
 		if (usrDao.findByUserName(newUser.getUserName())== null) {
 			usrDao.createUser(newUser);
-//			System.out.println(newUser.getUserName());
 			return newUser.getUserName();
 		}
 			return "exists";

@@ -3,6 +3,7 @@ package rest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 import models.Person;
 import dao.PersonDAO;
@@ -37,10 +38,8 @@ public class AdminWebService {
 	public String createPerson(Person newAdmin) {
 		if (psnDao.findByUserName(newAdmin.getUserName())== null) {
 			psnDao.create(newAdmin);
-//			System.out.println(newUser.getUserName());
-			return newAdmin.getUserName();
+			return "created";
 		}
-		//System.out.print(newPerson.getFirstName());
 		return "exists";
 	}
 	

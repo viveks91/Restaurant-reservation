@@ -3,6 +3,7 @@ package rest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 import models.Address;
 import managers.AddressManager;
@@ -15,10 +16,12 @@ public class AddressWebService {
 	@POST
 	@Path("/create")
 	@Consumes("application/json")
-	public int createAddress(Address newAddress) {
-//		System.out.print(newAddress.getCity());
-		
-		return addrmgr.createAddress(newAddress);
+	@Produces("application/json")
+	public Address createAddress(Address newAddress) {
+
+		int id = addrmgr.createAddress(newAddress);
+		newAddress.setId(id);
+		return newAddress;
 	}
 
 }

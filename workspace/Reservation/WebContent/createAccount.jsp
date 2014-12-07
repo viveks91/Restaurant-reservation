@@ -118,6 +118,7 @@
 	   
 	function createHandler() {
 		if ($("#type").val() === "user") {
+			
 			var newAddr = {
 					"street":$("#street").val(),
 					"apt_No":$("#apt_No").val(),
@@ -136,11 +137,7 @@
 					"phoneNo":$("#phoneNo").val(),
 					"emailId":$("#emailId").val()
 			};
-			var username = createUser(newUser);
-  			if (username == "exists")
-				alert("Username already exists. Try again!");
-			else
-				alert("User created!");
+			createUser(newUser);
 
 	} else {
 			var newAdmin = {
@@ -149,11 +146,7 @@
 				"userName" : $("#userName").val(),
 				"password" : $("#password").val(),
 			};
-			var username = createAdmin(newAdmin);
-			if (username == "exists")
-				alert("Username already exists. Try again!");
-			else
-				alert("Admin created!");
+            createAdmin(newAdmin);
 		}
 
 	}
@@ -168,45 +161,49 @@
 			contentType : "application/json",
 			async : false,
 			success : function(response) {
-				id = response;
+				id = response.id;
 			}
 		});
 		return id;
 	}
 
 	function createUser(user) {
-		var username = "exists";
 
 		$.ajax({
 			url : "http://localhost:8080/Reservation/rest/user/create",
 			type : "post",
 			data : JSON.stringify(user),
-			dataType : "json",
+			dataType : 'text',
 			contentType : "application/json",
 			async : false,
 			success : function(response) {
-				username = response;
-			}
+				if (response == "exists")
+					alert("Username already exists. Try again!");
+				else
+					alert("User created!");
+		    }
 		});
-		return username;
 	}
 
 	function createAdmin(admin) {
-		var adusername = "exists";
-
+		
 		$.ajax({
 			url : "http://localhost:8080/Reservation/rest/admin/create",
 			type : "post",
 			data : JSON.stringify(admin),
-			dataType : "json",
-			contentType : "application/json",
+			dataType : 'text',
+			contentType : 'application/json',
 			async : false,
 			success : function(response) {
-				adusername = response;
+				if (response == "exists")
+					alert("Username already exists. Try again!");
+				else
+					alert("Admin created!");
 			}
 		});
-		return adusername;
 	}
+	
+	
 </script>
 </div>
 

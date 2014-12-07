@@ -92,7 +92,7 @@ public class AddressDAO implements Serializable {
 		q.setParameter("city", address.getCity());
 		q.setParameter("state", address.getState());
 		q.setParameter("zip", address.getZip());
-		List<Address> found_address = q.getResultList();
+		List<Address> found_address = (List<Address>)q.getResultList();
 		em.getTransaction().commit();
 		return found_address;
 	}

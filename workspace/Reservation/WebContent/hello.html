@@ -13,21 +13,21 @@
 <script>
 
 	$(function(){
-		var message = {"message":"Hello","receiver":"Alice"};
-		var url = "http://localhost:8080/JWS/rest/hello123/createMe";
+		var message = {"userName":"Hello","password":"Alice"};
+		var url = "http://localhost:8080/Reservation/rest/hello123/createMe";
 		
 		$.ajax({
-			url: "http://localhost:8080/JWS/rest/hello123/createMe",
+			url: "http://localhost:8080/Reservation/rest/user/login",
 			type: "post",
 			data: JSON.stringify(message),
 			dataType: "json",
 			contentType: "application/json",
 			success: function(response) {
-				console.log(response);
+				alert(response);
 			}
 		});
 		
-		$.ajax({
+/* 		$.ajax({
 			url: "http://localhost:8080/JWS/rest/hello123/updateMe/123",
 			type: "put",
 			data: JSON.stringify(message),
@@ -36,7 +36,7 @@
 			success: function(response) {
 				console.log(response);
 			}
-		});
+		}); */
 		
 	});
 

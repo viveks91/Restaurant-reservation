@@ -48,7 +48,9 @@ public class AddressManager implements Serializable {
 		if(zipdao.findByZip(zip.getZip()) == null)
 			zipdao.create(zip);
 		
-		addr_dao.create(address); }
+		return addr_dao.create(address);
+		
+		}
 
 		return addresses.get(0).getId();
 	}
@@ -83,7 +85,11 @@ public class AddressManager implements Serializable {
 	
 /*	public static void main(String[] args)
 	{
-		Address a1 = new Address("g", "g","g", "g", "g");
+		//AddressDAO addr_dao = new AddressDAO();
+		//List<Address> addresses =null;
+		Address a1 = new Address(0, "fs8d8f", "sdfsd","fs", "fadsfsdsd", "sad");
+		//addresses = addr_dao.findByAddress(a1);
+		//System.out.println(addresses.get(0).getCity());
 		AddressManager manager = new AddressManager();
 		System.out.println(manager.createAddress(a1));
 	}*/
