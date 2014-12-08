@@ -17,11 +17,11 @@ public class PersonDAO {
 		em = factory.createEntityManager();
 	}
 	
-	public String create(Person person) {
+	public Person create(Person person) {
 		em.getTransaction().begin();
 		em.persist(person);
 		em.getTransaction().commit();
-		return person.getUserName();
+		return person;
 	}
 	
 	public void deleteByUserName(String username) {
@@ -95,7 +95,7 @@ public class PersonDAO {
 	//	dao.updateFirstNameByUserName("pre27", "Rio");
 		
 			//dao.deleteByUserName("pre2736");
-		//System.out.println(dao.findByUserName("g"));
+		System.out.println(dao.findByUserName("gsdz").getPassword());
 		
 
 	}

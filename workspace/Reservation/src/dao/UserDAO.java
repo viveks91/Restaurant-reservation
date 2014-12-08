@@ -1,10 +1,12 @@
 package dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import models.User;
 
@@ -17,11 +19,11 @@ public class UserDAO implements Serializable {
 		em = factory.createEntityManager();
 	}
 	
-	public String createUser(User user) {
+	public User createUser(User user) {
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
-		return user.getUserName();
+		return user;
 	}
 	
 	public void deleteByUserName(String username) {
@@ -49,15 +51,19 @@ public class UserDAO implements Serializable {
 		return user;
 	}
 	
-	
-	
-/*	public static void main(String[] args) {
+/*	public List<Object[]> find(int aid){
+		em.getTransaction().begin();
+		Query q = em.createNamedQuery("User.testing");
+		q.setParameter("aId", aid);
+		List<Object[]> data = (List<Object[]>)q.getResultList();
+		em.getTransaction().commit();
+		return data;
+	}
+
+	public static void main(String[] args) {
 		UserDAO dao = new UserDAO();
-		//User u1 = new User("pre718","1233","ksjdfh","miss","asdsda",123231,1);
-		//dao.createUser(u1);
-		//dao.deleteByUserName("pre271");
-		//dao.updateByUserName("pre2718", 2876, "jdhgf", 1);
-		System.out.println(dao.findByUserName("vvek91"));
+		List<Object[]> data = dao.find(24);
+		
 	}*/
 
 }

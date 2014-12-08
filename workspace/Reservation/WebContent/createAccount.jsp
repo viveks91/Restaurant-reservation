@@ -10,21 +10,22 @@
 </head>
 
 
-<body>
-<div class="col-lg-6">
-<h1 style="font-size:300%;">Create Account</h1><hr>
+<body style= "background-color: #F9F9F9;">
+<div style= "background-color: #006699;font-size:150%;text-indent: 20px;font-weight: bold;color:white;padding-top:5px;padding-bottom:5px">Food World</div>
+<div style="margin-left: 0.7cm;" class="col-lg-6">
+<h1 style="font-size:300%;text-indent: 30px;">Create Account</h1><hr style="height:1px;background-color:#EEE;">
 
 
 <form class="form-horizontal" role="form">
 
-    <label class="col-xs-4" for="lg" style="font-size:120%;">Account Type</label>
+    <label class="col-xs-4" for="lg" style="font-size:120%;text-indent: 40px;">Account Type</label>
     
         <div class="form-group form-group-lg">
           <label class="col-xs-2" for="lg" style="font-size:110%;">User<div class="col-xs-1"><input type="radio" id="usertype" name="accountType" value="user" checked></div></label>
 
           <label style="font-size:110%;">Admin<div class="col-xs-1" ><input type="radio" id="admintype" name="accountType" value="admin"></div></label>
         </div>
-</form><hr>
+</form><hr style="height:1px;background-color:#EEE;">
 
 <input type="hidden" id="type" value="user">
 
@@ -79,7 +80,7 @@
     <label class="col-sm-3 control-label" for="lg">Email ID</label>
     <div class="col-sm-9">
       <INPUT TYPE="text" id="emailId" placeholder="Enter your email id" class="form-control" maxlength="225"/>
-      <hr>
+      <hr style="height:1px;background-color:#EEE;">
       <button id="create" class="btn btn-success btn-block" >Create</button>
     </div>
   </div>
@@ -117,7 +118,8 @@
 	});
 	   
 	function createHandler() {
-		if ($("#type").val() === "user") {
+		if ($("#type").val() === "user") 
+		{
 			
 			var newAddr = {
 					"street":$("#street").val(),
@@ -125,7 +127,7 @@
 					"city":$("#city").val(),
 					"state":$("#state").val(),
 					"zip":$("#zip").val()
-			}
+			};
 			var addrId = createAddress(newAddr);
 
 			var newUser = {
@@ -147,8 +149,8 @@
 				"password" : $("#password").val(),
 			};
             createAdmin(newAdmin);
-		}
-
+	}
+    return false;
 	}
 
 	function createAddress(address) {
@@ -177,10 +179,9 @@
 			contentType : "application/json",
 			async : false,
 			success : function(response) {
-				if (response == "exists")
-					alert("Username already exists. Try again!");
-				else
-					alert("User created!");
+				if (response == "exists") alert("Username already exists. Try again!"); 
+				else location = "/Reservation/Home.jsp";
+				//return false;
 		    }
 		});
 	}
@@ -188,17 +189,16 @@
 	function createAdmin(admin) {
 		
 		$.ajax({
-			url : "http://localhost:8080/Reservation/rest/admin/create",
+			url : "http://localhost:8080/Reservation/rest/user/createAdmin",
 			type : "post",
 			data : JSON.stringify(admin),
 			dataType : 'text',
 			contentType : 'application/json',
 			async : false,
 			success : function(response) {
-				if (response == "exists")
-					alert("Username already exists. Try again!");
-				else
-					alert("Admin created!");
+				if (response == "exists") alert("Username already exists. Try again!"); 
+				else location = "/Reservation/Home.jsp";
+				//return false;
 			}
 		});
 	}

@@ -9,15 +9,18 @@
 <body>
 
 <div class="container">
-<h1>Users</h1>
+<h1>Hello 
 
-<input id="id" placeholder="User ID" class="form-control"/>
-<input id="username" placeholder="Username" class="form-control"/>
-<input id="email" placeholder="Email" class="form-control"/>
-<button id="create" class="btn btn-block btn-primary">Create</button>
-<button id="read" class="btn btn-block btn-primary">Read</button>
-<button id="update" class="btn btn-block btn-primary">Update</button>
-<button id="delete" class="btn btn-block btn-primary">Delete</button>
+<%
+
+Person prsn = (Person)request.getAttribute("user");
+
+%>
+
+
+
+</h1>
+
 
 <script>
 
