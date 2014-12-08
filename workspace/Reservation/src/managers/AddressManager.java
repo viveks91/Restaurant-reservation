@@ -78,20 +78,33 @@ public class AddressManager implements Serializable {
 	public int updateAddressById (int id, String street, String apt_no, String city, 
 			String state, String zip) {
 		int updated_id = id;
+		City city1 = new City(city);
+		State state1 = new State(state);
+		ZIP zip1 = new ZIP(zip);
+		
+		if(citydao.findByCity(city) == null)
+			citydao.create(city1);
+		
+		if(statedao.findByState(state) == null)
+			statedao.create(state1);
+		
+		if(zipdao.findByZip(zip) == null)
+			zipdao.create(zip1);
+		
 		if(findAddressById(id) != null)
 			updated_id = addr_dao.updateById(id, street, apt_no, city, state, zip);
 		return updated_id;
 	}
 	
-/*	public static void main(String[] args)
+	public static void main(String[] args)
 	{
 		//AddressDAO addr_dao = new AddressDAO();
 		//List<Address> addresses =null;
-		Address a1 = new Address(0, "fs8d8f", "sdfsd","fs", "fadsfsdsd", "sad");
+		//Address a1 = new Address(28, "fs8d8f", "sdfsd","fs", "fadsfsdsd", "sad");
 		//addresses = addr_dao.findByAddress(a1);
 		//System.out.println(addresses.get(0).getCity());
 		AddressManager manager = new AddressManager();
-		System.out.println(manager.createAddress(a1));
-	}*/
+		System.out.println(manager.updateAddressById(28,"fs8d8f", "sdfsd","fs", "fadsfsdsd", "sad"));
+	}
 
 }

@@ -4,8 +4,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -42,7 +44,6 @@ public class UserWebService {
 	@POST
 	@Consumes("application/json")
 	@Path("/login")
-	
 	public String loginFunc (Login login, @Context HttpServletRequest req) {
 		String userName = login.userName;
 		String password = login.password;
@@ -62,22 +63,30 @@ public class UserWebService {
 		}
 	}
 	
+	@POST
+	@Path("/logout")
+	public void logoutSession(@Context HttpServletRequest req) {
+		req.getSession().invalidate();
+	}
+	
 	/*@GET
 	@Produces("application/json")
 	@Path("/{id}")
 	public User getUserForId(@PathParam("id") int id) {
 		return dao.findUserById(id);
-	}
-	@DELETE
-	@Path("/{id}")
-	public void deleteUserForId(@PathParam("id") int id) {
-		dao.deleteUser(id);
 	}*/
+	@DELETE
+	@Path("/delete")
+	public void deleteUserForId(@Context HttpServletRequest req) {
+		Person person = (Person)req.getSession().getAttribute("user");
+		req.getSession().invalidate();
+		psnDao.deleteByUserName(person.getUserName());
+	}
+	
 	@POST
 	@Path("/create")
 	@Consumes("application/json")
 	public String createUser (User newUser, @Context HttpServletRequest req) {
-		System.out.print(newUser.getAddressId());
 		if (usrDao.findByUserName(newUser.getUserName())== null) {
 			User usr = usrDao.createUser(newUser);
 			req.getSession().setAttribute("user", usr);
@@ -98,10 +107,13 @@ public class UserWebService {
 		return "exists";
 	}
 	
-/*	@PUT
-	@Path("/{id}")
+	@PUT
+	@Path("/update")
 	@Consumes("application/json")
-	public void updateUser(@PathParam("id") int id, User newUser) {
-		dao.updateUser(id, newUser);
-	}*/
+	public void updateUser(User newUser, @Context HttpServletRequest req) {
+		Person person = (Person)req.getSession().getAttribute("user");
+		psnDao.updateFirstNameByUserName(person.getUserName(),newUser.getFirstName());
+		psnDao.updateLastNameByUserName(person.getUserName(), newUser.getLastName());
+		usrDao.updateByUserName(newUser.getUserName(), newUser.getPhoneNo(), newUser.getEmailId(), newUser.getAddressId());
+	}
 }

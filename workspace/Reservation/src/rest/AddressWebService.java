@@ -2,6 +2,7 @@ package rest;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
@@ -22,6 +23,13 @@ public class AddressWebService {
 		int id = addrmgr.createAddress(newAddress);
 		newAddress.setId(id);
 		return newAddress;
+	}
+	
+	@PUT
+	@Path("/update")
+	@Consumes("application/json")
+	public void updateAddress(Address newAddress) {
+		addrmgr.updateAddressById(newAddress.getId(),newAddress.getStreet(),newAddress.getapt_No(),newAddress.getCity(), newAddress.getState(), newAddress.getZip());
 	}
 
 }

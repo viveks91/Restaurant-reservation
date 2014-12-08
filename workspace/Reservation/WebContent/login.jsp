@@ -8,10 +8,10 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
-<body style="background-color: #F9F9F9;">
+<body style="background-color: #F3F3F3;">
 <div class="container" style="width:600px;">
 
-	<h1 style="text-align: center; font-size:500%; padding-top:60px;font-family:verdana;text-shadow: 4px 2.5px #A8A8A8;">FOOD WORLD</h1><br>
+	<h1 style="text-align: center; font-size:500%; padding-top:90px;font-family:verdana;text-shadow: 4px 2.5px #A8A8A8;">FOOD WORLD</h1><br>
 	<p style="text-align: center; font-size:150%; font-weight: bold; "> Connecting foodies</p><hr style="height:1px;background-color:#EEE;">
 </div>
 <div class="container" style="width:500px;">
@@ -53,7 +53,7 @@ function handleLogin(login) {
 		contentType : "application/json",
 		success : function(response) {
 			//alert(response.status == "pass");
-			  if(response == "pass") location.href = "/Reservation/Home.jsp";
+			  if(response == "pass") location.href = "/Reservation/home.jsp";
 				else alert("Username/Password is incorrect"); 
 		}
 	});

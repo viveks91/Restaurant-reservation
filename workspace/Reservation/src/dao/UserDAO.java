@@ -62,7 +62,8 @@ public class UserDAO implements Serializable {
 
 	public static void main(String[] args) {
 		UserDAO dao = new UserDAO();
-		List<Object[]> data = dao.find(24);
+		User user = dao.findByUserName("vivek");
+		System.out.println(user.getLastName());
 		
 	}*/
 

@@ -10,10 +10,10 @@
 </head>
 
 
-<body style= "background-color: #F9F9F9;">
+<body style = "background-color:#F3F3F3">
 <div style= "background-color: #006699;font-size:150%;text-indent: 20px;font-weight: bold;color:white;padding-top:5px;padding-bottom:5px">Food World</div>
 <div style="margin-left: 0.7cm;" class="col-lg-6">
-<h1 style="font-size:300%;text-indent: 30px;">Create Account</h1><hr style="height:1px;background-color:#EEE;">
+<h1 style="font-size:300%;text-indent: 30px;">Create Account</h1><hr style="height:1px;background-color:#DDD;">
 
 
 <form class="form-horizontal" role="form">
@@ -25,7 +25,7 @@
 
           <label style="font-size:110%;">Admin<div class="col-xs-1" ><input type="radio" id="admintype" name="accountType" value="admin"></div></label>
         </div>
-</form><hr style="height:1px;background-color:#EEE;">
+</form><hr style="height:1px;background-color:#DDD;">
 
 <input type="hidden" id="type" value="user">
 
@@ -80,7 +80,7 @@
     <label class="col-sm-3 control-label" for="lg">Email ID</label>
     <div class="col-sm-9">
       <INPUT TYPE="text" id="emailId" placeholder="Enter your email id" class="form-control" maxlength="225"/>
-      <hr style="height:1px;background-color:#EEE;">
+      <hr style="height:1px;background-color:#DDD;">
       <button id="create" class="btn btn-success btn-block" >Create</button>
     </div>
   </div>
@@ -180,7 +180,7 @@
 			async : false,
 			success : function(response) {
 				if (response == "exists") alert("Username already exists. Try again!"); 
-				else location = "/Reservation/Home.jsp";
+				else location.href = "/Reservation/home.jsp";
 				//return false;
 		    }
 		});
@@ -197,7 +197,7 @@
 			async : false,
 			success : function(response) {
 				if (response == "exists") alert("Username already exists. Try again!"); 
-				else location = "/Reservation/Home.jsp";
+				else location.href = "/Reservation/home.jsp";
 				//return false;
 			}
 		});
