@@ -7,13 +7,15 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 <%
 	User user = (User)session.getAttribute("user");
+    User viewuser = (User)session.getAttribute("viewuser");
 	AddressManager addrmgr = new AddressManager();
-	Address addr = addrmgr.findAddressById(user.getAddressId());
+	Address addr = addrmgr.findAddressById(viewuser.getAddressId());
 
 %>
 <title>
-<%= user.getFirstName()%> <%= user.getLastName()%>
+<%= viewuser.getFirstName()%> <%= viewuser.getLastName()%>
 </title>
+
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body style= "background-color:#F3F3F3;">
@@ -41,16 +43,16 @@
 
 <div style="margin-left: 0.3cm;float: left;" class="col-lg-8">
 	<h1 style="font-size:300%;text-indent: 20px;">
-	<%= user.getFirstName()%> <%= user.getLastName()%>
+	<%= viewuser.getFirstName()%> <%= viewuser.getLastName()%>
 	</h1><hr style="height:1px;background-color:#DDD;">
 	<div style="margin-left: 0.1cm;background-color: white;width:400px; float: left;position: relative;clear:both;">
 		<p style="text-indent:20px;padding-top:20px;font-weight: bold;font-size:120%;text-decoration: underline;">ABOUT</p>
 		<p style="text-indent:23px;padding-top:10px;font-size:100%;">Lives at :
 		<%= addr.getStreet()%>,<%= addr.getapt_No()%>,<%= addr.getCity()%>,<%= addr.getState()%></p>
 		<p style="text-indent:31px;font-size:100%;"> Phone :
-		<%= user.getPhoneNo()%></p>
+		<%= viewuser.getPhoneNo()%></p>
 		<p style="text-indent:20px;padding-down:30px;font-size:100%;">Email ID :
-		<%= user.getEmailId()%></p><br>
+		<%= viewuser.getEmailId()%></p><br>
 	
 	</div>
 
@@ -59,9 +61,9 @@
 
 <script>
 
-
-
 $(function(){
+	
+	
 
 	$("#logout").click(logoutHandler);
 	

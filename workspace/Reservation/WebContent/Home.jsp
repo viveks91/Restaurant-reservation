@@ -22,23 +22,23 @@
 
 <div style= "background-color: #006699;color:white;text-indent:20px;padding-top:5px;padding-bottom:5px;">
   <span style="font-size:150%;font-weight: bold;">Food World</span>
-  <span style="float:right;padding-right:10px;padding-top:5px;">
+  <span style="float:right;padding-right:20px;padding-top:5px;">
      <button id="logout" class="btn btn-link btn-xs" style="color:#FFF">Logout</button>
   </span>
   <span style="float:right;padding-right:10px;padding-top:5px;font-weight: bold;font-size:12pt;">
      <a href="/Reservation/home.jsp" style="color:#FFF">Home</a>
   </span>
-  <span style="float:right;padding-right:10px;font-weight: bold;font-size:150%;">
+  <span style="float:right;padding-right:20px;font-weight: bold;font-size:150%;">
      <a href="/Reservation/profile.jsp" style="color:#FFF"><%= person.getFirstName() %></a>
   </span>
 </div>
   
 <div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:250px;"> 
-<p style="text-indent:20px;font-size:110%;font-weight: bold;"><a href="/Reservation/home.jsp" style="color:#FFF"> Make a reservation</a></p>
-<p style="text-indent:20px;font-size:110%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
-<p style="text-indent:20px;font-size:110%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My favorites</a> </p>
-<p style="text-indent:20px;font-size:110%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reviews</a> </p>
-<p style="text-indent:20px;font-size:110%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editProfile.jsp" style="color:#FFF"> Edit profile</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/home.jsp" style="color:#FFF"> Make a reservation</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My favorites</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reviews</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editProfile.jsp" style="color:#FFF"> Edit profile</a> </p>
 </div>
 
 

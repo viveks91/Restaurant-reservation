@@ -2,22 +2,20 @@ package rest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.handler.MessageContext;
 
 import models.Person;
 import models.User;
-import dao.UserDAO;
 import dao.PersonDAO;
+import dao.UserDAO;
 
 class Login {
 	public String userName;
@@ -69,12 +67,15 @@ public class UserWebService {
 		req.getSession().invalidate();
 	}
 	
-	/*@GET
-	@Produces("application/json")
-	@Path("/{id}")
-	public User getUserForId(@PathParam("id") int id) {
-		return dao.findUserById(id);
-	}*/
+	@GET
+	@Path("/view/{username}")
+	public String getUser(@PathParam("username") String userName, @Context HttpServletRequest req) {
+		User user1 = usrDao.findByUserName(userName);
+		req.getSession().setAttribute("viewuser", user1);
+		return "done";
+	}
+	
+	
 	@DELETE
 	@Path("/delete")
 	public void deleteUserForId(@Context HttpServletRequest req) {

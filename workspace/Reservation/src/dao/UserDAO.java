@@ -58,12 +58,12 @@ public class UserDAO implements Serializable {
 		List<Object[]> data = (List<Object[]>)q.getResultList();
 		em.getTransaction().commit();
 		return data;
-	}
+	}*/
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		UserDAO dao = new UserDAO();
 		User user = dao.findByUserName("vivek");
-		System.out.println(user.getLastName());
+		System.out.println(user.getPhoneNo());
 		
 	}*/
 
