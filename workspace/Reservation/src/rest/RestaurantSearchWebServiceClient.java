@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.ws.rs.Consumes;
@@ -26,30 +28,38 @@ import org.json.simple.parser.ParseException;
 @Path("/search")
 public class RestaurantSearchWebServiceClient {
 
-	private String urlAPIPlaces = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={NAME}+in+{LOCATION}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
+	private String urlAPIPlaces = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={NAME}+restaurants+in+{LOCATION}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
 	private String urlAPIPlaceDetails ="https://maps.googleapis.com/maps/api/place/details/json?placeid={PLACE}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
-	
+	public static String dayNumber;
 	@PUT
 	@Path("/{searchParameters}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public RestaurantSearch getParameters(@PathParam("searchParameters") String searchParameters){
+	public List<RestaurantSearch> getParameters(@PathParam("searchParameters") String searchParameters){
 		System.out.println("Name got from UI:"+searchParameters);
 		String[] parts = searchParameters.split(",");
 		String restaurantName= parts[0];
 		String location = parts[1];
+		dayNumber = parts[2];
 		System.out.println("RestaurantName: "+restaurantName);
 		System.out.println("Location: "+location);
-		
+		System.out.println("Day number:"+dayNumber);
 		RestaurantSearchWebServiceClient client = new RestaurantSearchWebServiceClient();
-		RestaurantSearch searchResult = client.getRestaurantByNameAndLocation(restaurantName, location);
-		System.out.println("Address: "+searchResult.getAddress());
+		List<RestaurantSearch> searchResult = client.getRestaurantByNameAndLocation(restaurantName, location);
+		//System.out.println("Address: "+searchResult.getAddress());
 		return searchResult;
 	}
 	
-	public RestaurantSearch getRestaurantByNameAndLocation(String name, String location) {
-		String urlStr = urlAPIPlaces.replace("{NAME}+in+{LOCATION}", name
-				+ "+in+" + location);
+	public List<RestaurantSearch> getRestaurantByNameAndLocation(String name, String location) {
+		// Correct the input parameters,required for the URL pattern
+		
+		name = name.replace(" ", "+");
+		location = location.replace(" ", "+");
+		
+		String urlStr = urlAPIPlaces.replace("{NAME}+restaurants+in+{LOCATION}", name
+				+ "+restaurants+in+" + location);
+		System.out.println("URL:"+urlStr);
+		List<RestaurantSearch> searchResults= new ArrayList<RestaurantSearch>();
 		try {
 			URL url = new URL(urlStr);
 			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -68,17 +78,19 @@ public class RestaurantSearchWebServiceClient {
 				JSONObject root = (JSONObject) parser.parse(json);
 				JSONArray results = (JSONArray) root.get("results");
 				System.out.println("length"+results.size());
-//				for (int i=0;i<=results.size();i++)
-//				{
-//					JSONObject firstRestaurant = (JSONObject) results.get(i);
-//					String restaurantId = firstRestaurant.get("place_id").toString();
-//					RestaurantSearch restaurant = getPlaceDetails(restaurantId);
-//				}
-				JSONObject firstRestaurant = (JSONObject) results.get(0);
-				String restaurantId = firstRestaurant.get("place_id").toString();
-				RestaurantSearch restaurant = getPlaceDetails(restaurantId);
-				return restaurant;
-				
+				for (int i=0;i<=19;i++)
+				{
+					JSONObject firstRestaurant = (JSONObject) results.get(i);
+					String restaurantId = firstRestaurant.get("place_id").toString();
+					RestaurantSearch restaurant = getPlaceDetails(restaurantId);
+					if(restaurant!=null)
+					searchResults.add(restaurant);
+				}
+//				JSONObject firstRestaurant = (JSONObject) results.get(0);
+//				String restaurantId = firstRestaurant.get("place_id").toString();
+//				RestaurantSearch restaurant = getPlaceDetails(restaurantId);
+//				return restaurant;
+				return searchResults;
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -93,7 +105,7 @@ public class RestaurantSearchWebServiceClient {
 
 	private RestaurantSearch getPlaceDetails(String restaurantId) {
 		String placeDetailURL = urlAPIPlaceDetails.replace("{PLACE}", restaurantId);
-		int day = 0;
+		int day = Integer.parseInt(dayNumber);
 		RestaurantSearch restaurant = new RestaurantSearch();
 		System.out.println("Place detail URL:"+placeDetailURL);
 		
@@ -129,19 +141,22 @@ public class RestaurantSearchWebServiceClient {
 				
 				String closeRestaurantTime = closeTime.get("time").toString();
 				String openRestaurantTime = openTime.get("time").toString();
-
-				restaurant.setName(name);
-				restaurant.setWebsite(restaurantURL);
-				restaurant.setAddress(address);
-				restaurant.setPhoneNo(phoneNo);
-				restaurant.setCapacity(capacity);
-				restaurant.setOpeningTime(openRestaurantTime);
-				restaurant.setClosingTime(closeRestaurantTime);
-
-				return restaurant;
+				if(!address.isEmpty() & !phoneNo.isEmpty() & !restaurantURL.isEmpty() & !name.isEmpty() & !openRestaurantTime.isEmpty() & !closeRestaurantTime.isEmpty()){
+					restaurant.setName(name);
+					restaurant.setWebsite(restaurantURL);
+					restaurant.setAddress(address);
+					restaurant.setPhoneNo(phoneNo);
+					restaurant.setCapacity(capacity);
+					restaurant.setOpeningTime(openRestaurantTime);
+					restaurant.setClosingTime(closeRestaurantTime);
+					return restaurant;
+				}
 				
 			} catch (ParseException e) {
-				e.printStackTrace();
+				System.out.println("Ignore");
+			}
+			catch (NullPointerException ne) {
+				System.out.println("Ignore");
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -152,11 +167,11 @@ public class RestaurantSearchWebServiceClient {
 	}
 
 	public static void main(String[] args) {
-		String name="Chutneys";
+		String name="";
 		String location = "Seattle";
 		RestaurantSearchWebServiceClient client = new RestaurantSearchWebServiceClient();
-		RestaurantSearch searchResults = client.getRestaurantByNameAndLocation(name, location);
-		System.out.println("Address: "+searchResults.getAddress());
+		List<RestaurantSearch> searchResults = client.getRestaurantByNameAndLocation(name, location);
+//		System.out.println("Address: "+searchResults.getAddress());
 	}
 
 }

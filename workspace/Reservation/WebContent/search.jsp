@@ -16,40 +16,56 @@
 <INPUT TYPE="text" id="location" placeholder="location" class="form-control"/> 
 <button id="search" class="btn btn-primary btn-block">Search</button>
 
+<table id="recordtable" border=1 class="table" style="display:none">
+	<tr>
+		<th>Restaurant Name</th>
+		<th>Address</th>
+		<th>WebSite</th>
+		<th>OpeningTime</th>
+		<th>ClosingTime</th>
+	</tr>
+</table>
 <script>
 
 	$(function(){
-
 		$("#search").click(searchRestaurant);
-		
 	});
 	
-
+	function displayTable()    
+    {    
+		var element=document.getElementById("recordtable");     
+        element.style.display="block";    
+    }
 	function searchRestaurant() {
 		var restaurantName = $("#name").val();
 		var location = $("#location").val();
-		var searchParameters = restaurantName+","+location;
-		alert("Location :"+location);
-		alert("RestaurantName :"+restaurantName);
-		alert("searchParameters: "+searchParameters);
+		var date=new Date();
+		var dayNumber = date.getDay();
 		
+		var searchParameters = restaurantName+","+location+","+dayNumber;
+
 		$.ajax({
 			url : "http://localhost:8080/Reservation/rest/search/"+searchParameters,
 			type:"put",
-			data: JSON.stringify(restaurantName),
 			dataType: "json",
 			contentType: "application/json",
 			success:function(response) {
-				//console.log(response);
-				alert("response" + JSON.stringify(response));
-				//responseHandler(response);
+				responseHandler(response);
+				
 			}
 		});
-		
 	}
 	
-	
-	
+	function responseHandler(response)
+    {
+		var trHTML = '';
+        $.each(response, function (i, item) {
+            trHTML += '<tr><a href="searchDetails.jsp"><td>'+ item.name +'</td></a><td>' + item.address + '</td><a href="'+ item.website + '"><td>'+ item.website +'</td></a><td>' + item.openingTime + '</td><td>' + item.closingTime + '</td></tr>';
+        });
+        $('#recordtable').append(trHTML);
+        displayTable();
+    }
+
 </script>
 </div>
 </body>
