@@ -40,7 +40,7 @@
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My favorites</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reviews</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> Following</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/following.jsp" style="color:#FFF"> Following</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/finduser.jsp" style="color:#FFF"> Find a user</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
 </div>
@@ -49,7 +49,7 @@
 	<h1 style="font-size:300%;text-indent: 20px;">
 	<%= viewuser.getFirstName()%> <%= viewuser.getLastName()%>
 	</h1><hr style="height:1px;background-color:#DDD;">
-	<div style="margin-left: 0.1cm;background-color: white;width:440px; float:left;position: relative;">
+	<div style="margin-left: 0.1cm;background-color: white;width:440px; float:left;position: relative;box-shadow: 0.5px 0.5px 3px #888888;">
 		<p style="text-indent:20px;padding-top:20px;font-weight: bold;font-size:120%;text-decoration: underline;">ABOUT</p>
 		<p style="text-indent:20px;padding-top:10px;font-size:100%;">Address :
 		<%= addr.getStreet()%>,<%= addr.getapt_No()%>,<%= addr.getCity()%>,<%= addr.getState()%></p>
