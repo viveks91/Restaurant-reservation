@@ -8,15 +8,22 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
-<body>
+<body style = "background-color:#F3F3F3">
 <div class="container">
-<h1>Search a Restaurant</h1>
-<INPUT TYPE="text" id="name" placeholder="restaurantName" class="form-control"/>
+<h1 style="font-size:300%;text-indent: 30px;">Search a Restaurant</h1>
+<hr style="height:1px;background-color:#DDD;">
+<div class="container">
+ 	  <label class="col-sm-3 control-label" for="lg">Restaurant Name</label>
+      <INPUT TYPE="text" id="name" placeholder="Search a Restaurant" class="form-control" maxlength="225"/>
+	  <label class="col-sm-3 control-label" for="lg">Location Name</label>
+      <INPUT TYPE="text" id="location" placeholder="Location Name" class="form-control" maxlength="225"/>
+	  <hr style="height:1px;background-color:#DDD;">
+      <BUTTON id="search" class="btn btn-success btn-block" >Search</BUTTON>
 
-<INPUT TYPE="text" id="location" placeholder="location" class="form-control"/> 
-<button id="search" class="btn btn-primary btn-block">Search</button>
+ 	  <label id="label" class="col-sm-3 control-label" style="display:none">Results</label>
+	  <hr id="labelLine" style="height:1px;background-color:#DDD;display:none">
 
-<table id="recordtable" border=1 class="table" style="display:none">
+<table id="recordtable" border=2 class="table" style="display:none">
 	<tr>
 		<th>Restaurant Name</th>
 		<th>Address</th>
@@ -25,6 +32,7 @@
 		<th>ClosingTime</th>
 	</tr>
 </table>
+
 <script>
 
 	$(function(){
@@ -34,14 +42,20 @@
 	function displayTable()    
     {    
 		var element=document.getElementById("recordtable");     
+        element.style.display="block";
+		var element=document.getElementById("label");     
         element.style.display="block";    
+
     }
+	function clearTable(){
+		document.getElementById('recordtable').textContent = "";
+	}
 	function searchRestaurant() {
 		var restaurantName = $("#name").val();
 		var location = $("#location").val();
 		var date=new Date();
 		var dayNumber = date.getDay();
-		
+		clearTable();
 		var searchParameters = restaurantName+","+location+","+dayNumber;
 
 		$.ajax({
@@ -51,7 +65,6 @@
 			contentType: "application/json",
 			success:function(response) {
 				responseHandler(response);
-				
 			}
 		});
 	}
@@ -60,7 +73,7 @@
     {
 		var trHTML = '';
         $.each(response, function (i, item) {
-            trHTML += '<tr><a href="searchDetails.jsp"><td>'+ item.name +'</td></a><td>' + item.address + '</td><a href="'+ item.website + '"><td>'+ item.website +'</td></a><td>' + item.openingTime + '</td><td>' + item.closingTime + '</td></tr>';
+            trHTML += '<tr id="i"><a href="searchDetails.jsp"><td>'+ item.name +'</td></a><td>' + item.address + '</td><a href="'+ item.website + '"><td>'+ item.website +'</td></a><td>' + item.openingTime + '</td><td>' + item.closingTime + '</td></tr>';
         });
         $('#recordtable').append(trHTML);
         displayTable();
