@@ -16,13 +16,13 @@
 </div>
 <div class="container" style="width:500px;">
 <!-- <form action="/Reservation/loginAction" method="post">  -->
-    <div style="padding-bottom:5px;"><INPUT TYPE="text" id="userName" placeholder="Enter username" class="form-control" maxlength="225"/></div>
-    <div style="padding-bottom:7px;"><INPUT TYPE="password" id="password" placeholder="Enter password" class="form-control" maxlength="225"/></div>
+    <div style="padding-bottom:5px;"><INPUT style="height: 1cm;font-size:17px" TYPE="text" id="userName" placeholder="Enter username" class="form-control" maxlength="225"/></div>
+    <div style="padding-bottom:7px;"><INPUT style="height: 1cm;font-size:17px" TYPE="password" id="password" placeholder="Enter password" class="form-control" maxlength="225"/></div>
 	
 	<div class="form-group form-group-lg">
-    <button class="btn btn-primary col-xs-1" id="login" style="width:227px;">Login</button>
+    <button class="btn btn-primary col-xs-1" id="login" style="width:227px;height: 1cm;font-size:18px">Login</button>
     <div class="col-xs-1">
-      <button class="btn btn-primary btn-block" style="width:226px;" onclick="location.href = '/Reservation/createaccount.jsp';">Register</button>
+      <button class="btn btn-primary btn-block" style="width:226px;height: 1cm;font-size:18px" onclick="location.href = '/Reservation/createaccount.jsp';">Register</button>
     </div>
   </div>
   <script>

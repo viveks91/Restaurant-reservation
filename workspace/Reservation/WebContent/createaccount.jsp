@@ -33,55 +33,55 @@
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">First Name</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="firstName" placeholder="Enter your first name" class="form-control" maxlength="225"/>
+      <INPUT style="font-size:17px" TYPE="text" id="firstName" placeholder="Enter your first name" class="form-control" maxlength="225"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">Last Name</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="lastName" placeholder="Enter your last name" class="form-control" maxlength="225"/>
+      <INPUT style="font-size:17px" TYPE="text" id="lastName" placeholder="Enter your last name" class="form-control" maxlength="225"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">Username</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="userName" placeholder="Enter a username" class="form-control" maxlength="225"/>
+      <INPUT style="font-size:17px" TYPE="text" id="userName" placeholder="Enter a username" class="form-control" maxlength="225"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">Password</label>
     <div class="col-sm-9">
-      <INPUT TYPE="password" id="password" placeholder="Enter a password" class="form-control" maxlength="225"/>
+      <INPUT style="font-size:17px" TYPE="password" id="password" placeholder="Enter a password" class="form-control" maxlength="225"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">Address</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="apt_No" placeholder="Apartment Number" class="form-control" maxlength="10"/>
-	  <INPUT TYPE="text" id="street" placeholder="Street" class="form-control" maxlength="225"/>
-	  <INPUT TYPE="text" id="city" placeholder="City" class="form-control" maxlength="20"/>
-	  <INPUT TYPE="text" id="state" placeholder="State" class="form-control" maxlength="20"/>
-	  <INPUT TYPE="text" id="zip" placeholder="ZIP code" class="form-control" maxlength="20"/>
+      <INPUT style="font-size:17px" TYPE="text" id="apt_No" placeholder="Apartment Number" class="form-control" maxlength="10"/>
+	  <INPUT style="font-size:17px" TYPE="text" id="street" placeholder="Street" class="form-control" maxlength="225"/>
+	  <INPUT style="font-size:17px" TYPE="text" id="city" placeholder="City" class="form-control" maxlength="20"/>
+	  <INPUT style="font-size:17px" TYPE="text" id="state" placeholder="State" class="form-control" maxlength="20"/>
+	  <INPUT style="font-size:17px" TYPE="text" id="zip" placeholder="ZIP code" class="form-control" maxlength="20"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">Phone Number</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="phoneNo" placeholder="Enter your phone number" class="form-control" maxlength="12"/>
+      <INPUT style="font-size:17px" TYPE="text" id="phoneNo" placeholder="Enter your phone number" class="form-control" maxlength="12"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">Email ID</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="emailId" placeholder="Enter your email id" class="form-control" maxlength="225"/>
+      <INPUT style="font-size:17px;" TYPE="text" id="emailId" placeholder="Enter your email id" class="form-control" maxlength="225"/>
       <hr style="height:1px;background-color:#DDD;">
-      <button id="create" class="btn btn-success btn-block" >Create</button>
+      <button id="create" class="btn btn-success btn-block" style="height: 1cm;font-size:18px">Create</button>
     </div>
   </div>
   

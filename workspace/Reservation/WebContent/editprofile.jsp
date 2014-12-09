@@ -46,46 +46,46 @@
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">First Name</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="firstName" value= "<%=user.getFirstName()%>" class="form-control" maxlength="225"/>
+      <INPUT style="font-size:17px" TYPE="text" id="firstName" value= "<%=user.getFirstName()%>" class="form-control" maxlength="225"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">Last Name</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="lastName" value= "<%=user.getLastName()%>" class="form-control" maxlength="225"/>
+      <INPUT style="font-size:17px" TYPE="text" id="lastName" value= "<%=user.getLastName()%>" class="form-control" maxlength="225"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">Address</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="apt_No" value= "<%=addr.getapt_No()%>" class="form-control" maxlength="10"/>
-	  <INPUT TYPE="text" id="street" value= "<%=addr.getStreet()%>" class="form-control" maxlength="225"/>
-	  <INPUT TYPE="text" id="city" value= "<%=addr.getCity()%>" class="form-control" maxlength="20"/>
-	  <INPUT TYPE="text" id="state" value= "<%=addr.getState()%>" class="form-control" maxlength="20"/>
-	  <INPUT TYPE="text" id="zip" value= "<%=addr.getZip()%>" class="form-control" maxlength="20"/>
+      <INPUT style="font-size:17px" TYPE="text" id="apt_No" value= "<%=addr.getapt_No()%>" class="form-control" maxlength="10"/>
+	  <INPUT style="font-size:17px" TYPE="text" id="street" value= "<%=addr.getStreet()%>" class="form-control" maxlength="225"/>
+	  <INPUT style="font-size:17px" TYPE="text" id="city" value= "<%=addr.getCity()%>" class="form-control" maxlength="20"/>
+	  <INPUT style="font-size:17px" TYPE="text" id="state" value= "<%=addr.getState()%>" class="form-control" maxlength="20"/>
+	  <INPUT style="font-size:17px" TYPE="text" id="zip" value= "<%=addr.getZip()%>" class="form-control" maxlength="20"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">Phone Number</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="phoneNo" value= "<%=user.getPhoneNo()%>" class="form-control" maxlength="12"/>
+      <INPUT style="font-size:17px" TYPE="text" id="phoneNo" value= "<%=user.getPhoneNo()%>" class="form-control" maxlength="12"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg">Email ID</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="emailId" value= "<%=user.getEmailId()%>" class="form-control" maxlength="225"/>
-       <center id="notice" style="margin-top: 0.1cm;color:green;"></center>
+      <INPUT style="font-size:17px" TYPE="text" id="emailId" value= "<%=user.getEmailId()%>" class="form-control" maxlength="225"/>
+       <center id="notice" style="margin-top: 0.1cm;color:green;font-size:18px"></center>
     </div>
   </div> <hr style= "margin-left: 4.5cm;height:1px;background-color:#DDD;">
 
  <div style="margin-left: 4.5cm;float:left;">
-         <button class="btn btn-warning col-xs-5" id="update" style="width:232px;">Update</button>
-         <button class="btn btn-danger btn-block" id="delete" style="margin-left: 0.45cm;width:232px;float:left;" onclick="return confirm('Are you sure?')">Delete</button>
+         <button class="btn btn-warning col-xs-5" id="update" style="width:232px;height: 1cm;font-size:18px">Update</button>
+         <button class="btn btn-danger btn-block" id="delete" style="margin-left: 0.45cm;height: 1cm;font-size:18px;width:232px;float:left;" onclick="return confirm('Are you sure?')">Delete</button>
  </div>
 
 </form>

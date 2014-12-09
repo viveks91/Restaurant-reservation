@@ -45,12 +45,12 @@
 <div style="margin-left: 1.2cm;margin-top: 0.1cm;float: left;width:500px;" class="col-lg-6">
    <h1 style="font-size:300%;text-indent: 15px;">Find a user</h1><hr style="height:1px;background-color:#DDD;">
    <div style="margin-left: 0.2cm;">
-       <INPUT TYPE="text" id="user" placeholder="Enter username" class="form-control" maxlength="225"/>
+       <INPUT style="font-size:19px;height: 1cm;" TYPE="text" id="user" placeholder="Enter username" class="form-control" maxlength="225" style/>
    </div>
    <div style="margin-left: 0.2cm;margin-top: 0.2cm;">
-       <button id="find" class="btn btn-info btn-block" >Search user</button>
+       <button id="find" class="btn btn-info btn-block" style="height: 1cm;font-size:18px" >Search user</button>
    </div>
-   <p id="notice" style="margin-left: 0.3cm;margin-top: 0.3cm;color:red;"></p>
+   <p id="notice" style="margin-left: 0.3cm;margin-top: 0.3cm;color:red;font-size:18px"></p>
    
    <script>
 $(function(){
