@@ -1,21 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="models.Person"%>
+    pageEncoding="ISO-8859-1" import="models.User,models.Following,dao.FollowingDAO,java.util.List,dao.UserDAO"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript" src="js/jquery.js"></script>
 <%
-	Person person = (Person)session.getAttribute("user");
-	if (person == null) {
+	User user = (User)session.getAttribute("user");
+    UserDAO userdao = new UserDAO();
+	FollowingDAO folldao = new FollowingDAO();
+	List<Following> following = folldao.findByUserName(user.getUserName());
+
 %>
-<script>alert("Please login");</script>
-<jsp:forward page="/login.jsp" />
-<%
-	};
-%>
-<title>Home - FoodWorld</title>
-<script type="text/javascript" src="js/jquery.js"></script>
+<title>Following</title>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body style= "background-color:#F3F3F3;">
@@ -29,7 +26,7 @@
      <a href="/Reservation/home.jsp" style="color:#FFF">Home</a>
   </span>
   <span style="float:right;padding-right:20px;font-weight: bold;font-size:150%;">
-     <a href="/Reservation/profile.jsp" style="color:#FFF"><%= person.getFirstName() %></a>
+     <a href="/Reservation/profile.jsp" style="color:#FFF"><%= user.getFirstName() %></a>
   </span>
 </div>
   
@@ -43,6 +40,29 @@
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
 </div>
 
+<div style="margin-left: 1.2cm;margin-top: 0.1cm;float: left; width:900px">
+	<h1 style="font-size:300%;text-indent: 20px;">Following</h1>
+	<hr style="height:1px;background-color:#DDD;">
+	<%
+	User user1 = null;
+	for (int i=0; i<following.size();i++)
+	{
+	%>
+	<div style="margin-left: 0.3cm;box-shadow: 0.5px 0.5px 3px #888888;margin-top: 0.3cm;background-color: white;width:430px;padding-top:10px;padding-bottom:10px;padding-left:10px; float: left;position: relative;">
+	<%
+	user1 = userdao.findByUserName(following.get(i).getFollowing());
+	%>
+		<button class="btn btn-link" style="font-size:200%;" value ="<%= user1.getUserName() %>" onclick="userHandler(value)">
+		<%=user1.getFirstName() %> <%=user1.getLastName() %>
+		</button>
+		<br>
+	
+	</div>
+	<%
+	}
+	%>
+
+</div>
 
 <script>
 
@@ -63,6 +83,22 @@ function logoutHandler(){
 	
 	location.href= "/Reservation/login.jsp";
 }
+
+function userHandler(user){
+	
+ 	$.ajax({
+		url : "http://localhost:8080/Reservation/rest/user/view/"+user,
+		type : "post",
+		dataType : "text",
+		async : false,
+		success : function (response) {
+			location.href = "/Reservation/otheruser.jsp";
+		}
+	}); 
+
+return false;
+}
+
 
 </script>
 </body>
