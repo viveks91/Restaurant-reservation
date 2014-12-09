@@ -15,7 +15,6 @@ public class RestaurantSearch {
 	public String openingTime;
 	public String closingTime;
 	public int capacity;
-	public String type;
 	public String address;
 	
 	public String getAddress() {
@@ -60,11 +59,19 @@ public class RestaurantSearch {
 	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
-	public String getType() {
-		return type;
+	public RestaurantSearch(String name, String phoneNo, String website,
+			String openingTime, String closingTime, int capacity, String address) {
+		super();
+		this.name = name;
+		this.phoneNo = phoneNo;
+		this.website = website;
+		this.openingTime = openingTime;
+		this.closingTime = closingTime;
+		this.capacity = capacity;
+		this.address = address;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public RestaurantSearch() {
+		super();
 	}
 	
 }

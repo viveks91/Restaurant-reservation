@@ -36,29 +36,25 @@ public class RestaurantSearchWebServiceClient {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<RestaurantSearch> getParameters(@PathParam("searchParameters") String searchParameters){
-		System.out.println("Name got from UI:"+searchParameters);
 		String[] parts = searchParameters.split(",");
 		String restaurantName= parts[0];
 		String location = parts[1];
 		dayNumber = parts[2];
-		System.out.println("RestaurantName: "+restaurantName);
-		System.out.println("Location: "+location);
-		System.out.println("Day number:"+dayNumber);
 		RestaurantSearchWebServiceClient client = new RestaurantSearchWebServiceClient();
-		List<RestaurantSearch> searchResult = client.getRestaurantByNameAndLocation(restaurantName, location);
-		//System.out.println("Address: "+searchResult.getAddress());
+		List<RestaurantSearch> searchResult = null;
+		if(!location.equals(null)){
+			searchResult = client.getRestaurantByNameAndLocation(restaurantName, location);
+		}
 		return searchResult;
 	}
 	
 	public List<RestaurantSearch> getRestaurantByNameAndLocation(String name, String location) {
 		// Correct the input parameters,required for the URL pattern
-		
 		name = name.replace(" ", "+");
 		location = location.replace(" ", "+");
 		
 		String urlStr = urlAPIPlaces.replace("{NAME}+restaurants+in+{LOCATION}", name
 				+ "+restaurants+in+" + location);
-		System.out.println("URL:"+urlStr);
 		List<RestaurantSearch> searchResults= new ArrayList<RestaurantSearch>();
 		try {
 			URL url = new URL(urlStr);
@@ -78,7 +74,9 @@ public class RestaurantSearchWebServiceClient {
 				JSONObject root = (JSONObject) parser.parse(json);
 				JSONArray results = (JSONArray) root.get("results");
 				System.out.println("length"+results.size());
-				for (int i=0;i<=19;i++)
+				int size=results.size();
+				size=size-1;
+				for (int i=0;i<=size;i++)
 				{
 					JSONObject firstRestaurant = (JSONObject) results.get(i);
 					String restaurantId = firstRestaurant.get("place_id").toString();
@@ -86,15 +84,11 @@ public class RestaurantSearchWebServiceClient {
 					if(restaurant!=null)
 					searchResults.add(restaurant);
 				}
-//				JSONObject firstRestaurant = (JSONObject) results.get(0);
-//				String restaurantId = firstRestaurant.get("place_id").toString();
-//				RestaurantSearch restaurant = getPlaceDetails(restaurantId);
-//				return restaurant;
 				return searchResults;
 			} catch (ParseException e) {
 				e.printStackTrace();
+			}catch (IndexOutOfBoundsException io) {
 			}
-
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -107,8 +101,6 @@ public class RestaurantSearchWebServiceClient {
 		String placeDetailURL = urlAPIPlaceDetails.replace("{PLACE}", restaurantId);
 		int day = Integer.parseInt(dayNumber);
 		RestaurantSearch restaurant = new RestaurantSearch();
-		System.out.println("Place detail URL:"+placeDetailURL);
-		
 		try {
 			URL url = new URL(placeDetailURL);
 			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -165,13 +157,4 @@ public class RestaurantSearchWebServiceClient {
 		}
 		return null;
 	}
-
-	public static void main(String[] args) {
-		String name="";
-		String location = "Seattle";
-		RestaurantSearchWebServiceClient client = new RestaurantSearchWebServiceClient();
-		List<RestaurantSearch> searchResults = client.getRestaurantByNameAndLocation(name, location);
-//		System.out.println("Address: "+searchResults.getAddress());
-	}
-
 }
