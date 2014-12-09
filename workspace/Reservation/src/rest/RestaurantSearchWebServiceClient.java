@@ -125,31 +125,32 @@ public class RestaurantSearchWebServiceClient {
 				JSONObject root = (JSONObject) parser.parse(json);
 				JSONObject restaurantResults = (JSONObject) root.get("result");
 				
-				
-				String address = restaurantResults.get("formatted_address").toString();
-				String phoneNo = restaurantResults.get("formatted_phone_number").toString();
-				String restaurantURL = restaurantResults.get("website").toString();
-				String name = restaurantResults.get("name").toString();
-				
-				JSONObject timings = (JSONObject) restaurantResults.get("opening_hours");
-				JSONArray periods = (JSONArray) timings.get("periods");
-				JSONObject dayTimings = (JSONObject) periods.get(day);
-				JSONObject closeTime = (JSONObject) dayTimings.get("close");
-				JSONObject openTime = (JSONObject) dayTimings.get("open");
-				
-				String closeRestaurantTime = closeTime.get("time").toString();
-				String openRestaurantTime = openTime.get("time").toString();
-				if(!address.isEmpty() & !phoneNo.isEmpty() & !restaurantURL.isEmpty() & !name.isEmpty() & !openRestaurantTime.isEmpty() & !closeRestaurantTime.isEmpty()){
-					restaurant.setName(name);
-					restaurant.setWebsite(restaurantURL);
-					restaurant.setAddress(address);
-					restaurant.setPhoneNo(phoneNo);
-					restaurant.setCapacity(capacity);
-					restaurant.setOpeningTime(openRestaurantTime);
-					restaurant.setClosingTime(closeRestaurantTime);
-					return restaurant;
+				if(restaurantResults!=null)
+				{
+					String address = restaurantResults.get("formatted_address").toString();
+					String phoneNo = restaurantResults.get("formatted_phone_number").toString();
+					String restaurantURL = restaurantResults.get("website").toString();
+					String name = restaurantResults.get("name").toString();
+					
+					JSONObject timings = (JSONObject) restaurantResults.get("opening_hours");
+					JSONArray periods = (JSONArray) timings.get("periods");
+					JSONObject dayTimings = (JSONObject) periods.get(day);
+					JSONObject closeTime = (JSONObject) dayTimings.get("close");
+					JSONObject openTime = (JSONObject) dayTimings.get("open");
+					
+					String closeRestaurantTime = closeTime.get("time").toString();
+					String openRestaurantTime = openTime.get("time").toString();
+					if(!address.isEmpty() & !phoneNo.isEmpty() & !restaurantURL.isEmpty() & !name.isEmpty() & !openRestaurantTime.isEmpty() & !closeRestaurantTime.isEmpty()){
+						restaurant.setName(name);
+						restaurant.setWebsite(restaurantURL);
+						restaurant.setAddress(address);
+						restaurant.setPhoneNo(phoneNo);
+						restaurant.setCapacity(capacity);
+						restaurant.setOpeningTime(openRestaurantTime);
+						restaurant.setClosingTime(closeRestaurantTime);
+						return restaurant;
+					}
 				}
-				
 			} catch (ParseException pe) {
 				pe.printStackTrace();
 			}
