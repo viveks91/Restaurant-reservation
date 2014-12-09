@@ -20,9 +20,6 @@
 	  <hr style="height:1px;background-color:#DDD;">
       <BUTTON id="search" class="btn btn-success btn-block" >Search</BUTTON>
 
- 	  <label id="label" class="col-sm-3 control-label" style="display:none">Results</label>
-	  <hr id="labelLine" style="height:1px;background-color:#DDD;display:none">
-
 <table id="recordtable" border=2 class="table" style="display:none">
 	<tr>
 		<th>Restaurant Name</th>
@@ -73,7 +70,7 @@
     {
 		var trHTML = '';
         $.each(response, function (i, item) {
-            trHTML += '<tr id="i"><a href="searchDetails.jsp"><td>'+ item.name +'</td></a><td>' + item.address + '</td><a href="'+ item.website + '"><td>'+ item.website +'</td></a><td>' + item.openingTime + '</td><td>' + item.closingTime + '</td></tr>';
+            trHTML += '<tr><td><a href="searchDetails.jsp">'+ item.name +'</a></td><td>' + item.address + '</td><td><a href="'+ item.website + '">'+ item.website +'</a></td><td>' + item.openingTime + '</td><td>' + item.closingTime + '</td></tr>';
         });
         $('#recordtable').append(trHTML);
         displayTable();
