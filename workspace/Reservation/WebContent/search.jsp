@@ -63,7 +63,8 @@
    </div>
 	  <hr style="height:1px;background-color:#DDD;">
 </div>
-<!-- <div>
+
+<div>
 <table id="recordtable" border=2 class="table" style="display:none">
 	<tr>
 		<th>Restaurant Name</th>
@@ -73,7 +74,8 @@
 		<th>ClosingTime</th>
 	</tr>
 </table>
-</div> -->
+</div>
+
 </div>
 
 <script>
@@ -89,6 +91,7 @@
 		div1.style.display = (div1.style.display == "none") ? "block" : "none";
 		var div2 = document.getElementById('div2');
 		div2.style.display = (div2.style.display == "none") ? "block" : "none";
+		searchRestaurant();
 	}
 	
 	function stateRevert() {
