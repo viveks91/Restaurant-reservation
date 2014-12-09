@@ -3,6 +3,8 @@
  */
 package dao;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,7 +22,7 @@ import models.Reviews;
  */
 public class FavoritesDAO {
 
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Restaurant_Reservation");
 	EntityManager em = null;
 	
 	public FavoritesDAO()	{
@@ -42,25 +44,52 @@ public class FavoritesDAO {
 		em.getTransaction().commit();
 	}
 	
-	public List<Favorites> findByUserName(String userName) {
+	/*public List<Favorites> findByUserName(String userName) {
 		em.getTransaction().begin();
-		Query q = em.createNamedQuery("Favorites.findByUserName");
+		Query q = em.createNamedQuery("Favorites.findByUserName");//FavoritesRestaurants.findByUserName
 		q.setParameter("userName", userName);
 		List<Favorites> favorites = q.getResultList();
 		em.getTransaction().commit();
 		return favorites;
-	}
+	}*/
 	
+	public List<Object[]> findByUserName(String userName) {
+		em.getTransaction().begin();
+		Query q = em.createNamedQuery("FavoritesRestaurants.findByUserName");
+		q.setParameter("userName", userName);
+		List<Object[]> favorites = q.getResultList();
+	//	favorites.add(q.getFirstResult());
+		em.getTransaction().commit();
+		return favorites;
+	}
 	
 	public static void main(String[] args) {
 		FavoritesDAO dao = new FavoritesDAO();
+		List<Object[]> obj = dao.findByUserName("p0");
+		int i= 0;
+		 for ( i = 0; i < obj.size(); i++) {
+			    Object[] obj1 = obj.get(i);
+			    String name = (String) obj1[0];
+			    int ratings = (Integer) obj1[1];
+			    String aptNo = (String) obj1[2];
+			    String street = (String) obj1[3];
+			    String city = (String) obj1[4];
+			    String state = (String) obj1[5];
+			    String zip = (String) obj1[6];
+			    System.out.println(name);
+			    System.out.println(ratings);
+			    System.out.println(aptNo);
+			    System.out.println(street);
+			    System.out.println(city);
+			    System.out.println(state);
+			    }
 		//Favorites f1 = new Favorites("pre284", 1);
 		//dao.create(f1);
 	//	Favorites f2 = new Favorites("pre284", 2);
 		//dao.create(f2);
 	//	dao.deleteByUserNameAndFavorites("pre284", 1);
-		List<Favorites> f3 = dao.findByUserName("pre284");
-		System.out.println(f3);
+		//List<Favorites> f3 = dao.findByUserName("pre284");
+		
 
 	}
 

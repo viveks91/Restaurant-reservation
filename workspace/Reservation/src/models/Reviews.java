@@ -3,7 +3,7 @@ package models;
 
 import java.util.Date;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,12 +17,12 @@ import javax.persistence.TemporalType;
 
 @NamedQueries({
 	@NamedQuery(
-		name="Reviews.deleteReviewByRestaurantId",
-		query="delete from Reviews r where r.restaurantId = :restaurantId"
+		name="Reviews.deleteReviewByUserName",
+		query="delete from Reviews r where r.userName = :userName"
 	),
 	@NamedQuery(
-		name="Reviews.findCommentByUserNameAndRestaurantId",
-        query="select r from Reviews r where r.userName = :userName and r.restaurantId = :restaurantId"
+		name="Reviews.updateCommentByUserName",
+        query="update Reviews r set r.comments = :comments where r.userName = :userName"
 	),
 	@NamedQuery(
 			name="Reviews.findAllReviewsByUserName",
@@ -31,7 +31,11 @@ import javax.persistence.TemporalType;
 	@NamedQuery(
 			name="Reviews.findAllReviewsByRestaurantId",
 	        query="select r from Reviews r where r.restaurantId = :restaurantId"
-		)
+		),
+	@NamedQuery(
+			name="Reviews.findAllReviewsWithRestaurantName",
+			query="select r.name, rev.comments from Reviews rev, Restaurant r where rev.userName = :userName and rev.restaurantId = r.id"
+		),
 })
 
 public class Reviews {

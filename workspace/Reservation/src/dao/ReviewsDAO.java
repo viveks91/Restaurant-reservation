@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,11 +8,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import models.Person;
 import models.Reviews;
 
 public class ReviewsDAO {
 
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Restaurant_Reservation");
 	EntityManager em = null;
 	
 	public ReviewsDAO()	{
@@ -32,12 +34,13 @@ public class ReviewsDAO {
 		em.getTransaction().commit();
 	}
 	
-	public void deleteByRestaurantId(int rid) {
+	public List<Reviews> deleteByUserName(String userName) {
 		em.getTransaction().begin();
-		Query q = em.createNamedQuery("Reviews.deleteReviewByRestaurantId");
-		q.setParameter("restaurantId", rid);
-		q.executeUpdate();
+		Query q = em.createNamedQuery("Reviews.deleteReviewByUserName");
+		q.setParameter("userName", userName);
+		List<Reviews> reviews = q.getResultList();
 		em.getTransaction().commit();
+		return reviews;
 	}
 	
 	public Reviews updateByReviewId(int id, String newComment) {
@@ -49,17 +52,16 @@ public class ReviewsDAO {
 		return reviews;
 	}
 	
-	public int updateByUserNameAndRestaurantId(String userName, int rid, String newComment) {
+	public List<Reviews> updateByUserName(String userName, String newComment) {
 		em.getTransaction().begin();
-		Query q = em.createNamedQuery("Reviews.findCommentByUserNameAndRestaurantId");
+		Query q = em.createNamedQuery("Reviews.updateCommentByUserName");
 		q.setParameter("userName", userName);
-		q.setParameter("restaurantId", rid);
-		Reviews review = (Reviews) q.getSingleResult();
-		review.setComments(newComment);
-		em.merge(review);
+		q.setParameter("comments", newComment);
+		q.executeUpdate();
 		em.getTransaction().commit();
-		return review.getId();
+		return null;
 	}
+	
 	
 	public Reviews findByReviewId(int id) {
 		em.getTransaction().begin();
@@ -77,6 +79,15 @@ public class ReviewsDAO {
 		return reviews;
 	}
 	
+	public List<Object[]> findAllReviewsWithRestaurantName(String userName) {
+		em.getTransaction().begin();
+		Query q = em.createNamedQuery("Reviews.findAllReviewsWithRestaurantName");
+		q.setParameter("userName", userName);
+		List<Object[]> reviews = q.getResultList();
+		em.getTransaction().commit();
+		return reviews;
+	}
+	
 	public List<Reviews> findByRestaurantId(int restaurantId) {
 		em.getTransaction().begin();
 		Query q = em.createNamedQuery("Reviews.findAllReviewsByRestaurantId");
@@ -86,16 +97,32 @@ public class ReviewsDAO {
 		return reviews;
 	}
 	
-/*	public static void main(String[] args) {
+	
+	
+	
+	
+	
+	
+	
+	public static void main(String[] args) {
 		ReviewsDAO dao = new ReviewsDAO();
-		Reviews r1 = new Reviews ("pre27361",2, "dsfsfd", new Date(), 1);
+		List<Object[]> revs = dao.findAllReviewsWithRestaurantName("p0");
+		for(int i=0;i< revs.size();i++)
+		{
+		Object[] obj = revs.get(i);
+		String name = (String) obj[0];
+		String reviews = (String) obj[1];
+		System.out.println(name);
+		System.out.println(reviews);
+		}
+		/*Reviews r1 = new Reviews ("pre27361",2, "dsfsfd", new Date(), 1);
 		Reviews r2 = new Reviews ("pre2736", 6, "cvxcv", new Date(), 1);
 		
 		dao.createReviews(r1);
-		dao.createReviews(r2);
+		dao.createReviews(r2);*/
 		//dao.updateByUserName("pre27", "very nice");
-		List<Reviews> r5 = dao.findByUserName("pre2736");
-		System.out.println(r5);
-	}*/
+		//List<Reviews> r5 = dao.findByUserName("pre2736");
+		
+	}
 
 }

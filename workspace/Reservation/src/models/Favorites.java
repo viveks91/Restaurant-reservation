@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @IdClass(value=FavoritesPK.class)
+
 
 @NamedQueries({
 	@NamedQuery(
@@ -22,7 +24,16 @@ import javax.persistence.Table;
 			name="Favorites.findByUserName",
 			query="select f from Favorites f where f.userName = :userName"
 		),
+		@NamedQuery(
+			name="FavoritesRestaurants.findByUserName",
+			query="select r.name, rev.ratings, ad.apt_No, ad.street,ad.city,ad.state,ad.zip from Favorites f, Restaurant r, Reviews rev, Address ad where "
+					+ "f.userName = :userName and r.id = f.restaurantId and rev.userName = f.userName "
+					+ "and rev.restaurantId = f.restaurantId and r.addressId = ad.id"
+					
+		),
+
 })
+
 
 public class Favorites implements Serializable{
 
