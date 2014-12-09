@@ -40,10 +40,9 @@ public class RestaurantSearchWebServiceClient {
 		String restaurantName= parts[0];
 		String location = parts[1];
 		dayNumber = parts[2];
-		RestaurantSearchWebServiceClient client = new RestaurantSearchWebServiceClient();
 		List<RestaurantSearch> searchResult = null;
 		if(!location.equals(null)){
-			searchResult = client.getRestaurantByNameAndLocation(restaurantName, location);
+			searchResult = getRestaurantByNameAndLocation(restaurantName, location);
 		}
 		return searchResult;
 	}
@@ -75,8 +74,7 @@ public class RestaurantSearchWebServiceClient {
 				JSONArray results = (JSONArray) root.get("results");
 				System.out.println("length"+results.size());
 				int size=results.size();
-				size=size-1;
-				for (int i=0;i<=size;i++)
+				for (int i=0;i<size;i++)
 				{
 					JSONObject firstRestaurant = (JSONObject) results.get(i);
 					String restaurantId = firstRestaurant.get("place_id").toString();
