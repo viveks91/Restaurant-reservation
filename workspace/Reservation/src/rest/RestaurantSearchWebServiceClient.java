@@ -13,11 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+
+import models.User;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -72,20 +77,23 @@ public class RestaurantSearchWebServiceClient {
 			try {
 				JSONObject root = (JSONObject) parser.parse(json);
 				JSONArray results = (JSONArray) root.get("results");
-				System.out.println("length"+results.size());
-				int size=results.size();
-				for (int i=0;i<size;i++)
-				{
-					JSONObject firstRestaurant = (JSONObject) results.get(i);
-					String restaurantId = firstRestaurant.get("place_id").toString();
-					RestaurantSearch restaurant = getPlaceDetails(restaurantId);
-					if(restaurant!=null)
-					searchResults.add(restaurant);
+				if(!results.isEmpty()){
+					System.out.println("length"+results.size());
+					int size=results.size();
+					for (int i=0;i<size;i++)
+					{
+						JSONObject firstRestaurant = (JSONObject) results.get(i);
+						String restaurantId = firstRestaurant.get("place_id").toString();
+						RestaurantSearch restaurant = getPlaceDetails(restaurantId);
+						if(restaurant!=null)
+						searchResults.add(restaurant);
+					}
+					return searchResults;
 				}
-				return searchResults;
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}catch (IndexOutOfBoundsException io) {
+				io.printStackTrace();
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -142,11 +150,11 @@ public class RestaurantSearchWebServiceClient {
 					return restaurant;
 				}
 				
-			} catch (ParseException e) {
-				System.out.println("Ignore");
+			} catch (ParseException pe) {
+				pe.printStackTrace();
 			}
 			catch (NullPointerException ne) {
-				System.out.println("Ignore");
+				System.out.println("NE Ignore");
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
