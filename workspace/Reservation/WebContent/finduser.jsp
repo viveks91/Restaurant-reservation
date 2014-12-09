@@ -14,7 +14,7 @@
 <%
 	};
 %>
-<title>Home - FoodWorld</title>
+<title>Find user</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
@@ -42,28 +42,46 @@
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/finduser.jsp" style="color:#FFF"> Find a user</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
 </div>
-
-
-<script>
-
-
-
+<div style="margin-left: 0.7cm;float: left;width:500px;" class="col-lg-6">
+   <h1 style="font-size:300%;text-indent: 15px;">Find a user</h1><hr style="height:1px;background-color:#DDD;">
+   <div style="margin-left: 0.2cm;">
+       <INPUT TYPE="text" id="user" placeholder="Enter username" class="form-control" maxlength="225"/>
+   </div>
+   <div style="margin-left: 0.2cm;margin-top: 0.2cm;">
+       <button id="find" class="btn btn-info btn-block" >Search user</button>
+   </div>
+   <p id="notice" style="margin-left: 0.3cm;margin-top: 0.3cm;color:red;"></p>
+   
+   <script>
 $(function(){
 
-	$("#logout").click(logoutHandler);
+	$("#find").click(findHandler);
 	
 });
 
-function logoutHandler(){
-	
+function findHandler() {
+	var finduser = $("#user").val();
 	$.ajax({
-		url : "http://localhost:8080/Reservation/rest/user/logout",
+		url : "http://localhost:8080/Reservation/rest/user/view/"+finduser,
 		type : "post",
+		dataType : "text",
+		async : false,
+		success : function (response) {
+			if (response == "no") {
+				document.getElementById("notice").innerHTML = "User not found!";
+				}
+			else location.href = "/Reservation/otheruser.jsp";
+		}
 	});
-	
-	location.href= "/Reservation/login.jsp";
+
+return false;
 }
 
 </script>
+
+   <hr style="height:1px;background-color:#DDD;">
+</div>
+
+
 </body>
 </html>

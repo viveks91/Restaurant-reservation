@@ -31,21 +31,23 @@
   </span>
 </div>
   
-<div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:250px;float: left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/home.jsp" style="color:#FFF"> Make a reservation</a></p>
+<div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF"> Make a reservation</a></p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My favorites</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reviews</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editProfile.jsp" style="color:#FFF"> Edit profile</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> Following</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/finduser.jsp" style="color:#FFF"> Find a user</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
 </div>
 
 <div style="margin-left: 0.3cm;float: left;" class="col-lg-8">
 	<h1 style="font-size:300%;text-indent: 20px;">
 	<%= user.getFirstName()%> <%= user.getLastName()%>
 	</h1><hr style="height:1px;background-color:#DDD;">
-	<div style="margin-left: 0.1cm;background-color: white;width:400px; float: left;position: relative;clear:both;">
+	<div style="margin-left: 0.1cm;background-color: white;width:450px; float: left;position: relative;clear:both;">
 		<p style="text-indent:20px;padding-top:20px;font-weight: bold;font-size:120%;text-decoration: underline;">ABOUT</p>
-		<p style="text-indent:23px;padding-top:10px;font-size:100%;">Lives at :
+		<p style="text-indent:20px;padding-top:10px;font-size:100%;">Address :
 		<%= addr.getStreet()%>,<%= addr.getapt_No()%>,<%= addr.getCity()%>,<%= addr.getState()%></p>
 		<p style="text-indent:31px;font-size:100%;"> Phone :
 		<%= user.getPhoneNo()%></p>
@@ -53,7 +55,6 @@
 		<%= user.getEmailId()%></p><br>
 	
 	</div>
-
 
 </div>
 

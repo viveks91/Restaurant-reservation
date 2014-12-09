@@ -12,7 +12,7 @@
 <div class="container" style="width:600px;">
 
 	<h1 style="text-align: center; font-size:500%; padding-top:90px;font-family:verdana;text-shadow: 4px 2.5px #A8A8A8;">FOOD WORLD</h1><br>
-	<p style="text-align: center; font-size:150%; font-weight: bold; "> Connecting foodies</p><hr style="height:1px;background-color:#EEE;">
+	<p style="text-align: center; font-size:150%; font-weight: bold; "> Connecting foodies</p><hr style="height:1px;background-color:#DDD;">
 </div>
 <div class="container" style="width:500px;">
 <!-- <form action="/Reservation/loginAction" method="post">  -->
@@ -22,7 +22,7 @@
 	<div class="form-group form-group-lg">
     <button class="btn btn-primary col-xs-1" id="login" style="width:227px;">Login</button>
     <div class="col-xs-1">
-      <button class="btn btn-primary btn-block" style="width:226px;" onclick="location.href = '/Reservation/createAccount.jsp';">Register</button>
+      <button class="btn btn-primary btn-block" style="width:226px;" onclick="location.href = '/Reservation/createaccount.jsp';">Register</button>
     </div>
   </div>
   <script>
@@ -63,6 +63,6 @@ function handleLogin(login) {
 </script>
   
 </div>
-<div class="container" style="width:600px;"><hr style="height:1px;background-color:#EEE;"></div>
+<div class="container" style="width:600px;"><hr style="height:1px;background-color:#DDD;"></div>
 </body>
 </html>

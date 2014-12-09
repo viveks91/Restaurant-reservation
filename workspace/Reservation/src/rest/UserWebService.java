@@ -14,6 +14,8 @@ import javax.xml.ws.WebServiceContext;
 
 import models.Person;
 import models.User;
+import models.Following;
+import dao.FollowingDAO;
 import dao.PersonDAO;
 import dao.UserDAO;
 
@@ -27,6 +29,8 @@ public class UserWebService {
 	
 	UserDAO usrDao = new UserDAO();
 	PersonDAO psnDao = new PersonDAO();
+	FollowingDAO follDao = new FollowingDAO();
+	
 	@Resource
 	private WebServiceContext context;
 	
@@ -62,16 +66,38 @@ public class UserWebService {
 	}
 	
 	@POST
+	@Path("/follow/{username}")
+	public void followUser(@PathParam("username") String toFollow, @Context HttpServletRequest req) {
+		
+		User user1 = (User)req.getSession().getAttribute("user");
+		String userName = user1.getUserName();
+		Following following = new Following(userName, toFollow);
+		follDao.create(following);
+	}
+	
+	@POST
+	@Path("/unfollow/{username}")
+	public void unfollowUser(@PathParam("username") String toFollow, @Context HttpServletRequest req) {
+		
+		User user1 = (User)req.getSession().getAttribute("user");
+		String userName = user1.getUserName();
+		follDao.deleteByUserNameAndFollowing(userName, toFollow);
+	}
+	
+	@POST
 	@Path("/logout")
 	public void logoutSession(@Context HttpServletRequest req) {
 		req.getSession().invalidate();
 	}
 	
-	@GET
+	@POST
 	@Path("/view/{username}")
 	public String getUser(@PathParam("username") String userName, @Context HttpServletRequest req) {
 		User user1 = usrDao.findByUserName(userName);
-		req.getSession().setAttribute("viewuser", user1);
+		if (user1 == null) return "no";
+		else {
+			req.getSession().setAttribute("viewuser", user1);
+		}
 		return "done";
 	}
 	

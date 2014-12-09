@@ -51,17 +51,30 @@ public class FollowingDAO {
 		return following;
 	}
 	
+	public boolean findBy2UserName(String userName1, String userName2) {
+		em.getTransaction().begin();
+		Query q = em.createNamedQuery("Following.findBy2UserName");
+		q.setParameter("userName1", userName1);
+		q.setParameter("userName2", userName2);
+		List<Following> following = (List<Following>)q.getResultList();
+		em.getTransaction().commit();
+		boolean a;
+		if (following.isEmpty()) a=false;
+		else a=true;
+		return a;
+	}
 	
-	public static void main(String[] args) {
+	
+/*	public static void main(String[] args) {
 		FollowingDAO dao = new FollowingDAO();
-		/*Following f1 = new Following("pre284", "pre2718");
+		Following f1 = new Following("pre284", "pre2718");
 		dao.create(f1);
 		Following f2 = new Following("pre284", "pre2712");
 		dao.create(f2);
-		//dao.deleteByUserNameAndFollowing("pre284", "pre2718");*/
-		List<Following> f3 = dao.findByUserName("pre284");
+		//dao.deleteByUserNameAndFollowing("pre284", "pre2718");
+		boolean f3 = dao.findBy2UserName("vivek","vidhya");
 		System.out.println(f3);
 
-	}
+	}*/
 
 }

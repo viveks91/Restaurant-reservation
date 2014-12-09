@@ -25,6 +25,10 @@ import javax.persistence.Table;
 			name="Following.findByUserName",
 			query="select f from Following f where f.userName = :userName"
 		),
+	@NamedQuery(
+				name="Following.findBy2UserName",
+				query="select f from Following f where f.userName = :userName1 and f.following = :userName2"
+			),
 })
 	
 public class Following implements Serializable{
