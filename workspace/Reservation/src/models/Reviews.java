@@ -21,10 +21,6 @@ import javax.persistence.TemporalType;
 		query="delete from Reviews r where r.userName = :userName"
 	),
 	@NamedQuery(
-		name="Reviews.updateCommentByUserName",
-        query="update Reviews r set r.comments = :comments where r.userName = :userName"
-	),
-	@NamedQuery(
 			name="Reviews.findAllReviewsByUserName",
 	        query="select r from Reviews r where r.userName = :userName"
 		),

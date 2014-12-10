@@ -11,7 +11,7 @@
 <%
     User user = (User)session.getAttribute("user");
 	FavoritesDAO fav = new FavoritesDAO();
-	 List<Object[]> favs = fav.findByUserName(user.getUserName());
+	List<Object[]> favs = fav.findByUserName(user.getUserName());
 	
 %>
 
@@ -23,19 +23,21 @@
      <button id="logout" class="btn btn-link btn-xs" style="color:#FFF">Logout</button>
   </span>
   <span style="float:right;padding-right:10px;padding-top:5px;font-weight: bold;font-size:12pt;">
-     <a href="/Restaurant_Reservation/home.jsp" style="color:#FFF">Home</a>
+     <a href="/Reservation/home.jsp" style="color:#FFF">Home</a>
   </span>
   <span style="float:right;padding-right:20px;font-weight: bold;font-size:150%;">
-     <a href="/Restaurant_Reservation/profile.jsp" style="color:#FFF"><%= user.getFirstName() %></a>
+     <a href="/Reservation/profile.jsp" style="color:#FFF"><%= user.getFirstName() %></a>
   </span>
 </div>
   
-<div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:250px;float: left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Restaurant_Reservation/home.jsp" style="color:#FFF"> Make a reservation</a></p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Restaurant_Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Restaurant_Reservation/favorites.jsp" style="color:#FFF"> My favorites</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Restaurant_Reservation/home.jsp" style="color:#FFF"> My reviews</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Restaurant_Reservation/editProfile.jsp" style="color:#FFF"> Edit profile</a> </p>
+<div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurants</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/favorites.jsp" style="color:#FFF"> My favorites</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reviews.jsp" style="color:#FFF"> My reviews</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/following.jsp" style="color:#FFF"> Following</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/finduser.jsp" style="color:#FFF"> Find a user</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
 </div>
 <div style="margin-left: 0.7cm;float: left;" class="col-lg-6">
 <h1 style="font-size:150%;text-indent: 30px;">My favorite restaurants</h1><hr style="height:1px;background-color:#DDD;">
@@ -68,16 +70,11 @@
 		<p style="text-indent:80px;line-height:0px;padding-top:0px;font-size:100%;"><%= state%> <%= zip%></p>
 	</div>
 
-  
   		<%
 				}
  		 %>
-		
-		
-	
+
 	</div>
-
-
 </div>
 
 
@@ -88,8 +85,19 @@
 	$(function(){
 
 		$("#getFavorites").click(getFavoritesHandler);
+		$("#logout").click(logoutHandler);
 		
 	});
+	
+	function logoutHandler(){
+		
+		$.ajax({
+			url : "http://localhost:8080/Reservation/rest/user/logout",
+			type : "post",
+		});
+		
+		location.href= "/Reservation/login.jsp";
+	}
 	
 	function getFavoritesHandler() {
 		findFavorites($("#userName").val());
@@ -100,7 +108,7 @@
 		//alert("calling findFavorites api for username " + userName);
 		
 		$.ajax({
-			url : "http://localhost:8080/Restaurant_Reservation/rest/user/"+userName,
+			url : "http://localhost:8080/Reservation/rest/user/"+userName,
 			type:"get",
 			contentType: "application/json",
 			success:function(response) {

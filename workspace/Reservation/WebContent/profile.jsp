@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="models.User,models.Address,managers.AddressManager"%>
+    pageEncoding="ISO-8859-1" import="java.util.List,models.User,models.Address,managers.AddressManager,models.Favorites,dao.FavoritesDAO"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,6 +9,8 @@
 	User user = (User)session.getAttribute("user");
 	AddressManager addrmgr = new AddressManager();
 	Address addr = addrmgr.findAddressById(user.getAddressId());
+	FavoritesDAO fav = new FavoritesDAO();
+	List<Object[]> favs = fav.findByUserName(user.getUserName());
 
 %>
 <title>
@@ -32,10 +34,10 @@
 </div>
   
 <div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurant</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurants</a></p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My favorites</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reviews</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/favorites.jsp" style="color:#FFF"> My favorites</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reviews.jsp" style="color:#FFF"> My reviews</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/following.jsp" style="color:#FFF"> Following</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/finduser.jsp" style="color:#FFF"> Find a user</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
@@ -45,7 +47,7 @@
 	<h1 style="font-size:300%;text-indent: 20px;">
 	<%= user.getFirstName()%> <%= user.getLastName()%>
 	</h1><hr style="height:1px;background-color:#DDD;">
-	<div style="margin-left: 0.1cm;background-color: white;width:450px; float: left;position: relative;clear:both;box-shadow: 0.5px 0.5px 3px #888888;">
+	<div style="margin-left: 0.1cm;margin-bottom: 0.55cm;background-color: white;width:450px; float: left;position: relative;clear:both;box-shadow: 0.5px 0.5px 3px #888888;">
 		<p style="text-indent:20px;padding-top:20px;font-weight: bold;font-size:120%;text-decoration: underline;">ABOUT</p>
 		<p style="text-indent:20px;padding-top:10px;font-size:100%;">Address :
 		<%= addr.getStreet()%>,<%= addr.getapt_No()%>,<%= addr.getCity()%>,<%= addr.getState()%></p>
@@ -55,6 +57,41 @@
 		<%= user.getEmailId()%></p><br>
 	
 	</div>
+	<div>
+	<hr style="height:1px;background-color:#DDD;clear:both;">
+	</div>
+	
+<div style="margin-left: 0.1cm;background-color: white;width:874px;padding-bottom:12px; float: left;position: relative;clear:both;box-shadow: 0.5px 0.5px 3px #888888;">
+<p style="text-indent:20px;padding-top:20px;font-weight: bold;font-size:120%;text-decoration: underline;">FAVORITES</p>
+
+<%
+if (favs.size()!=0)
+{
+for(int i=0;i< favs.size();i++)
+{
+	Object[] obj = favs.get(i);
+	String name = (String) obj[0];
+	String street = (String) obj[3];
+	String city = (String) obj[4];
+	String state = (String) obj[5];
+	int id = (Integer) obj[7];
+%>
+<div style="margin-left:0.3cm;">
+<button class="btn btn-link" style='font-size:140%;outline:none; value ="<%=id %>" onclick="restaurantHandler(value)'> <%=name %></button>
+<p style="text-indent:14px;font-size:120%; "><%= street %>, <%= city %>, <%= state %></p>
+</div>
+<%
+}}
+else
+{
+%>
+<div style="margin-left:0.3cm;">
+<p style="text-indent:14px;font-size:120%; ">No favorites</p>
+</div>
+<%
+}
+%>
+</div>
 
 </div>
 

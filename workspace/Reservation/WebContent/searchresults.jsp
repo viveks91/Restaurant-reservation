@@ -41,10 +41,10 @@
 </div>
   
 <div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurant</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurants</a></p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My favorites</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reviews</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/favorites.jsp" style="color:#FFF"> My favorites</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reviews.jsp" style="color:#FFF"> My reviews</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/following.jsp" style="color:#FFF"> Following</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/finduser.jsp" style="color:#FFF"> Find a user</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
@@ -67,12 +67,23 @@
 
 	$(function(){
 		$("#back").click(stateRevert);
+		$("#logout").click(logoutHandler);
 		responseHandler();
 		
 	});
 	
 	function stateRevert() {
 		location.href="/Reservation/search.jsp";
+	}
+	
+	function logoutHandler(){
+		
+		$.ajax({
+			url : "http://localhost:8080/Reservation/rest/user/logout",
+			type : "post",
+		});
+		
+		location.href= "/Reservation/login.jsp";
 	}
 	
 	function responseHandler()
@@ -90,7 +101,7 @@
                     "<%= results.get(i).getName() %>" + '</button><br>'+
                     '<p style="float:left; margin-left:0.5cm; font-size:130%">Rating: '+"<%= results.get(i).getRatings() %>"+'</p>'+
                     '<p style="float:left; margin-left:1.5cm; font-size:130%">Price Level: '+"<%= results.get(i).getPriceLevel() %>"+'</p><br>'+
-                    '<p style="clear:both; margin-left:0.5cm">'+"<%= results.get(i).getAddress() %>"+'</p>'+
+                    '<p style="clear:left; margin-left:0.5cm">'+"<%= results.get(i).getAddress() %>"+'</p>'+
                     '</div>';
 
         <%

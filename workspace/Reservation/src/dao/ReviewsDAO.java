@@ -13,7 +13,7 @@ import models.Reviews;
 
 public class ReviewsDAO {
 
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Restaurant_Reservation");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
 	EntityManager em = null;
 	
 	public ReviewsDAO()	{
@@ -43,7 +43,7 @@ public class ReviewsDAO {
 		return reviews;
 	}
 	
-	public Reviews updateByReviewId(int id, String newComment) {
+	/*public Reviews updateByReviewId(int id, String newComment) {
 		em.getTransaction().begin();
 		Reviews reviews = em.find(Reviews.class, id);
 		reviews.setComments(newComment);
@@ -60,7 +60,7 @@ public class ReviewsDAO {
 		q.executeUpdate();
 		em.getTransaction().commit();
 		return null;
-	}
+	}*/
 	
 	
 	public Reviews findByReviewId(int id) {
