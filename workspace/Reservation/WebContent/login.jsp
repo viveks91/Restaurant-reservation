@@ -34,11 +34,17 @@
 	});
 
 function loginHandler() {
+	var username = $("#userName").val();
+	var password = $("#password").val();
+	if ((username == "") && (password == ""))
+		location.href="/Reservation/login.jsp";
+	else {
 	var newLogin = {
-			"userName":$("#userName").val(),
-			"password":$("#password").val(),
+			"userName":username,
+			"password":password,
 	};
 	handleLogin(newLogin);
+	}
 	return false;
 }
 

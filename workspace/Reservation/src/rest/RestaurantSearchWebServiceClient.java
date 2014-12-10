@@ -12,15 +12,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.xml.ws.WebServiceContext;
 
 import models.User;
 
@@ -32,31 +35,39 @@ import org.json.simple.parser.ParseException;
 // /rest/search
 @Path("/search")
 public class RestaurantSearchWebServiceClient {
+	
+	@Resource
+	private WebServiceContext context;
+	
+	public WebServiceContext getContext() {
+		return context;
+	}
+
+	public void setContext(WebServiceContext context) {
+		this.context = context;
+	}
 
 	private String urlAPIPlaces = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={NAME}+restaurants+in+{LOCATION}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
 	private String urlAPIPlaceDetails ="https://maps.googleapis.com/maps/api/place/details/json?placeid={PLACE}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
 	public static String dayNumber;
-	@PUT
+	@POST
 	@Path("/{searchParameters}")
 	@Consumes("application/json")
-	@Produces("application/json")
-	public List<RestaurantSearch> getParameters(@PathParam("searchParameters") String searchParameters){
+	public void getParameters(@PathParam("searchParameters") String searchParameters, @Context HttpServletRequest req){
 		String[] parts = searchParameters.split(",");
 		String restaurantName= parts[0];
 		String location = parts[1];
-		dayNumber = parts[2];
 		List<RestaurantSearch> searchResult = null;
-		if(!location.equals(null)){
-			searchResult = getRestaurantByNameAndLocation(restaurantName, location);
-		}
-		return searchResult;
+		searchResult = getRestaurantByNameAndLocation(restaurantName, location);
+		if (searchResult!=null)
+		 req.getSession().setAttribute("searchResults", searchResult);
 	}
 	
 	public List<RestaurantSearch> getRestaurantByNameAndLocation(String name, String location) {
 		// Correct the input parameters,required for the URL pattern
 		name = name.replace(" ", "+");
 		location = location.replace(" ", "+");
-		RestaurantSearch restaurant = new RestaurantSearch();
+		
 		String urlStr = urlAPIPlaces.replace("{NAME}+restaurants+in+{LOCATION}", name
 				+ "+restaurants+in+" + location);
 		List<RestaurantSearch> searchResults= new ArrayList<RestaurantSearch>();
@@ -82,6 +93,7 @@ public class RestaurantSearchWebServiceClient {
 					int size=results.size();
 					for (int i=0;i<size;i++)
 					{
+						RestaurantSearch restaurant = new RestaurantSearch();
 						JSONObject restaurantObj = (JSONObject) results.get(i);
 						if(restaurantObj!=null){
 							String placeId = restaurantObj.get("place_id").toString();

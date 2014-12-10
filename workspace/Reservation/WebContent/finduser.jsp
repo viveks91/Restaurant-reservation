@@ -34,7 +34,7 @@
 </div>
   
 <div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF"> Make a reservation</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurant</a></p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My favorites</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reviews</a> </p>
@@ -56,6 +56,7 @@
 $(function(){
 
 	$("#find").click(findHandler);
+	$("#logout").click(logoutHandler);
 	
 });
 
@@ -75,6 +76,16 @@ function findHandler() {
 	});
 
 return false;
+}
+
+function logoutHandler(){
+	
+	$.ajax({
+		url : "http://localhost:8080/Reservation/rest/user/logout",
+		type : "post",
+	});
+	
+	location.href= "/Reservation/login.jsp";
 }
 
 </script>

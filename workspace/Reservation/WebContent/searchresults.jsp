@@ -9,11 +9,18 @@
 	Person person = (Person)session.getAttribute("user");
 	if (person == null) {
 %>
-<script>alert("Please login");</script>
 <jsp:forward page="/login.jsp" />
 <%
 	};
+	List<RestaurantSearch> results = (List<RestaurantSearch>)session.getAttribute("searchResults");
+	if (results==null)
+	{
 %>
+<jsp:forward page="/search.jsp" />
+<%
+	}
+%>
+
 <title>Home - FoodWorld</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
@@ -45,47 +52,53 @@
 <div style="margin-left: 1.2cm;margin-top: 0.1cm;float: left; width:700px">
 <h1 style="font-size:300%;text-indent: 20px;float:left;">Search a restaurant</h1>
 
+<div id="div2" style="margin-left: 3.2cm;margin-top: 0.5cm;float: left; width:100px;display:block;">
+<button id="back" class="btn btn-info btn-block" style="height: 1cm; width:5cm;font-size:18px" >Back to search</button><br>
+</div>
 <hr style="height:1px;background-color:#DDD;clear:both">
 
-<div id="div1" style="display:block;">
 
-   <div style="margin-left: 0.2cm;">
-       <INPUT style="font-size:17px;height: 1cm;" TYPE="text" id="name" placeholder="Restaurant name" class="form-control" maxlength="225" style/>
-   </div>
-   <div style="margin-left: 0.2cm;margin-top: 0.2cm;">
-       <INPUT style="font-size:17px;height: 1cm;" TYPE="text" id="location" placeholder="Location or place" class="form-control" maxlength="225" style/>
-   </div>
-   <div style="margin-left: 0.2cm;margin-top: 0.3cm;">
-       <button id="search" class="btn btn-primary btn-block" style="height: 1cm;font-size:18px" onclick = "searchRestaurant()">Search restaurant</button>
-   </div>
-	  <hr style="height:1px;background-color:#DDD;">
+<div id="results" style="display:block">
+
 </div>
-
 </div>
 
 <script>
 
-	/* $(function(){
-		$("#search").click(searchRestaurant);
-	}); */
+	$(function(){
+		$("#back").click(stateRevert);
+		responseHandler();
+		
+	});
 	
-	function searchRestaurant() {
-		var restaurantName = $("#name").val();
-		var location = $("#location").val();
-		var searchParameters = restaurantName+","+location;
+	function stateRevert() {
+		location.href="/Reservation/search.jsp";
+	}
+	
+	function responseHandler()
+    {
+		var html = "";
+		<%
+		
+		for(int i=0;i<results.size();i++){
+		%>
+		//alert("Asd");
 
-		$.ajax({
-			url : "http://localhost:8080/Reservation/rest/search/"+searchParameters,
-			type:"post",
-			async:false,
-			success : responseHandler
-		});
-	}
-	
-	function responseHandler() {
-		location.href = "/Reservation/searchresults.jsp";
-	}
-	
+            html += '<div style="margin-left: 0.3cm;box-shadow: 0.5px 0.5px 3px #888888;margin-top: 0.3cm;background-color: white;width:685px;'+
+                    'padding-top:10px;padding-bottom:10px;padding-left:10px; float:left;position: relative;">'+
+                    '<button class="btn btn-link" style="font-size:170%;outline:none;" value ="'+"ID"+'" onclick="restaurantHandler(value)">'+
+                    "<%= results.get(i).getName() %>" + '</button><br>'+
+                    '<p style="float:left; margin-left:0.5cm; font-size:130%">Rating: '+"<%= results.get(i).getRatings() %>"+'</p>'+
+                    '<p style="float:left; margin-left:1.5cm; font-size:130%">Price Level: '+"<%= results.get(i).getPriceLevel() %>"+'</p><br>'+
+                    '<p style="clear:both; margin-left:0.5cm">'+"<%= results.get(i).getAddress() %>"+'</p>'+
+                    '</div>';
+
+        <%
+		}
+        %>
+        document.getElementById('results').innerHTML= html;
+
+    }
 
 </script>
 </body>

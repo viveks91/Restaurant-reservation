@@ -10,6 +10,10 @@
     UserDAO userdao = new UserDAO();
 	FollowingDAO folldao = new FollowingDAO();
 	List<Following> following = folldao.findByUserName(user.getUserName());
+	
+	String view;
+	if (following.isEmpty()) view = "block";
+	else view = "none";
 
 %>
 <title>Following</title>
@@ -31,7 +35,7 @@
 </div>
   
 <div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF"> Make a reservation</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurant</a></p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My favorites</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reviews</a> </p>
@@ -43,6 +47,7 @@
 <div style="margin-left: 1.2cm;margin-top: 0.1cm;float: left; width:900px">
 	<h1 style="font-size:300%;text-indent: 20px;">Following</h1>
 	<hr style="height:1px;background-color:#DDD;">
+	<div style="margin-left:20px; display:<%=view %>"><p> You are not following anyone</p></div>
 	<%
 	User user1 = null;
 	for (int i=0; i<following.size();i++)
