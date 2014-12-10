@@ -76,12 +76,14 @@ public class FavoritesDAO {
 			    String city = (String) obj1[4];
 			    String state = (String) obj1[5];
 			    String zip = (String) obj1[6];
+			    int id = (Integer) obj1[7];
 			    System.out.println(name);
 			    System.out.println(ratings);
 			    System.out.println(aptNo);
 			    System.out.println(street);
 			    System.out.println(city);
 			    System.out.println(state);
+			    System.out.println(id);
 			    }
 		//Favorites f1 = new Favorites("pre284", 1);
 		//dao.create(f1);
