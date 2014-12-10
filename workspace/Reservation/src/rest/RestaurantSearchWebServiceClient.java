@@ -13,11 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+
+import models.User;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -40,10 +45,9 @@ public class RestaurantSearchWebServiceClient {
 		String restaurantName= parts[0];
 		String location = parts[1];
 		dayNumber = parts[2];
-		RestaurantSearchWebServiceClient client = new RestaurantSearchWebServiceClient();
 		List<RestaurantSearch> searchResult = null;
 		if(!location.equals(null)){
-			searchResult = client.getRestaurantByNameAndLocation(restaurantName, location);
+			searchResult = getRestaurantByNameAndLocation(restaurantName, location);
 		}
 		return searchResult;
 	}
@@ -52,7 +56,7 @@ public class RestaurantSearchWebServiceClient {
 		// Correct the input parameters,required for the URL pattern
 		name = name.replace(" ", "+");
 		location = location.replace(" ", "+");
-		
+		RestaurantSearch restaurant = new RestaurantSearch();
 		String urlStr = urlAPIPlaces.replace("{NAME}+restaurants+in+{LOCATION}", name
 				+ "+restaurants+in+" + location);
 		List<RestaurantSearch> searchResults= new ArrayList<RestaurantSearch>();
@@ -73,21 +77,42 @@ public class RestaurantSearchWebServiceClient {
 			try {
 				JSONObject root = (JSONObject) parser.parse(json);
 				JSONArray results = (JSONArray) root.get("results");
-				System.out.println("length"+results.size());
-				int size=results.size();
-				size=size-1;
-				for (int i=0;i<=size;i++)
-				{
-					JSONObject firstRestaurant = (JSONObject) results.get(i);
-					String restaurantId = firstRestaurant.get("place_id").toString();
-					RestaurantSearch restaurant = getPlaceDetails(restaurantId);
-					if(restaurant!=null)
-					searchResults.add(restaurant);
+				if(!results.isEmpty()){
+					System.out.println("length"+results.size());
+					int size=results.size();
+					for (int i=0;i<size;i++)
+					{
+						JSONObject restaurantObj = (JSONObject) results.get(i);
+						if(restaurantObj!=null){
+							String placeId = restaurantObj.get("place_id").toString();
+							String restaurantName=restaurantObj.get("name").toString();
+							String address=restaurantObj.get("formatted_address").toString();
+							String priceLevel;
+							try{
+								priceLevel=restaurantObj.get("price_level").toString();
+							}catch(NullPointerException ne){
+								priceLevel="Not Available";
+							}
+							String rating;
+							try{
+								rating = restaurantObj.get("rating").toString();
+							}catch(NullPointerException ne){
+								rating = "Not Available";
+							}
+							restaurant.setPlaceId(placeId);
+							restaurant.setName(restaurantName);
+							restaurant.setAddress(address);
+							restaurant.setPriceLevel(priceLevel);
+							restaurant.setRatings(rating);
+							searchResults.add(restaurant);
+						}
+					}
+					return searchResults;
 				}
-				return searchResults;
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}catch (IndexOutOfBoundsException io) {
+				io.printStackTrace();
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -97,9 +122,12 @@ public class RestaurantSearchWebServiceClient {
 		return null;
 	}
 
-	private RestaurantSearch getPlaceDetails(String restaurantId) {
-		String placeDetailURL = urlAPIPlaceDetails.replace("{PLACE}", restaurantId);
-		int day = Integer.parseInt(dayNumber);
+	@PUT
+	@Path("/{placeId}")
+	@Consumes("application/json")
+	private RestaurantSearch getPlaceDetails(@PathParam("placeId") String placeId) {
+		String placeDetailURL = urlAPIPlaceDetails.replace("{PLACE}", placeId);
+		int day = 0;
 		RestaurantSearch restaurant = new RestaurantSearch();
 		try {
 			URL url = new URL(placeDetailURL);
@@ -107,48 +135,82 @@ public class RestaurantSearchWebServiceClient {
 			InputStream stream = connection.getInputStream();
 			InputStreamReader reader = new InputStreamReader(stream);
 			BufferedReader buffer = new BufferedReader(reader);
-
 			String json = "";
 			String line = "";
 			int capacity = 50;
 			while ((line = buffer.readLine()) != null) {
 				json += line;
 			}
+			System.out.println(json);
+
 			JSONParser parser = new JSONParser();
 			try {
 				JSONObject root = (JSONObject) parser.parse(json);
-				JSONObject restaurantResults = (JSONObject) root.get("result");
+				JSONObject restaurantResult = (JSONObject) root.get("result");
 				
-				
-				String address = restaurantResults.get("formatted_address").toString();
-				String phoneNo = restaurantResults.get("formatted_phone_number").toString();
-				String restaurantURL = restaurantResults.get("website").toString();
-				String name = restaurantResults.get("name").toString();
-				
-				JSONObject timings = (JSONObject) restaurantResults.get("opening_hours");
-				JSONArray periods = (JSONArray) timings.get("periods");
-				JSONObject dayTimings = (JSONObject) periods.get(day);
-				JSONObject closeTime = (JSONObject) dayTimings.get("close");
-				JSONObject openTime = (JSONObject) dayTimings.get("open");
-				
-				String closeRestaurantTime = closeTime.get("time").toString();
-				String openRestaurantTime = openTime.get("time").toString();
-				if(!address.isEmpty() & !phoneNo.isEmpty() & !restaurantURL.isEmpty() & !name.isEmpty() & !openRestaurantTime.isEmpty() & !closeRestaurantTime.isEmpty()){
-					restaurant.setName(name);
-					restaurant.setWebsite(restaurantURL);
-					restaurant.setAddress(address);
-					restaurant.setPhoneNo(phoneNo);
-					restaurant.setCapacity(capacity);
-					restaurant.setOpeningTime(openRestaurantTime);
-					restaurant.setClosingTime(closeRestaurantTime);
-					return restaurant;
+				if(restaurantResult!=null)
+				{
+					String address = restaurantResult.get("formatted_address").toString();
+					String phoneNo;
+					try{
+						phoneNo = (String) restaurantResult.get("formatted_phone_number");
+					}catch(NullPointerException ne){
+						phoneNo = "Not Available";
+					}
+					String restaurantURL;
+					try{
+						restaurantURL = (String) restaurantResult.get("website");
+					}catch(NullPointerException ne){
+						restaurantURL = "Not Available";
+					}
+					String name = restaurantResult.get("name").toString();
+					
+					String closeRestaurantTime;
+					String openRestaurantTime;
+					
+					try{
+						JSONObject timings = (JSONObject) restaurantResult.get("opening_hours");
+						JSONArray periods = (JSONArray) timings.get("periods");
+						JSONObject dayTimings = (JSONObject) periods.get(day);
+						JSONObject closeTime = (JSONObject) dayTimings.get("close");
+						JSONObject openTime = (JSONObject) dayTimings.get("open");
+						
+						closeRestaurantTime = closeTime.get("time").toString();
+						openRestaurantTime = openTime.get("time").toString();
+					}catch(NullPointerException ne){
+						closeRestaurantTime = "Not Available";
+						openRestaurantTime = "Not Available";
+					}
+					
+					String priceLevel;
+					try{
+						priceLevel=restaurantResult.get("price_level").toString();
+					}catch(NullPointerException ne){
+						priceLevel="Not Available";
+					}
+					String rating;
+					try{
+						rating = restaurantResult.get("rating").toString();
+					}catch(NullPointerException ne){
+						rating = "Not Available";
+					}
+						restaurant.setPlaceId(placeId);
+						restaurant.setName(name);
+						restaurant.setWebsite(restaurantURL);
+						restaurant.setAddress(address);
+						restaurant.setPhoneNo(phoneNo);
+						restaurant.setCapacity(capacity);
+						restaurant.setOpeningTime(openRestaurantTime);
+						restaurant.setClosingTime(closeRestaurantTime);
+						restaurant.setRatings(rating);
+						restaurant.setPriceLevel(priceLevel);
+						return restaurant;
 				}
-				
-			} catch (ParseException e) {
-				System.out.println("Ignore");
+			} catch (ParseException pe) {
+				pe.printStackTrace();
 			}
 			catch (NullPointerException ne) {
-				System.out.println("Ignore");
+				System.out.println("NE Ignore");
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

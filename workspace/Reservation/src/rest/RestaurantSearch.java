@@ -9,14 +9,38 @@ package rest;
  *
  */
 public class RestaurantSearch {
-	public String name;
-	public String phoneNo;
-	public String website;
-	public String openingTime;
-	public String closingTime;
-	public int capacity;
-	public String address;
+	private String name;
+	private String phoneNo;
+	private String website;
+	private String openingTime;
+	private String closingTime;
+	private int capacity;
+	private String address;
+	private String placeId;
+	private String priceLevel;
+	private String ratings;
 	
+	public String getPlaceId() {
+		return placeId;
+	}
+	public void setPlaceId(String placeId) {
+		this.placeId = placeId;
+	}
+	public String getPriceLevel() {
+		return priceLevel;
+	}
+	public void setPriceLevel(String priceLevel) {
+		this.priceLevel = priceLevel;
+	}
+	public String getRatings() {
+		return ratings;
+	}
+	public void setRatings(String ratings) {
+		this.ratings = ratings;
+	}
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
 	public String getAddress() {
 		return address;
 	}
@@ -59,8 +83,10 @@ public class RestaurantSearch {
 	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
+	
 	public RestaurantSearch(String name, String phoneNo, String website,
-			String openingTime, String closingTime, int capacity, String address) {
+			String openingTime, String closingTime, int capacity,
+			String address, String placeId, String priceLevel, String ratings) {
 		super();
 		this.name = name;
 		this.phoneNo = phoneNo;
@@ -69,6 +95,9 @@ public class RestaurantSearch {
 		this.closingTime = closingTime;
 		this.capacity = capacity;
 		this.address = address;
+		this.placeId = placeId;
+		this.priceLevel = priceLevel;
+		this.ratings = ratings;
 	}
 	public RestaurantSearch() {
 		super();
