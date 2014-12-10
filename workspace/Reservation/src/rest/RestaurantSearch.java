@@ -19,6 +19,8 @@ public class RestaurantSearch {
 	private String placeId;
 	private String priceLevel;
 	private String ratings;
+	private String imageURL;
+	
 	
 	public String getPlaceId() {
 		return placeId;
@@ -83,10 +85,16 @@ public class RestaurantSearch {
 	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
-	
+	public String getImageURL() {
+		return imageURL;
+	}
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
 	public RestaurantSearch(String name, String phoneNo, String website,
 			String openingTime, String closingTime, int capacity,
-			String address, String placeId, String priceLevel, String ratings) {
+			String address, String placeId, String priceLevel, String ratings,
+			String imageURL) {
 		super();
 		this.name = name;
 		this.phoneNo = phoneNo;
@@ -98,6 +106,7 @@ public class RestaurantSearch {
 		this.placeId = placeId;
 		this.priceLevel = priceLevel;
 		this.ratings = ratings;
+		this.imageURL = imageURL;
 	}
 	public RestaurantSearch() {
 		super();

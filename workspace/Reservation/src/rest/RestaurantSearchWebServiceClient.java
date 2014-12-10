@@ -49,7 +49,7 @@ public class RestaurantSearchWebServiceClient {
 
 	private String urlAPIPlaces = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={NAME}+restaurants+in+{LOCATION}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
 	private String urlAPIPlaceDetails ="https://maps.googleapis.com/maps/api/place/details/json?placeid={PLACE}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
-	public static String dayNumber;
+	private String urlAPIPhoto="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={PHOTO_REF}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
 	@POST
 	@Path("/{searchParameters}")
 	@Consumes("application/json")
@@ -89,7 +89,6 @@ public class RestaurantSearchWebServiceClient {
 				JSONObject root = (JSONObject) parser.parse(json);
 				JSONArray results = (JSONArray) root.get("results");
 				if(!results.isEmpty()){
-					System.out.println("length"+results.size());
 					int size=results.size();
 					for (int i=0;i<size;i++)
 					{
@@ -111,11 +110,22 @@ public class RestaurantSearchWebServiceClient {
 							}catch(NullPointerException ne){
 								rating = "Not Available";
 							}
+							
+							String imageURL;
+							try{
+								JSONArray photos = (JSONArray) restaurantObj.get("photos");
+								JSONObject photoObj = (JSONObject) photos.get(0);
+								String photo_reference = photoObj.get("photo_reference").toString();
+								imageURL = urlAPIPhoto.replace("{PHOTO_REF}", photo_reference);
+							}catch(Exception e){
+								imageURL="Not Available";
+							}
 							restaurant.setPlaceId(placeId);
 							restaurant.setName(restaurantName);
 							restaurant.setAddress(address);
 							restaurant.setPriceLevel(priceLevel);
 							restaurant.setRatings(rating);
+							restaurant.setImageURL(imageURL);
 							searchResults.add(restaurant);
 						}
 					}
@@ -153,8 +163,6 @@ public class RestaurantSearchWebServiceClient {
 			while ((line = buffer.readLine()) != null) {
 				json += line;
 			}
-			System.out.println(json);
-
 			JSONParser parser = new JSONParser();
 			try {
 				JSONObject root = (JSONObject) parser.parse(json);
@@ -206,6 +214,16 @@ public class RestaurantSearchWebServiceClient {
 					}catch(NullPointerException ne){
 						rating = "Not Available";
 					}
+					String imageURL;
+					
+					try{
+						JSONArray photos = (JSONArray) restaurantResult.get("photos");
+						JSONObject photoObj = (JSONObject) photos.get(0);
+						String photo_reference = photoObj.get("photo_reference").toString();
+						imageURL = urlAPIPhoto.replace("{PHOTO_REF}", photo_reference);
+					}catch(Exception e){
+						imageURL="Not Available";
+					}
 						restaurant.setPlaceId(placeId);
 						restaurant.setName(name);
 						restaurant.setWebsite(restaurantURL);
@@ -216,6 +234,7 @@ public class RestaurantSearchWebServiceClient {
 						restaurant.setClosingTime(closeRestaurantTime);
 						restaurant.setRatings(rating);
 						restaurant.setPriceLevel(priceLevel);
+						restaurant.setImageURL(imageURL);
 						return restaurant;
 				}
 			} catch (ParseException pe) {
