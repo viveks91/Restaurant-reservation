@@ -201,6 +201,7 @@ CREATE TABLE `Restaurant` (
   `capacity` int(10) NOT NULL,
   `type` varchar(100) NOT NULL,
   `addressId` int(11) NOT NULL,
+  `imageURL` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `addressId` (`addressId`),
@@ -208,17 +209,13 @@ CREATE TABLE `Restaurant` (
   CONSTRAINT `restaurant_ibfk_2` FOREIGN KEY (`addressId`) REFERENCES `Address` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
-LOCK TABLES `Restaurant` WRITE;
-/*!40000 ALTER TABLE `Restaurant` DISABLE KEYS */;
-
-INSERT INTO `Restaurant` (`id`, `name`, `phoneNo`, `website`, `openingTime`, `closingTime`, `capacity`, `type`, `addressId`)
+INSERT INTO `Restaurant` (`id`, `name`, `phoneNo`, `website`, `openingTime`, `closingTime`, `capacity`, `type`, `addressId`,`imageURL`)
 VALUES
-	(1,'Roti',96868698,'www.roti.com','09:00:00','17:00:00',50,'Indian',1),
-	(2,'BlueMoon',23223,'www.bluemoon.com',NULL,NULL,12,'Italian',2),
-	(3,'Chutneys',234234,'www.chutneys.com','09:00:00','19:00:00',20,'Indian',1);
+	(1,'Roti',96868698,'www.roti.com','09:00:00','17:00:00',50,'Indian',1,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg'),
+	(2,'BlueMoon',23223,'www.bluemoon.com',NULL,NULL,12,'Italian',2,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg'),
+	(3,'Chutneys',234234,'www.chutneys.com','09:00:00','19:00:00',20,'Indian',1,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg');
 
-/*!40000 ALTER TABLE `Restaurant` ENABLE KEYS */;
-UNLOCK TABLES;
+
 
 
 # Dump of table Reviews

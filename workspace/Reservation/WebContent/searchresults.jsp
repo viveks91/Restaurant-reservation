@@ -21,7 +21,7 @@
 	}
 %>
 
-<title>Home - FoodWorld</title>
+<title>Search results</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
@@ -97,12 +97,12 @@
 
             html += '<div style="margin-left: 0.3cm;box-shadow: 0.5px 0.5px 3px #888888;margin-top: 0.3cm;background-color: white;width:685px;'+
                     'padding-top:10px;padding-bottom:10px;padding-left:10px; float:left;position: relative;">'+
-                    '<button class="btn btn-link" style="font-size:170%;outline:none;" value ="'+"ID"+'" onclick="restaurantHandler(value)">'+
-                    "<%= results.get(i).getName() %>" + '</button><br>'+
-                    '<p style="float:left; margin-left:0.5cm; font-size:130%">Rating: '+"<%= results.get(i).getRatings() %>"+'</p>'+
-                    '<p style="float:left; margin-left:1.5cm; font-size:130%">Price Level: '+"<%= results.get(i).getPriceLevel() %>"+'</p><br>'+
-                    '<p style="clear:left; margin-left:0.5cm">'+"<%= results.get(i).getAddress() %>"+'</p>'+
-                    '</div>';
+                    '<div style="width:545px;float:left;padding-right: 10px;"><button class="btn btn-link" style="font-size:170%;outline:none;" value ="<%= results.get(i).getPlaceId() %>" onclick="restaurantHandler(value)">'+
+                    '<%= results.get(i).getName() %></button><br>'+
+                    '<p style="float:left; margin-left:0.5cm; font-size:130%">Rating:<%= results.get(i).getRatings() %></p>'+
+                    '<p style="float:left; margin-left:1.5cm; font-size:130%">Price Level: <%= results.get(i).getPriceLevel() %></p><br>'+
+                    '<p style="clear:left; margin-left:0.5cm"><%= results.get(i).getAddress() %></p>'+
+                    '</div><image style="content:url(<%=results.get(i).getImageURL() %>);margin-top:5px" width= "100" height="100"></image></div>';
 
         <%
 		}

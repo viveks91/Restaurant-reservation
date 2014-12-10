@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Edit account</title>
+<title>Favorites</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
@@ -39,47 +39,44 @@
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/finduser.jsp" style="color:#FFF"> Find a user</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
 </div>
-<div style="margin-left: 0.7cm;float: left;" class="col-lg-6">
-<h1 style="font-size:150%;text-indent: 30px;">My favorite restaurants</h1><hr style="height:1px;background-color:#DDD;">
-
-<div style="margin-left: 0.3cm;float: left;" class="col-lg-8">
-	<h1 style="font-size:300%;text-indent: 20px;">
-	<%= user.getFirstName()%> <%= user.getLastName()%>
-	</h1><hr style="height:1px;background-color:#DDD;">
-	<div style="margin-left: 0.1cm;background-color: white;width:400px; float: left;position: relative;clear:both;">
-		<p style="text-indent:20px;padding-top:20px;font-weight: bold;font-size:120%;text-decoration: underline;">
-		<%
+<div style="margin-left: 1.2cm;margin-top: 0.1cm;float: left; width:700px">
+	<h1 style="font-size:300%;text-indent: 20px;">Favorites</h1>
+	<hr style="height:1px;background-color:#DDD;">
+	
+<%
+	if (favs.size()!=0)
+	{
 			for(int i=0;i< favs.size();i++)
 				{
 				Object[] obj = favs.get(i);
 				String name = (String) obj[0];
 				int ratings = (Integer) obj[1];
-			    String aptNo = (String) obj[2];
 			    String street = (String) obj[3];
 			    String city = (String) obj[4];
 			    String state = (String) obj[5];
-			    String zip = (String) obj[6];
-		%>
-  		<div style="margin-left: 0.1cm;background-color: white;width:400px; float: left;position: relative;clear:both;">
-		<p style="text-indent:20px;padding-top:20px;font-weight: bold;font-size:120%;text-decoration: underline;"></p>
-		<p style="text-indent:23px;line-height:6px;padding-top:0px;font-size:125%;"><%= name %></p>
-		<p style="text-indent:23px;line-height:18px;padding-top:0px;font-size:100%;">Ratings: <%= ratings %></p>
-		<p style="text-indent:23px;line-height:10px;padding-top:0px;font-size:100%;">Address: <%= aptNo%></p>
-		<p style="text-indent:80px;line-height:0px;padding-top:0px;font-size:100%;"><%= street%></p>
-		<p style="text-indent:80px;line-height:10px;padding-top:0px;font-size:100%;"><%= city%></p>
-		<p style="text-indent:80px;line-height:0px;padding-top:0px;font-size:100%;"><%= state%> <%= zip%></p>
+			    int id = (Integer) obj[7];
+			    String imageURL = (String) obj[8];
+%>
+
+	<div style="margin-left: 0.5cm;box-shadow: 0.5px 0.5px 3px #888888;margin-top: 0.3cm;background-color: white;width:650px;padding-top:10px;padding-bottom:10px;padding-left:10px; clear:left;position: relative;">
+	<div style="width:515px;float:left"><button class="btn btn-link" style='font-size:140%;outline:none;padding-right: 10px;' value ="<%=id %>" onclick="restaurantHandler(value)"> <%=name %></button><br>
+		<p style="text-indent:14px;font-size:120%; "><%= street %>, <%= city %>, <%= state %></p>
+		<p style="text-indent:14px;font-size:120%;font-style: italic; ">My rating: <%= ratings %></p></div>
+		<image style="content:url(<%=imageURL%>);" width= "100" height="100"></image>
 	</div>
 
-  		<%
-				}
- 		 %>
-
-	</div>
+<%
+	}}
+	else {
+ %>
+<div style="margin-left:0.3cm;">
+<p style="text-indent:14px;font-size:120%; ">No favorites</p>
 </div>
+<%
+}
+%>
+	</div>
 
-
-
-  
 <script>
 
 	$(function(){

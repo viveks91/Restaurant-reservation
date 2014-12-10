@@ -13,7 +13,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import models.Favorites;
-import models.Reviews;
 
 
 /**
@@ -65,9 +64,9 @@ public class FavoritesDAO {
 	
 	public static void main(String[] args) {
 		FavoritesDAO dao = new FavoritesDAO();
-		List<Object[]> obj = dao.findByUserName("p0");
-		int i= 0;
-		 for ( i = 0; i < obj.size(); i++) {
+		List<Object[]> obj = dao.findByUserName("vivek");
+		System.out.println(obj.size());
+		 for ( int i = 0; i < obj.size(); i++) {
 			    Object[] obj1 = obj.get(i);
 			    String name = (String) obj1[0];
 			    int ratings = (Integer) obj1[1];

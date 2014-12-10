@@ -26,7 +26,7 @@ import javax.persistence.Table;
 		),
 		@NamedQuery(
 			name="FavoritesRestaurants.findByUserName",
-			query="select r.name, rev.ratings, ad.apt_No, ad.street,ad.city,ad.state,ad.zip,r.id from Favorites f, Restaurant r, Reviews rev, Address ad where "
+			query="select r.name, rev.ratings, ad.apt_No, ad.street,ad.city,ad.state,ad.zip,r.id,r.imageURL from Favorites f, Restaurant r, Reviews rev, Address ad where "
 					+ "f.userName = :userName and r.id = f.restaurantId and rev.userName = f.userName "
 					+ "and rev.restaurantId = f.restaurantId and r.addressId = ad.id"
 					

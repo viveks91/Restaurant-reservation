@@ -14,7 +14,7 @@
 <%
 	};
 %>
-<title>Home - FoodWorld</title>
+<title>Search</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
@@ -86,9 +86,9 @@ function logoutHandler(){
 		var location = $("#location").val();
 		var searchParameters = restaurantName+","+location;
 		
-		if ((restaurantName == "") && (location == ""))
-			location.href="/Reservation/login.jsp";
-		else {
+		if ((restaurantName == "") && (location == "")) {
+			//Do nothing
+		} else  {
 
 		$.ajax({
 			url : "http://localhost:8080/Reservation/rest/search/"+searchParameters,

@@ -4,14 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Edit account</title>
+<title>Reviews</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
 <%
     User user = (User)session.getAttribute("user");
 	ReviewsDAO rev = new ReviewsDAO();
-	 List<Object[]> revs = rev.findAllReviewsWithRestaurantName(user.getUserName());
+	List<Object[]> revs = rev.findAllReviewsWithRestaurantName(user.getUserName());
 %>
 
 <body style= "background-color:#F3F3F3;">
@@ -38,27 +38,27 @@
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/finduser.jsp" style="color:#FFF"> Find a user</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
 </div>
-<div style="margin-left: 0.7cm;float: left;" class="col-lg-6">
-<h1 style="font-size:150%;text-indent: 30px;">My reviews</h1><hr style="height:1px;background-color:#DDD;">
+<div style="margin-left: 1.2cm;margin-top: 0.1cm;float: left; width:700px">
+	<h1 style="font-size:300%;text-indent: 20px;">My reviews</h1>
+	<hr style="height:1px;background-color:#DDD;">
 
-<div style="margin-left: 0.3cm;float: left;" class="col-lg-8">
-	<h1 style="font-size:300%;text-indent: 20px;">
-	
-	</h1><hr style="height:1px;background-color:#DDD;">
-	<div style="margin-left: 0.1cm;background-color: white;width:400px; float: left;position: relative;clear:both;">
-		<p style="text-indent:20px;padding-top:20px;font-weight: bold;font-size:120%;text-decoration: underline;">
 		<%
 			for(int i=0;i< revs.size();i++)
 				{
 				Object[] obj = revs.get(i);
 				String name = (String) obj[0];
 				String reviews = (String) obj[1];
+				int rating = (Integer) obj[2];
+				String imageURL = (String) obj[3];
+				int id = (Integer) obj[4];
 		%>
-  		<div style="margin-left: 0.1cm;background-color: white;width:400px; float: left;position: relative;clear:both;">
-		<p style="text-indent:20px;padding-top:20px;font-weight: bold;font-size:120%;text-decoration: underline;"></p>
-		<p style="text-indent:23px;line-height:6px;padding-top:0px;font-size:125%;"><%= name %></p>
-		<p style="text-indent:23px;line-height:18px;padding-top:0px;font-size:100%;">Reviews: <%= reviews %></p>
-	</div>
+  		<div style="margin-left: 0.5cm;box-shadow: 0.5px 0.5px 3px #888888;margin-top: 0.3cm;background-color: white;width:650px;padding-top:10px;padding-bottom:10px;padding-left:10px; clear:left;position: relative;">
+	    <div style="width:515px;float:left"><button class="btn btn-link" style='font-size:140%;outline:none;padding-right: 10px;' value ="<%=id %>" onclick="restaurantHandler(value)"> <%=name %></button><br>
+		<p style="text-indent:14px;font-size:120%; ">My rating: <%= rating %></p>
+		<p style="text-indent:14px;font-size:120%;font-style: italic; ">"<%= reviews%>"</p>
+		</div>
+		<image style="content:url(<%=imageURL%>);" width= "100" height="100"></image>
+	    </div>
   		<%
 				}
  		 %>

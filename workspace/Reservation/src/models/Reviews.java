@@ -30,7 +30,7 @@ import javax.persistence.TemporalType;
 		),
 	@NamedQuery(
 			name="Reviews.findAllReviewsWithRestaurantName",
-			query="select r.name, rev.comments from Reviews rev, Restaurant r where rev.userName = :userName and rev.restaurantId = r.id"
+			query="select r.name, rev.comments, rev.ratings,r.imageURL,r.id from Reviews rev, Restaurant r where rev.userName = :userName and rev.restaurantId = r.id"
 		),
 })
 

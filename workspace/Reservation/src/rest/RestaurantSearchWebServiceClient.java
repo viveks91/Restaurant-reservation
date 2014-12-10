@@ -47,16 +47,19 @@ public class RestaurantSearchWebServiceClient {
 		this.context = context;
 	}
 
-	private String urlAPIPlaces = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={NAME}+restaurants+in+{LOCATION}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
+	private String urlAPIPlaces = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={NAME}+restaurants+in+{LOCATION}&key=AIzaSyApupOnC2_qT2S_5Sw82cLtMxX3Y7fWPUY";
 	private String urlAPIPlaceDetails ="https://maps.googleapis.com/maps/api/place/details/json?placeid={PLACE}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
-	private String urlAPIPhoto="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={PHOTO_REF}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
+	private String urlAPIPhoto="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={PHOTO_REF}&key=AIzaSyBK7757GStqJx2Xudqnm5IMViOBmGIdJFM";
 	@POST
 	@Path("/{searchParameters}")
 	@Consumes("application/json")
 	public void getParameters(@PathParam("searchParameters") String searchParameters, @Context HttpServletRequest req){
 		String[] parts = searchParameters.split(",");
-		String restaurantName= parts[0];
-		String location = parts[1];
+		String restaurantName = parts[0];
+		String location;
+		if (parts.length == 1) location = "+";
+		else location = parts[1];
+		
 		List<RestaurantSearch> searchResult = null;
 		searchResult = getRestaurantByNameAndLocation(restaurantName, location);
 		if (searchResult!=null)
@@ -118,7 +121,7 @@ public class RestaurantSearchWebServiceClient {
 								String photo_reference = photoObj.get("photo_reference").toString();
 								imageURL = urlAPIPhoto.replace("{PHOTO_REF}", photo_reference);
 							}catch(Exception e){
-								imageURL="Not Available";
+								imageURL="http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg";
 							}
 							restaurant.setPlaceId(placeId);
 							restaurant.setName(restaurantName);
@@ -250,4 +253,11 @@ public class RestaurantSearchWebServiceClient {
 		}
 		return null;
 	}
+	
+/*	public static void main (String args[])
+	{
+		String a = ",asd";
+		String b[] = a.split(",");
+		System.out.println(b.length);
+	}*/
 }

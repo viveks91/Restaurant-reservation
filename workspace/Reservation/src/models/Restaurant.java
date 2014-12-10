@@ -7,6 +7,8 @@ import java.util.Date;
 
 
 
+
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,6 +43,13 @@ public class Restaurant implements Serializable {
 	private Integer capacity;
 	private String type;
 	private Integer addressId;
+	private String imageURL;
+	public String getImageURL() {
+		return imageURL;
+	}
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -95,9 +104,23 @@ public class Restaurant implements Serializable {
 	public void setAddressId(Integer addressId) {
 		this.addressId = addressId;
 	}
+	public Restaurant(String name, Integer phoneNo, String website,
+			Date openingTime, Date closingTime, Integer capacity, String type,
+			Integer addressId, String imageURL) {
+		super();
+		this.name = name;
+		this.phoneNo = phoneNo;
+		this.website = website;
+		this.openingTime = openingTime;
+		this.closingTime = closingTime;
+		this.capacity = capacity;
+		this.type = type;
+		this.addressId = addressId;
+		this.imageURL = imageURL;
+	}
 	public Restaurant(Integer id, String name, Integer phoneNo, String website,
 			Date openingTime, Date closingTime, Integer capacity, String type,
-			Integer addressId) {
+			Integer addressId, String imageURL) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -108,23 +131,12 @@ public class Restaurant implements Serializable {
 		this.capacity = capacity;
 		this.type = type;
 		this.addressId = addressId;
-	}
-	public Restaurant(String name, Integer phoneNo, String website,
-			Date openingTime, Date closingTime, Integer capacity, String type,
-			Integer addressId) {
-		super();
-		this.name = name;
-		this.phoneNo = phoneNo;
-		this.website = website;
-		this.openingTime = openingTime;
-		this.closingTime = closingTime;
-		this.capacity = capacity;
-		this.type = type;
-		this.addressId = addressId;
+		this.imageURL = imageURL;
 	}
 	public Restaurant() {
 		super();
 	}
+	
 	
 
 }

@@ -80,7 +80,7 @@
 <div style="clear:both">
 	<hr style="height:1px;background-color:#DDD;">
 </div>
-<div style="margin-left: 0.1cm;background-color: white;width:874px;padding-bottom:12px; float: left;position: relative;clear:both;box-shadow: 0.5px 0.5px 3px #888888;">
+<div style="margin-left: 0.1cm;background-color: white;width:864px;padding-bottom:12px; float: left;position: relative;clear:both;box-shadow: 0.5px 0.5px 3px #888888;">
 <p style="text-indent:20px;padding-top:20px;font-weight: bold;font-size:120%;text-decoration: underline;">FAVORITES</p>
 
 <%
@@ -94,10 +94,12 @@ for(int i=0;i< favs.size();i++)
 	String city = (String) obj[4];
 	String state = (String) obj[5];
 	int id = (Integer) obj[7];
+	String imageURL = (String) obj[8];
 %>
-<div style="margin-left:0.3cm;">
-<button class="btn btn-link" style='font-size:140%;outline:none; value ="<%=id %>" onclick="restaurantHandler(value)'> <%=name %></button>
-<p style="text-indent:14px;font-size:120%; "><%= street %>, <%= city %>, <%= state %></p>
+<div style="margin-left:0.3cm;margin-top:0.3cm;">
+<div style="width:615px;float:left"><button class="btn btn-link" style='font-size:140%;outline:none; value ="<%=id %>" onclick="restaurantHandler(value)'> <%=name %></button>
+<p style="text-indent:14px;font-size:120%; "><%= street %>, <%= city %>, <%= state %></p></div>
+<image style="content:url(<%=imageURL%>);" width= "100" height="100"></image>
 </div>
 <%
 }}
