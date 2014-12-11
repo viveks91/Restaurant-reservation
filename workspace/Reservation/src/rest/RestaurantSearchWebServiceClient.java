@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import org.json.simple.parser.ParseException;
 
 // /rest/search
 @Path("/search")
-public class RestaurantSearchWebServiceClient {
+public class RestaurantSearchWebServiceClient implements Serializable {
 	
 	@Resource
 	private WebServiceContext context;
@@ -50,11 +51,14 @@ public class RestaurantSearchWebServiceClient {
 	private String urlAPIPlaces = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={NAME}+restaurants+in+{LOCATION}&key=AIzaSyApupOnC2_qT2S_5Sw82cLtMxX3Y7fWPUY";
 	private String urlAPIPlaceDetails ="https://maps.googleapis.com/maps/api/place/details/json?placeid={PLACE}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
 	private String urlAPIPhoto="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={PHOTO_REF}&key=AIzaSyBK7757GStqJx2Xudqnm5IMViOBmGIdJFM";
-	@POST
+	
+	
+	@GET
 	@Path("/{searchParameters}")
-	@Consumes("application/json")
 	public void getParameters(@PathParam("searchParameters") String searchParameters, @Context HttpServletRequest req){
 		String[] parts = searchParameters.split(",");
+		req.getSession().setAttribute("searchResults", null);
+
 		String restaurantName = parts[0];
 		String location;
 		if (parts.length == 1) location = "+";
@@ -147,10 +151,9 @@ public class RestaurantSearchWebServiceClient {
 		return null;
 	}
 
-	@PUT
-	@Path("/{placeId}")
-	@Consumes("application/json")
-	private RestaurantSearch getPlaceDetails(@PathParam("placeId") String placeId) {
+	@GET
+	@Path("/details/{placeId}")
+	public void getPlaceDetails(@PathParam("placeId") String placeId, @Context HttpServletRequest req) {
 		String placeDetailURL = urlAPIPlaceDetails.replace("{PLACE}", placeId);
 		int day = 0;
 		RestaurantSearch restaurant = new RestaurantSearch();
@@ -238,7 +241,8 @@ public class RestaurantSearchWebServiceClient {
 						restaurant.setRatings(rating);
 						restaurant.setPriceLevel(priceLevel);
 						restaurant.setImageURL(imageURL);
-						return restaurant;
+						
+						req.getSession().setAttribute("selectedRestaurant", restaurant);
 				}
 			} catch (ParseException pe) {
 				pe.printStackTrace();
@@ -251,7 +255,6 @@ public class RestaurantSearchWebServiceClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 	
 /*	public static void main (String args[])

@@ -92,7 +92,7 @@ function logoutHandler(){
 
 		$.ajax({
 			url : "http://localhost:8080/Reservation/rest/search/"+searchParameters,
-			type:"post",
+			type:"get",
 			async:false,
 			success : responseHandler
 		});
