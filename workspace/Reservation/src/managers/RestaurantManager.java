@@ -51,12 +51,12 @@ public class RestaurantManager implements Serializable{
 	 */
 	public int updateRestaurantById (Integer id, String name, Integer phoneNo, 
 			String website, Date openingTime, Date closingTime, Integer capacity, 
-			String type, Integer addressId) {
+			String type, Integer addressId, String imageURL, int priceLevel, int rating) {
 		int updated_id = id;
 		if((findRestaurantById(id) != null) && (addr_dao.findById(addressId) != null)
 				&& (catgry_dao.findByType(type) != null))
 			updated_id = restrnt_dao.updateById(id, name, phoneNo, website, openingTime,
-					closingTime, capacity, type, addressId);
+					closingTime, capacity, type, addressId,imageURL,priceLevel,rating);
 		return updated_id;
 	}
 	

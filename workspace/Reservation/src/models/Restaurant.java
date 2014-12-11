@@ -9,6 +9,10 @@ import java.util.Date;
 
 
 
+
+
+
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,6 +48,8 @@ public class Restaurant implements Serializable {
 	private String type;
 	private Integer addressId;
 	private String imageURL;
+	private int priceLevel;
+	private int rating;
 	public String getImageURL() {
 		return imageURL;
 	}
@@ -104,9 +110,23 @@ public class Restaurant implements Serializable {
 	public void setAddressId(Integer addressId) {
 		this.addressId = addressId;
 	}
+
+	
+	public int getPriceLevel() {
+		return priceLevel;
+	}
+	public void setPriceLevel(int priceLevel) {
+		this.priceLevel = priceLevel;
+	}
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
 	public Restaurant(String name, Integer phoneNo, String website,
 			Date openingTime, Date closingTime, Integer capacity, String type,
-			Integer addressId, String imageURL) {
+			Integer addressId, String imageURL, int priceLevel, int rating) {
 		super();
 		this.name = name;
 		this.phoneNo = phoneNo;
@@ -117,10 +137,12 @@ public class Restaurant implements Serializable {
 		this.type = type;
 		this.addressId = addressId;
 		this.imageURL = imageURL;
+		this.priceLevel = priceLevel;
+		this.rating = rating;
 	}
 	public Restaurant(Integer id, String name, Integer phoneNo, String website,
 			Date openingTime, Date closingTime, Integer capacity, String type,
-			Integer addressId, String imageURL) {
+			Integer addressId, String imageURL, int priceLevel, int rating) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -132,6 +154,8 @@ public class Restaurant implements Serializable {
 		this.type = type;
 		this.addressId = addressId;
 		this.imageURL = imageURL;
+		this.priceLevel = priceLevel;
+		this.rating = rating;
 	}
 	public Restaurant() {
 		super();

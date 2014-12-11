@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.List,models.User,models.Address,managers.AddressManager,dao.FollowingDAO,models.Favorites,dao.FavoritesDAO"%>
+    pageEncoding="ISO-8859-1" import="java.util.List,models.User,models.Reviews,rest.RestaurantSearch,dao.ReviewsDAO,dao.FavoritesDAO"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,18 +7,14 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 <%
 	User user = (User)session.getAttribute("user");
-    User viewuser = (User)session.getAttribute("viewuser");
+    FavoritesDAO favdao = new FavoritesDAO();
+    ReviewsDAO revdao = new ReviewsDAO();
     
-	AddressManager addrmgr = new AddressManager();
-	Address addr = addrmgr.findAddressById(viewuser.getAddressId());
-	FollowingDAO folldao = new FollowingDAO();
-	boolean isFollowing = folldao.findBy2UserName(user.getUserName(), viewuser.getUserName());
-	FavoritesDAO fav = new FavoritesDAO();
-	List<Object[]> favs = fav.findByUserName(viewuser.getUserName());
+    RestaurantSearch selected = (RestaurantSearch)session.getAttribute("selectedRestaurant");
 
 %>
 <title>
-<%= viewuser.getFirstName()%> <%= viewuser.getLastName()%>
+<%= selected.getName()%>
 </title>
 
 <link href="css/bootstrap.css" rel="stylesheet"/>
@@ -48,5 +44,15 @@
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
 </div>
 
+<div style="margin-left: 0.3cm;margin-top: 0.3cm;" class="col-lg-8">
+	<div style="float:left;width:640px"><h1 style="font-size:310%;text-indent: 20px;">
+	<%= selected.getName()%>
+	</h1>
+	<p style="font-size:130%;text-indent:0.8cm;padding-top:5px"><%= selected.getAddress()%></p>
+	<p style="font-size:110%;text-indent:0.8cm;padding-top:5px"><%= selected.getPhoneNo()%></p>
+	<p style="font-size:130%;text-indent:0.8cm;padding-top:5px"><%= selected.getAddress()%></p></div>
+	<image style="content:url(<%=selected.getImageURL() %>);margin-top:5px" width= "200" height="200"></image>
+	<hr style="height:1px;background-color:#DDD;">
+</div>
 </body>
 </html>

@@ -89,7 +89,6 @@ function stateRevert() {
 }
 
 function restaurantHandler(placeId) {
-	alert(placeId);
 	$.ajax({
 		url : "http://localhost:8080/Reservation/rest/search/details/"+placeId,
 		type : "get",

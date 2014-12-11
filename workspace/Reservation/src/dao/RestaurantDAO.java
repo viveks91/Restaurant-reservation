@@ -52,7 +52,7 @@ public class RestaurantDAO implements Serializable {
 	 */
 	public int updateById(Integer id, String name, Integer phoneNo, String website,
 			Date openingTime, Date closingTime, Integer capacity, String type,
-			Integer addressId) {
+			Integer addressId, String imageURL, int priceLevel, int rating) {
 		em.getTransaction().begin();
 		Restaurant restaurant = em.find(Restaurant.class, id);
 		restaurant.setAddressId(addressId);
@@ -63,6 +63,9 @@ public class RestaurantDAO implements Serializable {
 		restaurant.setPhoneNo(phoneNo);
 		restaurant.setType(type);
 		restaurant.setWebsite(website);
+		restaurant.setImageURL(imageURL);
+		restaurant.setPriceLevel(priceLevel);
+		restaurant.setRating(rating);
 		em.merge(restaurant);
 		em.getTransaction().commit();
 		return id;

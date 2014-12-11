@@ -38,6 +38,10 @@ import javax.persistence.TemporalType;
 					+ "where f.userName = :username and rev.userName = f.following and r.id= rev.restaurantId "
 					+ "order by rev.date DESC"
 		),
+	@NamedQuery(
+				name="Reviews.findAllReviewsWithRestaurantId",
+				query="select p.firstName, rev.comments from Restaurant r, Reviews rev, Person p where rev.restaurantId=r.id and rev.userName=p.userName and r.id = :rId"
+		),
 })
 
 public class Reviews {

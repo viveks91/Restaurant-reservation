@@ -194,7 +194,7 @@ DROP TABLE IF EXISTS `Restaurant`;
 CREATE TABLE `Restaurant` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(225) NOT NULL,
-  `phoneNo` int(50) DEFAULT NULL,
+  `phoneNo` varchar(12) DEFAULT NULL,
   `website` varchar(500) DEFAULT NULL,
   `openingTime` time DEFAULT NULL,
   `closingTime` time DEFAULT NULL,
@@ -202,6 +202,8 @@ CREATE TABLE `Restaurant` (
   `type` varchar(100) NOT NULL,
   `addressId` int(11) NOT NULL,
   `imageURL` varchar(500) DEFAULT NULL,
+  `priceLevel` int(3) DEFAULT NULL,
+  `rating` int(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `addressId` (`addressId`),
@@ -211,9 +213,9 @@ CREATE TABLE `Restaurant` (
 
 INSERT INTO `Restaurant` (`id`, `name`, `phoneNo`, `website`, `openingTime`, `closingTime`, `capacity`, `type`, `addressId`,`imageURL`)
 VALUES
-	(1,'Roti',96868698,'www.roti.com','09:00:00','17:00:00',50,'Indian',1,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg'),
-	(2,'BlueMoon',23223,'www.bluemoon.com',NULL,NULL,12,'Italian',2,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg'),
-	(3,'Chutneys',234234,'www.chutneys.com','09:00:00','19:00:00',20,'Indian',1,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg');
+	(1,'Roti','96868698','www.roti.com','09:00:00','17:00:00',50,'Indian',1,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg',3,3),
+	(2,'BlueMoon','23223','www.bluemoon.com',NULL,NULL,12,'Italian',2,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg',3,3),
+	(3,'Chutneys','234234','www.chutneys.com','09:00:00','19:00:00',20,'Indian',1,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg',3,3);
 
 
 
