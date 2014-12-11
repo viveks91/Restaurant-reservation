@@ -30,11 +30,11 @@ public class RestaurantDAO implements Serializable {
 	 * @param restaurant
 	 * @return id
 	 */
-	public int create(Restaurant restaurant) {
+	public Restaurant create(Restaurant restaurant) {
 		em.getTransaction().begin();
 		em.persist(restaurant);
 		em.getTransaction().commit();
-		return restaurant.getId();
+		return restaurant;
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class RestaurantDAO implements Serializable {
 	 */
 	public int updateById(Integer id, String name, String phoneNo, String website,
 			String openingTime, String closingTime, Integer capacity, String type,
-			Integer addressId, String imageURL, int priceLevel, int rating) {
+			Integer addressId, String imageURL, int priceLevel, String rating) {
 		em.getTransaction().begin();
 		Restaurant restaurant = em.find(Restaurant.class, id);
 		restaurant.setAddressId(addressId);
@@ -92,9 +92,9 @@ public class RestaurantDAO implements Serializable {
 		em.getTransaction().begin();
 		Query q = em.createNamedQuery("Restaurant.findByAll");
 		q.setParameter("name", restaurant.getName());
-		q.setParameter("addressId", restaurant.getAddressId());
-		q.setParameter("type", restaurant.getType());
 		q.setParameter("website", restaurant.getWebsite());
+		q.setParameter("phoneNo", restaurant.getPhoneNo());
+		q.setParameter("addrId", restaurant.getAddressId());
 		List<Restaurant> found_restaurant = q.getResultList();
 		em.getTransaction().commit();
 		return found_restaurant;

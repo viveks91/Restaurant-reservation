@@ -24,13 +24,16 @@ import javax.persistence.Table;
 			name="Favorites.findByUserName",
 			query="select f from Favorites f where f.userName = :userName"
 		),
-		@NamedQuery(
+	@NamedQuery(
 			name="FavoritesRestaurants.findByUserName",
-			query="select r.name, rev.ratings, ad.apt_No, ad.street,ad.city,ad.state,ad.zip,r.id,r.imageURL from Favorites f, Restaurant r, Reviews rev, Address ad where "
-					+ "f.userName = :userName and r.id = f.restaurantId and rev.userName = f.userName "
-					+ "and rev.restaurantId = f.restaurantId and r.addressId = ad.id"
-					
-		),
+			query="select r.name, r.rating, r.id, ad.street, ad.city, ad.state, ad.zip,r.imageURL from Favorites f, Restaurant r, Address ad "
+					+ "where f.userName = :userName and r.id = f.restaurantId and ad.id = r.addressId"
+	),
+	@NamedQuery(
+			name="FavoritesRestaurants.checkByUserName",
+			query="select f from Favorites f where f.userName = :userName and f.restaurantId =:rId"
+	)
+		
 
 })
 

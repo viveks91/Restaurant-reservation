@@ -106,6 +106,24 @@ public class ReviewsDAO {
 		return reviews;
 	}
 	
+	public List<Object[]> findWithRestaurantId(int restaurantId) {
+		em.getTransaction().begin();
+		Query q = em.createNamedQuery("Reviews.findAllReviewsWithRestaurantId");
+		q.setParameter("rId", restaurantId);
+		List<Object[]> reviews = q.getResultList();
+		em.getTransaction().commit();
+		return reviews;
+	}
+	
+	public List<Object[]> fetchNewsFeed(String userName) {
+		em.getTransaction().begin();
+		Query q = em.createNamedQuery("Reviews.findFollowingUserReviews");
+		q.setParameter("userName", userName);
+		List<Object[]> newsfeed = q.getResultList();
+		em.getTransaction().commit();
+		return newsfeed;
+	}
+	
 	
 	
 	

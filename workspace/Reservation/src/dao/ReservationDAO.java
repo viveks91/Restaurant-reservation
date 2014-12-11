@@ -1,7 +1,6 @@
 package dao;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,7 +12,7 @@ import models.Reservation;
 
 public class ReservationDAO implements Serializable {
 	
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Restaurant_Reservation");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
 	EntityManager em = null;
 	
 	public ReservationDAO()	{
@@ -110,7 +109,7 @@ public class ReservationDAO implements Serializable {
 	 * @param time
 	 * @return id
 	 */
-	public int updateById(int id, int people_count, String time,Date date) {
+	public int updateById(int id, int people_count, String time,String date) {
 		em.getTransaction().begin();
 		Reservation reservation = em.find(Reservation.class, id);
 		reservation.setPeople_count(people_count);
@@ -132,5 +131,12 @@ public class ReservationDAO implements Serializable {
 		em.getTransaction().commit();
 		return reservation;
 	}
+	
+	public static void main(String[] args) {
+		Reservation reservation = new Reservation(4,"2014-12-12","12:00",5,"vivek");
+		ReservationDAO reservDao = new ReservationDAO();
+		reservDao.create(reservation);
+	}
+
 
 }

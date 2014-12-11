@@ -12,11 +12,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.xml.ws.WebServiceContext;
 
+import managers.AddressManager;
+import managers.RestaurantManager;
+import models.Address;
 import models.Person;
+import models.Reservation;
+import models.Restaurant;
 import models.User;
 import models.Following;
 import dao.FollowingDAO;
 import dao.PersonDAO;
+import dao.ReservationDAO;
+import dao.RestaurantDAO;
 import dao.UserDAO;
 
 class Login {
@@ -142,5 +149,71 @@ public class UserWebService {
 		psnDao.updateFirstNameByUserName(person.getUserName(),newUser.getFirstName());
 		psnDao.updateLastNameByUserName(person.getUserName(), newUser.getLastName());
 		usrDao.updateByUserName(newUser.getUserName(), newUser.getPhoneNo(), newUser.getEmailId(), newUser.getAddressId());
+	}
+	
+	@POST
+	@Path("/reserve")
+	@Consumes("application/json")
+	public String createReservationAndRestaurant(Reservation reservation,
+			@Context HttpServletRequest req) {
+
+		// Restaurant res = restDao.create(restaurant)
+		Address address1 = new Address();
+		AddressManager addrmgr = new AddressManager();
+		Restaurant restaurant = new Restaurant();
+		RestaurantManager restaurantMgr = new RestaurantManager();
+		ReservationDAO reservationDao = new ReservationDAO();
+
+		RestaurantSearch selected = (RestaurantSearch)req.getSession()
+				.getAttribute("selectedRestaurant");
+		
+		int path =  (Integer)req.getSession()
+				.getAttribute("path");
+		
+		if (path==1) {
+
+		String address = selected.getAddress();
+		String addressParts[] = address.split(",");
+		String streetPart = addressParts[0];
+		String apt_no = streetPart.substring(0, streetPart.indexOf(' '));
+		String street = streetPart.substring(streetPart.indexOf(' ')+1);
+		String city = addressParts[1];
+		String stateString = addressParts[2];
+		String stateString1[] = stateString.split(" ");
+		String state = stateString1[1];
+		String zip = stateString1[2];
+		address1.setapt_No(apt_no);
+		address1.setStreet(street);
+		address1.setCity(city);
+		address1.setState(state);
+		address1.setZip(zip);
+
+		int addId = addrmgr.createAddress(address1);
+		restaurant.setAddressId(addId);
+
+		restaurant.setCapacity(50);
+		restaurant.setClosingTime(selected.getClosingTime());
+		restaurant.setOpeningTime(selected.getOpeningTime());
+		restaurant.setName(selected.getName());
+		restaurant.setPhoneNo(selected.getPhoneNo());
+		restaurant.setType("Restaurant");
+		restaurant.setWebsite(selected.getWebsite());
+		restaurant.setPriceLevel(Integer.valueOf(selected.getPriceLevel()));
+		restaurant.setImageURL(selected.getImageURL());
+		restaurant.setRating(selected.getRatings());
+		
+		int restaurantId = restaurantMgr.createRestaurant(restaurant);
+		reservation.setRestaurantId(restaurantId);
+		reservationDao.create(reservation);
+		
+		} else {
+			
+			reservation.setRestaurantId(selected.getRestaurantId());
+			reservationDao.create(reservation);
+		
+		}
+
+		return "Reservation booked";
+
 	}
 }

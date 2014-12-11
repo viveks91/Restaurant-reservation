@@ -31,35 +31,35 @@
 
 <form class="form-horizontal" role="form">
   <div class="form-group form-group-lg">
-    <label class="col-sm-3 control-label" for="lg">First Name</label>
+    <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">First Name</label>
     <div class="col-sm-9">
       <INPUT style="font-size:17px" TYPE="text" id="firstName" placeholder="Enter your first name" class="form-control" maxlength="225"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
-    <label class="col-sm-3 control-label" for="lg">Last Name</label>
+    <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Last Name</label>
     <div class="col-sm-9">
       <INPUT style="font-size:17px" TYPE="text" id="lastName" placeholder="Enter your last name" class="form-control" maxlength="225"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
-    <label class="col-sm-3 control-label" for="lg">Username</label>
+    <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Username</label>
     <div class="col-sm-9">
       <INPUT style="font-size:17px" TYPE="text" id="userName" placeholder="Enter a username" class="form-control" maxlength="225"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
-    <label class="col-sm-3 control-label" for="lg">Password</label>
+    <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Password</label>
     <div class="col-sm-9">
       <INPUT style="font-size:17px" TYPE="password" id="password" placeholder="Enter a password" class="form-control" maxlength="225"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
-    <label class="col-sm-3 control-label" for="lg">Address</label>
+    <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Address</label>
     <div class="col-sm-9">
       <INPUT style="font-size:17px" TYPE="text" id="apt_No" placeholder="Apartment Number" class="form-control" maxlength="10"/>
 	  <INPUT style="font-size:17px" TYPE="text" id="street" placeholder="Street" class="form-control" maxlength="225"/>
@@ -70,14 +70,14 @@
   </div>
   
   <div class="form-group form-group-lg">
-    <label class="col-sm-3 control-label" for="lg">Phone Number</label>
+    <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Phone Number</label>
     <div class="col-sm-9">
       <INPUT style="font-size:17px" TYPE="text" id="phoneNo" placeholder="Enter your phone number" class="form-control" maxlength="12"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
-    <label class="col-sm-3 control-label" for="lg">Email ID</label>
+    <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Email ID</label>
     <div class="col-sm-9">
       <INPUT style="font-size:17px;" TYPE="text" id="emailId" placeholder="Enter your email id" class="form-control" maxlength="225"/>
       <hr style="height:1px;background-color:#DDD;">

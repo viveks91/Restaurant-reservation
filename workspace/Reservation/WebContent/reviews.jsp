@@ -48,7 +48,7 @@
 				Object[] obj = revs.get(i);
 				String name = (String) obj[0];
 				String reviews = (String) obj[1];
-				int rating = (Integer) obj[2];
+				String  rating = (String) obj[2];
 				String imageURL = (String) obj[3];
 				int id = (Integer) obj[4];
 		%>
@@ -118,6 +118,22 @@
         });
         $("#favoritesList").append(Options);
     }
+	
+	function restaurantHandler(value) {
+		$.ajax({
+			url : "http://localhost:8080/Reservation/rest/search/fav/"+value,
+			type:"post",
+			contentType: "application/json",
+			async : false,
+			success:function(response) {
+				redirectHandler();
+			}
+		});
+	}
+	
+	function redirectHandler() {
+		location.href = "/Reservation/restaurantdetails.jsp";
+	}
 
 </script>
 </div>

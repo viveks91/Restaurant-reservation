@@ -62,36 +62,28 @@ public class FavoritesDAO {
 		return favorites;
 	}
 	
-	public static void main(String[] args) {
+	public boolean isFav(String userName, int rId) {
+		em.getTransaction().begin();
+		Query q = em.createNamedQuery("FavoritesRestaurants.checkByUserName");
+		q.setParameter("userName", userName);
+		q.setParameter("rId", rId);
+		List<Favorites> favorites = q.getResultList();
+		em.getTransaction().commit();
+		if (favorites.isEmpty()) return false;
+		else return true;
+	}
+	
+/*	public static void main(String[] args) {
 		FavoritesDAO dao = new FavoritesDAO();
-		List<Object[]> obj = dao.findByUserName("vivek");
-		System.out.println(obj.size());
-		 for ( int i = 0; i < obj.size(); i++) {
-			    Object[] obj1 = obj.get(i);
-			    String name = (String) obj1[0];
-			    int ratings = (Integer) obj1[1];
-			    String aptNo = (String) obj1[2];
-			    String street = (String) obj1[3];
-			    String city = (String) obj1[4];
-			    String state = (String) obj1[5];
-			    String zip = (String) obj1[6];
-			    int id = (Integer) obj1[7];
-			    System.out.println(name);
-			    System.out.println(ratings);
-			    System.out.println(aptNo);
-			    System.out.println(street);
-			    System.out.println(city);
-			    System.out.println(state);
-			    System.out.println(id);
-			    }
+		List<Integer> fav = dao.findByUserName("vivek");
+		System.out.println(fav.size());
+
 		//Favorites f1 = new Favorites("pre284", 1);
 		//dao.create(f1);
 	//	Favorites f2 = new Favorites("pre284", 2);
 		//dao.create(f2);
 	//	dao.deleteByUserNameAndFavorites("pre284", 1);
 		//List<Favorites> f3 = dao.findByUserName("pre284");
-		
-
-	}
+	}*/
 
 }

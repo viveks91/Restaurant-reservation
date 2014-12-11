@@ -50,10 +50,10 @@
 <div id="div1" style="display:block;">
 
    <div style="margin-left: 0.2cm;">
-       <INPUT style="font-size:17px;height: 1cm;" TYPE="text" id="name" placeholder="Restaurant name" class="form-control" maxlength="225" style/>
+       <INPUT style="font-size:17px;height: 1cm;" TYPE="text" id="name" placeholder="Restaurant name" class="form-control" maxlength="225"/>
    </div>
    <div style="margin-left: 0.2cm;margin-top: 0.2cm;">
-       <INPUT style="font-size:17px;height: 1cm;" TYPE="text" id="location" placeholder="Location or place" class="form-control" maxlength="225" style/>
+       <INPUT style="font-size:17px;height: 1cm;" TYPE="text" id="location" placeholder="Location or place" class="form-control" maxlength="225"/>
    </div>
    <div style="margin-left: 0.2cm;margin-top: 0.3cm;">
        <button id="search" class="btn btn-primary btn-block" style="height: 1cm;font-size:18px" onclick = "searchRestaurant()">Search restaurant</button>

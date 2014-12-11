@@ -4,6 +4,8 @@ package models;
 import java.util.Date;
 
 
+
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,7 +42,12 @@ import javax.persistence.TemporalType;
 		),
 	@NamedQuery(
 				name="Reviews.findAllReviewsWithRestaurantId",
-				query="select p.firstName, rev.comments from Restaurant r, Reviews rev, Person p where rev.restaurantId=r.id and rev.userName=p.userName and r.id = :rId"
+				query="select p.firstName, rev.comments, rev.ratings from Restaurant r, Reviews rev, Person p where rev.restaurantId=r.id and rev.userName=p.userName and r.id = :rId"
+		),
+	@NamedQuery(
+				name="Reviews.findFollowingUserReviews",
+				query="select r.name, rev.comments,f.following, p.firstName,r.id,r.imageURL from Restaurant r, Reviews rev, Following f, Person p"
+						+ " where rev.userName = f.following and f.userName= :userName and f.following = p.userName"
 		),
 })
 
@@ -52,35 +59,28 @@ public class Reviews {
 	
 	
 	private String userName;
-	private int ratings;
+	private String ratings;
 	private String comments;
 	
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	private int restaurantId;
-	
-	public String toString()
-	{
-		return id + " " + userName + " " + comments;
-	}
-	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	
 	public String getUserName() {
 		return userName;
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public int getRatings() {
+	public String getRatings() {
 		return ratings;
 	}
-	public void setRatings(int ratings) {
+	public void setRatings(String ratings) {
 		this.ratings = ratings;
 	}
 	public String getComments() {
@@ -101,8 +101,7 @@ public class Reviews {
 	public void setRestaurantId(int restaurantId) {
 		this.restaurantId = restaurantId;
 	}
-	
-	public Reviews(int id, String userName, int ratings, String comments,
+	public Reviews(int id, String userName, String ratings, String comments,
 			Date date, int restaurantId) {
 		super();
 		this.id = id;
@@ -112,10 +111,7 @@ public class Reviews {
 		this.date = date;
 		this.restaurantId = restaurantId;
 	}
-	public Reviews() {
-		super();
-	}
-	public Reviews(String userName, int ratings, String comments, Date date,
+	public Reviews(String userName, String ratings, String comments, Date date,
 			int restaurantId) {
 		super();
 		this.userName = userName;
@@ -124,5 +120,9 @@ public class Reviews {
 		this.date = date;
 		this.restaurantId = restaurantId;
 	}
+	public Reviews() {
+		super();
+	}
+	
 	
 }

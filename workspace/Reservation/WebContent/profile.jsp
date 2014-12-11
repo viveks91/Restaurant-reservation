@@ -72,14 +72,15 @@ for(int i=0;i< favs.size();i++)
 {
 	Object[] obj = favs.get(i);
 	String name = (String) obj[0];
+	int id = (Integer) obj[2];
 	String street = (String) obj[3];
 	String city = (String) obj[4];
 	String state = (String) obj[5];
-	int id = (Integer) obj[7];
-	String imageURL = (String) obj[8];
+	
+	String imageURL = (String) obj[7];
 %>
 <div style="margin-left:0.3cm;margin-top:0.3cm;">
-<div style="width:615px;float:left"><button class="btn btn-link" style='font-size:140%;outline:none; value ="<%=id %>" onclick="restaurantHandler(value)'> <%=name %></button>
+<div style="width:615px;float:left"><button class="btn btn-link" style='font-size:140%;outline:none;' value ="<%=id %>" onclick="restaurantHandler(value)"> <%=name %></button>
 <p style="text-indent:14px;font-size:120%; "><%= street %>, <%= city %>, <%= state %></p></div>
 <image style="content:url(<%=imageURL%>);" width= "100" height="100"></image>
 </div><hr style="margin-left:20px;width:800px">
@@ -95,7 +96,6 @@ else
 }
 %>
 </div>
-
 </div>
 
 <script>
@@ -116,6 +116,22 @@ function logoutHandler(){
 	});
 	
 	location.href= "/Reservation/login.jsp";
+}
+
+function restaurantHandler(value) {
+	$.ajax({
+		url : "http://localhost:8080/Reservation/rest/search/fav/"+value,
+		type:"post",
+		contentType: "application/json",
+		async : false,
+		success:function(response) {
+			redirectHandler();
+		}
+	});
+}
+
+function redirectHandler() {
+	location.href = "/Reservation/restaurantdetails.jsp";
 }
 
 </script>

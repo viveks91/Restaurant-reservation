@@ -14,7 +14,7 @@
 <%
 	};
 	ReviewsDAO rev = new ReviewsDAO();
-	List<Object[]> feed = rev.findFriendsReviewsWithRestaurantName(person.getUserName());
+	List<Object[]> feed = rev.fetchNewsFeed(person.getUserName());
 %>
 <title>Home - FoodWorld</title>
 <script type="text/javascript" src="js/jquery.js"></script>
@@ -48,34 +48,32 @@
 <div style="margin-left: 1.2cm;margin-top: 0.1cm;float: left; width:900px">
 	<h1 style="font-size:200%;text-indent: 20px;">NewsFeed</h1>
 	<hr style="height:1px;background-color:#DDD;">
-<%-- 	
+ 	
  	<%
 	for (int i=0; i<feed.size();i++)
 	{
 		Object[] obj = feed.get(i);
-		String name = (String) obj[0];
+		String restaurant = (String) obj[0];
 		String comment = (String) obj[1];
-		String date = (String) obj[2];
-		String restaurant = (String) obj[3];
+		String followingUser = (String) obj[2];
+		String followingFirstName = (String) obj[3];
 		int rid = (Integer) obj[4];
 		String imageURL = (String) obj[5];
 		
 	%>
-	<div style="margin-left: 0.3cm;box-shadow: 0.5px 0.5px 3px #888888;margin-top: 0.3cm;background-color: white;width:430px;padding-top:10px;padding-bottom:10px;padding-left:10px; float: left;position: relative;">
-	<%
-	user1 = userdao.findByUserName(following.get(i).getFollowing());
-	%>
-		<button class="btn btn-link" style="font-size:170%;outline:none;" value ="<%= user1.getUserName() %>" onclick="userHandler(value)">
-		<%=user1.getFirstName() %> <%=user1.getLastName() %>
-		</button>
-		<br>
+	<div style="margin-left: 0.3cm;box-shadow: 0.5px 0.5px 3px #888888;margin-top: 0.3cm;background-color: white;width:800px;padding-top:10px;padding-bottom:10px;padding-left:10px; float: left;position: relative;">
+	<div style="float:left"><button class="btn btn-link" style="font-size:150%;outline:none;padding: 0;float:left" value ="<%= followingUser %>" onclick="userHandler(value)">
+		<%=followingFirstName %></button> <div style="padding-top:2px;padding-left:4px;padding-right:4px;font-size:140%;float:left"> added a review for </div>
+		<button class="btn btn-link" style="font-size:150%;outline:none;padding: 0;" value ="<%= rid %>" onclick="restaurantHandler(value)"><%=restaurant %>
+		</button><br>
+		<p style="font-style:italic;font-size:140%;">" <%=comment %> "</p></div>
+	<div style="float:right; margin-right:10px"><image style="content:url(<%=imageURL%>);" width= "100" height="100"></image></div>
 	
 	</div> 
  	<%
 	}
 	%> 
 
- --%>
 
 <script>
 
@@ -93,6 +91,37 @@ function logoutHandler(){
 	});
 	
 	location.href= "/Reservation/login.jsp";
+}
+
+function userHandler(user){
+	
+ 	$.ajax({
+		url : "http://localhost:8080/Reservation/rest/user/view/"+user,
+		type : "post",
+		dataType : "text",
+		async : false,
+		success : function (response) {
+			location.href = "/Reservation/otheruser.jsp";
+		}
+	}); 
+
+return false;
+}
+
+function restaurantHandler(value) {
+	$.ajax({
+		url : "http://localhost:8080/Reservation/rest/search/fav/"+value,
+		type:"post",
+		contentType: "application/json",
+		async : false,
+		success:function(response) {
+			redirectHandler();
+		}
+	});
+}
+
+function redirectHandler() {
+	location.href = "/Reservation/restaurantdetails.jsp";
 }
 
 </script>

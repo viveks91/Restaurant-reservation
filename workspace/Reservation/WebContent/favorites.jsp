@@ -50,12 +50,13 @@
 				{
 				Object[] obj = favs.get(i);
 				String name = (String) obj[0];
-				int ratings = (Integer) obj[1];
+				String ratings = (String) obj[1];
+				int id = (Integer) obj[2];
 			    String street = (String) obj[3];
 			    String city = (String) obj[4];
 			    String state = (String) obj[5];
-			    int id = (Integer) obj[7];
-			    String imageURL = (String) obj[8];
+			    String zip = (String) obj[6];
+			    String imageURL = (String) obj[7];
 %>
 
 	<div style="margin-left: 0.5cm;box-shadow: 0.5px 0.5px 3px #888888;margin-top: 0.3cm;background-color: white;width:650px;padding-top:10px;padding-bottom:10px;padding-left:10px; clear:left;position: relative;">
@@ -130,6 +131,22 @@
         });
         $("#favoritesList").append(Options);
     }
+	
+	function restaurantHandler(value) {
+		$.ajax({
+			url : "http://localhost:8080/Reservation/rest/search/fav/"+value,
+			type:"post",
+			contentType: "application/json",
+			async : false,
+			success:function(response) {
+				redirectHandler();
+			}
+		});
+	}
+	
+	function redirectHandler() {
+		location.href = "/Reservation/restaurantdetails.jsp";
+	}
 
 </script>
 </div>

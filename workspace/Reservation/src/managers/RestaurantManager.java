@@ -2,6 +2,7 @@ package managers;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import models.Restaurant;
 import dao.RestaurantDAO;
@@ -21,9 +22,14 @@ public class RestaurantManager implements Serializable{
 	 */
 	public int createRestaurant (Restaurant restaurant) {
 		// Create only if the restaurant does not already exists
-		if(restrnt_dao.findByRestaurant(restaurant).isEmpty()) 
-			restrnt_dao.create(restaurant);
-		return restaurant.getId();
+		List<Restaurant> resultList =  restrnt_dao.findByRestaurant(restaurant);
+		if(resultList.isEmpty()) 
+			{ 
+			Restaurant newRestaurant = restrnt_dao.create(restaurant);
+			return newRestaurant.getId();
+			} else {
+				return resultList.get(0).getId();
+			}
 	}
 	
 	/**
@@ -51,7 +57,7 @@ public class RestaurantManager implements Serializable{
 	 */
 	public int updateRestaurantById (Integer id, String name, String phoneNo, 
 			String website, String openingTime, String closingTime, Integer capacity, 
-			String type, Integer addressId, String imageURL, int priceLevel, int rating) {
+			String type, Integer addressId, String imageURL, int priceLevel, String rating) {
 		int updated_id = id;
 		if((findRestaurantById(id) != null) && (addr_dao.findById(addressId) != null)
 				&& (catgry_dao.findByType(type) != null))
@@ -74,8 +80,11 @@ public class RestaurantManager implements Serializable{
 	
 /*	public static void main(String[] args)
 	{
-		Restaurant a1 = new Restaurant("esddr", 23,"www.com", new Date(), new Date(), 10, "Indian",4);
+		Restaurant a1 = new Restaurant("Asdfa", "345", "ASDA",
+				"SGSG", "Hsab", 1, "asd",
+				1, "Sfgsfg", 1, "4.3");
 		RestaurantManager manager = new RestaurantManager();
-		manager.updateRestaurantById (3, "qwerty", 23,"www.com", new Date(), new Date(), 10, "Indian",5);
+		int i = manager.createRestaurant(a1);
+		System.out.println(i);
 	}*/
 }

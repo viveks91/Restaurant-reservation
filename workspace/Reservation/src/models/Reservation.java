@@ -44,68 +44,97 @@ public class Reservation implements Serializable {
 	@Id
 	private int id;
 	private int people_count;
-	@Temporal(TemporalType.DATE)
-	private Date date;
+
+	private String date;
 	
 	private String time;
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
 	private int restaurantId;
 	private String userName;
+
+	
+	public Reservation(int people_count, String date, String time,
+			int restaurantId, String userName) {
+		super();
+		this.people_count = people_count;
+		this.date = date;
+		this.time = time;
+		this.restaurantId = restaurantId;
+		this.userName = userName;
+	}
+
+
+	public Reservation(int id, int people_count, String date, String time,
+			int restaurantId, String userName) {
+		super();
+		this.id = id;
+		this.people_count = people_count;
+		this.date = date;
+		this.time = time;
+		this.restaurantId = restaurantId;
+		this.userName = userName;
+	}
+
+
 	public int getId() {
 		return id;
 	}
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
+
 	public int getPeople_count() {
 		return people_count;
 	}
+
+
 	public void setPeople_count(int people_count) {
 		this.people_count = people_count;
 	}
+
+
+	public String getDate() {
+		return date;
+	}
+
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+
 	public String getTime() {
 		return time;
 	}
+
+
 	public void setTime(String time) {
 		this.time = time;
 	}
+
+
 	public int getRestaurantId() {
 		return restaurantId;
 	}
+
+
 	public void setRestaurantId(int restaurantId) {
 		this.restaurantId = restaurantId;
 	}
+
+
 	public String getUserName() {
 		return userName;
 	}
+
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
-	public Reservation(int people_count, Date date, String time,
-			int restaurantId, String userName) {
-		super();
-		this.people_count = people_count;
-		this.date = date;
-		this.time = time;
-		this.restaurantId = restaurantId;
-		this.userName = userName;
-	}
-	public Reservation(int id, int people_count, Date date, String time,
-			int restaurantId, String userName) {
-		super();
-		this.id = id;
-		this.people_count = people_count;
-		this.date = date;
-		this.time = time;
-		this.restaurantId = restaurantId;
-		this.userName = userName;
-	}
+
+
 	public Reservation() {
 		super();
 	}

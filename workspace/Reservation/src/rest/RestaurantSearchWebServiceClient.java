@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -26,12 +27,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.xml.ws.WebServiceContext;
 
+import managers.AddressManager;
+import models.Address;
+import models.Favorites;
+import models.Restaurant;
+import models.Reviews;
 import models.User;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import dao.FavoritesDAO;
+import dao.RestaurantDAO;
+import dao.ReviewsDAO;
 
 // /rest/search
 @Path("/search")
@@ -202,7 +212,11 @@ public class RestaurantSearchWebServiceClient implements Serializable {
 						JSONObject openTime = (JSONObject) dayTimings.get("open");
 						
 						closeRestaurantTime = closeTime.get("time").toString();
+						StringBuilder sb = new StringBuilder(closeRestaurantTime);
+						closeRestaurantTime = sb.insert(2, ":").toString();
 						openRestaurantTime = openTime.get("time").toString();
+						sb = new StringBuilder(openRestaurantTime);
+						openRestaurantTime = sb.insert(2, ":").toString();
 					}catch(NullPointerException ne){
 						closeRestaurantTime = "Not Available";
 						openRestaurantTime = "Not Available";
@@ -244,6 +258,7 @@ public class RestaurantSearchWebServiceClient implements Serializable {
 						restaurant.setRestaurantId(-1);
 						
 						req.getSession().setAttribute("selectedRestaurant", restaurant);
+						req.getSession().setAttribute("path", 1);
 				}
 			} catch (ParseException pe) {
 				pe.printStackTrace();
@@ -257,6 +272,57 @@ public class RestaurantSearchWebServiceClient implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	@POST
+	@Path("/addtofav")
+	public void addToFavorites(@Context HttpServletRequest req) {
+		
+		RestaurantSearch selected = (RestaurantSearch)req.getSession().getAttribute("selectedRestaurant");
+		User user = (User)req.getSession().getAttribute("user");
+		Favorites favorite = new Favorites(user.getUserName(), selected.getRestaurantId());
+		FavoritesDAO favDao = new FavoritesDAO();
+		favDao.create(favorite);
+	}
+	
+	@POST
+	@Path("/fav/{value}")
+	public void makeRestaurantSearchObj(@PathParam("value") int selectedRestaurantId,@Context HttpServletRequest req){
+		Restaurant restaurant = new Restaurant();
+		RestaurantDAO restaurantDao = new RestaurantDAO();
+		restaurant = restaurantDao.findById(selectedRestaurantId);
+		RestaurantSearch restaurantSearchObj = new RestaurantSearch();
+		restaurantSearchObj.setName(restaurant.getName());
+		restaurantSearchObj.setWebsite(restaurant.getWebsite());
+		restaurantSearchObj.setCapacity(restaurant.getCapacity());
+		restaurantSearchObj.setClosingTime(restaurant.getClosingTime());
+		restaurantSearchObj.setOpeningTime(restaurant.getOpeningTime());
+		restaurantSearchObj.setImageURL(restaurant.getImageURL());
+		restaurantSearchObj.setPhoneNo(restaurant.getPhoneNo());
+		restaurantSearchObj.setPriceLevel((String.valueOf(restaurant.getPriceLevel())));
+		restaurantSearchObj.setRatings((String.valueOf(restaurant.getRating())));
+		restaurantSearchObj.setRestaurantId(selectedRestaurantId);
+		
+		AddressManager addrMgr = new AddressManager();
+		Address address = addrMgr.findAddressById(selectedRestaurantId);
+		String restaurantAddress=address.getapt_No()+" "+address.getStreet()+", "+address.getCity()+", "+address.getState()+" "+address.getZip();
+		restaurantSearchObj.setAddress(restaurantAddress);
+		req.getSession().setAttribute("selectedRestaurant", restaurantSearchObj);
+		req.getSession().setAttribute("path", 0);
+	}
+	
+	@POST
+	@Path("/addreview/{comments}/{rating}")
+	public void addReview(@PathParam("comments") String comments,@PathParam("rating") String rating, @Context HttpServletRequest req) {
+		
+		User user = (User)req.getSession().getAttribute("user");
+		RestaurantSearch selected = (RestaurantSearch)req.getSession().getAttribute("selectedRestaurant");
+		ReviewsDAO revDao = new ReviewsDAO();
+		Date date = new Date();
+		Reviews newReview = new Reviews(user.getUserName(),rating,comments,date,selected.getRestaurantId());
+		revDao.createReviews(newReview);
+		
+	}
+	
 	
 /*	public static void main (String args[])
 	{

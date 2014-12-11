@@ -69,8 +69,8 @@ LOCK TABLES `Category` WRITE;
 INSERT INTO `Category` (`type`)
 VALUES
 	('Indian'),
-	('Italian');
-
+	('Italian'),
+    ('Restaurant');
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,18 +171,20 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Reservation`;
 
+
 CREATE TABLE `Reservation` (
   `id` int(100) unsigned NOT NULL AUTO_INCREMENT,
-  `people_count` int(5) DEFAULT '1',
-  `time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `people_count` int(5) NOT NULL DEFAULT '1',
+  `date` varchar(15) NOT NULL,
   `restaurantId` int(11) unsigned NOT NULL,
   `userName` varchar(225) NOT NULL,
+  `time` varchar(225) DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `restaurantId` (`restaurantId`),
   KEY `userName` (`userName`),
   CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 
 
@@ -194,21 +196,21 @@ DROP TABLE IF EXISTS `Restaurant`;
 CREATE TABLE `Restaurant` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(225) NOT NULL,
-  `phoneNo` varchar(12) DEFAULT NULL,
+  `phoneNo` varchar(20) DEFAULT NULL,
   `website` varchar(500) DEFAULT NULL,
-  `openingTime` time DEFAULT NULL,
-  `closingTime` time DEFAULT NULL,
+  `openingTime` varchar(100) DEFAULT NULL,
+  `closingTime` varchar(100) DEFAULT NULL,
   `capacity` int(10) NOT NULL,
   `type` varchar(100) NOT NULL,
   `addressId` int(11) NOT NULL,
   `imageURL` varchar(500) DEFAULT NULL,
   `priceLevel` int(3) DEFAULT NULL,
-  `rating` int(3) DEFAULT NULL,
+  `rating` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `addressId` (`addressId`),
-  CONSTRAINT `restaurant_ibfk_1` FOREIGN KEY (`type`) REFERENCES `Category` (`type`) ON UPDATE CASCADE,
-  CONSTRAINT `restaurant_ibfk_2` FOREIGN KEY (`addressId`) REFERENCES `Address` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `restaurant_ibfk_1` FOREIGN KEY (`type`) REFERENCES `Category` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `restaurant_ibfk_2` FOREIGN KEY (`addressId`) REFERENCES `Address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 INSERT INTO `Restaurant` (`id`, `name`, `phoneNo`, `website`, `openingTime`, `closingTime`, `capacity`, `type`, `addressId`,`imageURL`)
@@ -228,7 +230,7 @@ DROP TABLE IF EXISTS `Reviews`;
 CREATE TABLE `Reviews` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userName` varchar(225) DEFAULT NULL,
-  `ratings` int(2) DEFAULT NULL,
+  `ratings` varchar(5) DEFAULT NULL,
   `comments` varchar(500) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `restaurantId` int(11) unsigned NOT NULL,

@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.21)
 # Database: Restaurant_Reservation
-# Generation Time: 2014-11-25 22:19:18 +0000
+# Generation Time: 2014-12-09 18:24:56 +0000
 # ************************************************************
 
 
@@ -22,25 +22,8 @@
 
 # Dump of table Address
 # ------------------------------------------------------------
-DROP TABLE IF EXISTS `City`;
-DROP TABLE IF EXISTS `State`;
-DROP TABLE IF EXISTS `ZIP`;
+
 DROP TABLE IF EXISTS `Address`;
-
-CREATE TABLE `City` (
-  `city` varchar(20) NOT NULL,
-  PRIMARY KEY (`city`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `State` (
-  `state` varchar(20) NOT NULL,
-  PRIMARY KEY (`state`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `ZIP` (
-  `zip` varchar(20) NOT NULL,
-  PRIMARY KEY (`zip`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Address` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -50,11 +33,24 @@ CREATE TABLE `Address` (
   `state` varchar(20) NOT NULL,
   `zip` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`city`) REFERENCES `City` (`city`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  FOREIGN KEY (`state`) REFERENCES `State` (`state`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  FOREIGN KEY (`zip`) REFERENCES `ZIP` (`zip`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `city` (`city`),
+  KEY `state` (`state`),
+  KEY `zip` (`zip`),
+  CONSTRAINT `address_ibfk_1` FOREIGN KEY (`city`) REFERENCES `City` (`city`),
+  CONSTRAINT `address_ibfk_2` FOREIGN KEY (`state`) REFERENCES `State` (`state`),
+  CONSTRAINT `address_ibfk_3` FOREIGN KEY (`zip`) REFERENCES `ZIP` (`zip`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
+LOCK TABLES `Address` WRITE;
+/*!40000 ALTER TABLE `Address` DISABLE KEYS */;
+
+INSERT INTO `Address` (`id`, `apt_No`, `street`, `city`, `state`, `zip`)
+VALUES
+	(1,'o0001','ewrwer','seattle','WA','98119'),
+	(2,'234','we','seattle','WA','90109');
+
+/*!40000 ALTER TABLE `Address` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table Category
@@ -67,6 +63,37 @@ CREATE TABLE `Category` (
   PRIMARY KEY (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `Category` WRITE;
+/*!40000 ALTER TABLE `Category` DISABLE KEYS */;
+
+INSERT INTO `Category` (`type`)
+VALUES
+	('Indian'),
+	('Italian'),
+    ('Restaurant');
+/*!40000 ALTER TABLE `Category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table City
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `City`;
+
+CREATE TABLE `City` (
+  `city` varchar(20) NOT NULL,
+  PRIMARY KEY (`city`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `City` WRITE;
+/*!40000 ALTER TABLE `City` DISABLE KEYS */;
+
+INSERT INTO `City` (`city`)
+VALUES
+	('seattle');
+
+/*!40000 ALTER TABLE `City` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table Favorites
@@ -77,11 +104,22 @@ DROP TABLE IF EXISTS `Favorites`;
 CREATE TABLE `Favorites` (
   `userName` varchar(225) NOT NULL,
   `restaurantId` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`userName`, `restaurantId`),
-  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`userName`,`restaurantId`),
+  KEY `restaurantId` (`restaurantId`),
+  CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `Favorites` WRITE;
+/*!40000 ALTER TABLE `Favorites` DISABLE KEYS */;
+
+INSERT INTO `Favorites` (`userName`, `restaurantId`)
+VALUES
+	('p0',1),
+	('p0',2);
+
+/*!40000 ALTER TABLE `Favorites` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table Following
@@ -92,12 +130,16 @@ DROP TABLE IF EXISTS `Following`;
 CREATE TABLE `Following` (
   `userName` varchar(225) NOT NULL,
   `following` varchar(225) NOT NULL,
-  PRIMARY KEY (`userName`, `following`),
-  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`following`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`userName`,`following`),
+  KEY `following` (`following`),
+  CONSTRAINT `following_ibfk_1` FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `following_ibfk_2` FOREIGN KEY (`following`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+
+# Dump of table Person
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Person`;
 
@@ -115,6 +157,7 @@ LOCK TABLES `Person` WRITE;
 
 INSERT INTO `Person` (`userName`, `password`, `firstName`, `lastName`, `dtype`)
 VALUES
+	('p0','pass','Preety','Mishra','User'),
 	('pre2712','jack12','jack','pager','Person'),
 	('pre2718','1233','ksjdfh','miss','User'),
 	('pre284','1234','pret','mish','User');
@@ -123,23 +166,25 @@ VALUES
 UNLOCK TABLES;
 
 
-
-
 # Dump of table Reservation
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Reservation`;
 
+
 CREATE TABLE `Reservation` (
   `id` int(100) unsigned NOT NULL AUTO_INCREMENT,
-  `people_count` int(5) DEFAULT 1,
-  `time` datetime DEFAULT current_timestamp,
+  `people_count` int(5) NOT NULL DEFAULT '1',
+  `date` varchar(15) NOT NULL,
   `restaurantId` int(11) unsigned NOT NULL,
   `userName` varchar(225) NOT NULL,
+  `time` varchar(225) DEFAULT '',
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `restaurantId` (`restaurantId`),
+  KEY `userName` (`userName`),
+  CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 
 
@@ -151,17 +196,29 @@ DROP TABLE IF EXISTS `Restaurant`;
 CREATE TABLE `Restaurant` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(225) NOT NULL,
-  `phoneNo` int(50) DEFAULT NULL,
+  `phoneNo` varchar(20) DEFAULT NULL,
   `website` varchar(500) DEFAULT NULL,
-  `openingTime` time DEFAULT NULL,
-  `closingTime` time DEFAULT NULL,
+  `openingTime` varchar(100) DEFAULT NULL,
+  `closingTime` varchar(100) DEFAULT NULL,
   `capacity` int(10) NOT NULL,
   `type` varchar(100) NOT NULL,
   `addressId` int(11) NOT NULL,
+  `imageURL` varchar(500) DEFAULT NULL,
+  `priceLevel` int(3) DEFAULT NULL,
+  `rating` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`type`) REFERENCES `Category` (`type`)  ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`addressId`) REFERENCES `Address` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `type` (`type`),
+  KEY `addressId` (`addressId`),
+  CONSTRAINT `restaurant_ibfk_1` FOREIGN KEY (`type`) REFERENCES `Category` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `restaurant_ibfk_2` FOREIGN KEY (`addressId`) REFERENCES `Address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+INSERT INTO `Restaurant` (`id`, `name`, `phoneNo`, `website`, `openingTime`, `closingTime`, `capacity`, `type`, `addressId`,`imageURL`)
+VALUES
+	(1,'Roti','96868698','www.roti.com','09:00:00','17:00:00',50,'Indian',1,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg',3,3),
+	(2,'BlueMoon','23223','www.bluemoon.com',NULL,NULL,12,'Italian',2,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg',3,3),
+	(3,'Chutneys','234234','www.chutneys.com','09:00:00','19:00:00',20,'Indian',1,'http://img2.wikia.nocookie.net/__cb20130511180903/legendmarielu/images/b/b4/No_image_available.jpg',3,3);
+
 
 
 
@@ -172,16 +229,50 @@ DROP TABLE IF EXISTS `Reviews`;
 
 CREATE TABLE `Reviews` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `userName` varchar(225),
-  `ratings` int(2) DEFAULT NULL,
+  `userName` varchar(225) DEFAULT NULL,
+  `ratings` varchar(5) DEFAULT NULL,
   `comments` varchar(500) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `restaurantId` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `restaurantId` (`restaurantId`),
+  KEY `userName` (`userName`),
+  CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`restaurantId`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`userName`) REFERENCES `User` (`userName`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
+LOCK TABLES `Reviews` WRITE;
+/*!40000 ALTER TABLE `Reviews` DISABLE KEYS */;
+
+INSERT INTO `Reviews` (`id`, `userName`, `ratings`, `comments`, `date`, `restaurantId`)
+VALUES
+	(1,'p0',2,'bad',NULL,1),
+	(2,'p0',4,'good',NULL,2),
+	(3,'pre284',5,'very nice',NULL,1);
+
+/*!40000 ALTER TABLE `Reviews` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table State
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `State`;
+
+CREATE TABLE `State` (
+  `state` varchar(20) NOT NULL,
+  PRIMARY KEY (`state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `State` WRITE;
+/*!40000 ALTER TABLE `State` DISABLE KEYS */;
+
+INSERT INTO `State` (`state`)
+VALUES
+	('WA');
+
+/*!40000 ALTER TABLE `State` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table TimeSlot
@@ -195,13 +286,14 @@ CREATE TABLE `TimeSlot` (
   `closeTime` time DEFAULT NULL,
   `capacity` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`id`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE
+  CONSTRAINT `timeslot_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Restaurant` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 
 # Dump of table User
 # ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `User`;
 
 CREATE TABLE `User` (
@@ -221,12 +313,34 @@ LOCK TABLES `User` WRITE;
 
 INSERT INTO `User` (`phoneNo`, `emailId`, `userName`, `addressId`)
 VALUES
-	(2876,'jdhgf','pre2718',1),
-	(1234,'asd','pre284',1);
+	('9234687','pwei@kjdsa.com','p0',1),
+	('2876','jdhgf','pre2718',1),
+	('1234','asd','pre284',1);
 
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+# Dump of table ZIP
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ZIP`;
+
+CREATE TABLE `ZIP` (
+  `zip` varchar(20) NOT NULL,
+  PRIMARY KEY (`zip`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `ZIP` WRITE;
+/*!40000 ALTER TABLE `ZIP` DISABLE KEYS */;
+
+INSERT INTO `ZIP` (`zip`)
+VALUES
+	('90109'),
+	('98119');
+
+/*!40000 ALTER TABLE `ZIP` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
