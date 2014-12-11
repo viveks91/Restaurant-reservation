@@ -13,7 +13,7 @@ import models.Reservation;
 
 public class ReservationDAO implements Serializable {
 	
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Reservation");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Restaurant_Reservation");
 	EntityManager em = null;
 	
 	public ReservationDAO()	{
@@ -25,11 +25,11 @@ public class ReservationDAO implements Serializable {
 	 * @param reservation
 	 * @return id
 	 */
-	public int create(Reservation reservation) {
+	public Reservation create(Reservation reservation) {
 		em.getTransaction().begin();
 		em.persist(reservation);
 		em.getTransaction().commit();
-		return reservation.getId();
+		return reservation;
 	}
 	
 	/**
@@ -95,6 +95,14 @@ public class ReservationDAO implements Serializable {
 		return found_reservations;
 	}
 	
+	public List<Object[]> findDetailsByUserName(String userName) {
+		em.getTransaction().begin();
+		Query q = em.createNamedQuery("Reservation.findReservationsAndDetailsByUserName");
+		q.setParameter("username", userName);
+		List<Object[]> reservations = q.getResultList();
+		em.getTransaction().commit();
+		return reservations;
+	}
 	/**
 	 * Updates the reservation with the given id to given values
 	 * @param id
@@ -102,10 +110,11 @@ public class ReservationDAO implements Serializable {
 	 * @param time
 	 * @return id
 	 */
-	public int updateById(int id, int people_count, Date time) {
+	public int updateById(int id, int people_count, String time,Date date) {
 		em.getTransaction().begin();
 		Reservation reservation = em.find(Reservation.class, id);
 		reservation.setPeople_count(people_count);
+		reservation.setDate(date);
 		reservation.setTime(time);
 		em.merge(reservation);
 		em.getTransaction().commit();

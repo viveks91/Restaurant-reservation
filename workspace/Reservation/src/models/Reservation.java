@@ -34,6 +34,10 @@ import javax.persistence.TemporalType;
 			name="Reservation.deleteReservationsByUserName", 
 			query="delete from Reservation r where r.userName = :username"),
 	@NamedQuery(
+			name="Reservation.findReservationsAndDetailsByUserName", 
+			query="select rt.name,r.people_count,r.time,r.date from Reservation r, "
+					+ "Restaurant rt where r.userName = :username and r.restaurantId = rt.id"),
+	@NamedQuery(
 			name="Reservation.deleteReservationsByRestaurantId", 
 			query="delete from Reservation r where r.restaurantId = :rId")})
 public class Reservation implements Serializable {
@@ -41,7 +45,15 @@ public class Reservation implements Serializable {
 	private int id;
 	private int people_count;
 	@Temporal(TemporalType.DATE)
-	private Date time;
+	private Date date;
+	
+	private String time;
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	private int restaurantId;
 	private String userName;
 	public int getId() {
@@ -56,10 +68,10 @@ public class Reservation implements Serializable {
 	public void setPeople_count(int people_count) {
 		this.people_count = people_count;
 	}
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 	public int getRestaurantId() {
@@ -74,19 +86,22 @@ public class Reservation implements Serializable {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public Reservation(int id, int people_count, Date time,
+	
+	public Reservation(int people_count, Date date, String time,
 			int restaurantId, String userName) {
 		super();
-		this.id = id;
 		this.people_count = people_count;
+		this.date = date;
 		this.time = time;
 		this.restaurantId = restaurantId;
 		this.userName = userName;
 	}
-	public Reservation(int people_count, Date time, int restaurantId,
-			String userName) {
+	public Reservation(int id, int people_count, Date date, String time,
+			int restaurantId, String userName) {
 		super();
+		this.id = id;
 		this.people_count = people_count;
+		this.date = date;
 		this.time = time;
 		this.restaurantId = restaurantId;
 		this.userName = userName;

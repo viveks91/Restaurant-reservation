@@ -84,10 +84,10 @@ public class ReservationManager implements Serializable{
 	 * @param userName
 	 * @return id
 	 */
-	public int updateReservationById (int id, int people_count, Date time,
+	public int updateReservationById (int id, int people_count, String time,Date date, 
 			int restaurantId, String userName) {
 		int updated_id;
-		updated_id = rsvtn_dao.updateById(id, people_count, time);
+		updated_id = rsvtn_dao.updateById(id, people_count, time,date);
 		return updated_id;
 	}
 
