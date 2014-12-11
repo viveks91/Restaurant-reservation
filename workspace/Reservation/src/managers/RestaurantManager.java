@@ -49,8 +49,8 @@ public class RestaurantManager implements Serializable{
 	 * @param addressId
 	 * @return id
 	 */
-	public int updateRestaurantById (Integer id, String name, Integer phoneNo, 
-			String website, Date openingTime, Date closingTime, Integer capacity, 
+	public int updateRestaurantById (Integer id, String name, String phoneNo, 
+			String website, String openingTime, String closingTime, Integer capacity, 
 			String type, Integer addressId, String imageURL, int priceLevel, int rating) {
 		int updated_id = id;
 		if((findRestaurantById(id) != null) && (addr_dao.findById(addressId) != null)

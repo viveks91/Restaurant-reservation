@@ -37,13 +37,10 @@ public class Restaurant implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	private Integer phoneNo;
+	private String phoneNo;
 	private String website;
-	
-	@Temporal(TemporalType.TIME)
-	private Date openingTime;
-	@Temporal(TemporalType.TIME)
-	private Date closingTime;
+	private String openingTime;
+	private String closingTime;
 	private Integer capacity;
 	private String type;
 	private Integer addressId;
@@ -68,10 +65,10 @@ public class Restaurant implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getPhoneNo() {
+	public String getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(Integer phoneNo) {
+	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 	public String getWebsite() {
@@ -80,16 +77,16 @@ public class Restaurant implements Serializable {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	public Date getOpeningTime() {
+	public String getOpeningTime() {
 		return openingTime;
 	}
-	public void setOpeningTime(Date openingTime) {
+	public void setOpeningTime(String openingTime) {
 		this.openingTime = openingTime;
 	}
-	public Date getClosingTime() {
+	public String getClosingTime() {
 		return closingTime;
 	}
-	public void setClosingTime(Date closingTime) {
+	public void setClosingTime(String closingTime) {
 		this.closingTime = closingTime;
 	}
 	public Integer getCapacity() {
@@ -124,8 +121,8 @@ public class Restaurant implements Serializable {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-	public Restaurant(String name, Integer phoneNo, String website,
-			Date openingTime, Date closingTime, Integer capacity, String type,
+	public Restaurant(String name, String phoneNo, String website,
+			String openingTime, String closingTime, Integer capacity, String type,
 			Integer addressId, String imageURL, int priceLevel, int rating) {
 		super();
 		this.name = name;
@@ -140,8 +137,8 @@ public class Restaurant implements Serializable {
 		this.priceLevel = priceLevel;
 		this.rating = rating;
 	}
-	public Restaurant(Integer id, String name, Integer phoneNo, String website,
-			Date openingTime, Date closingTime, Integer capacity, String type,
+	public Restaurant(Integer id, String name, String phoneNo, String website,
+			String openingTime, String closingTime, Integer capacity, String type,
 			Integer addressId, String imageURL, int priceLevel, int rating) {
 		super();
 		this.id = id;

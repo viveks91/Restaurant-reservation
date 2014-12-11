@@ -50,8 +50,8 @@ public class RestaurantDAO implements Serializable {
 	 * @param addressId
 	 * @return id
 	 */
-	public int updateById(Integer id, String name, Integer phoneNo, String website,
-			Date openingTime, Date closingTime, Integer capacity, String type,
+	public int updateById(Integer id, String name, String phoneNo, String website,
+			String openingTime, String closingTime, Integer capacity, String type,
 			Integer addressId, String imageURL, int priceLevel, int rating) {
 		em.getTransaction().begin();
 		Restaurant restaurant = em.find(Restaurant.class, id);
