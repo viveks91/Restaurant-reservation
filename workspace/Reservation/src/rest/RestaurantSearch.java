@@ -22,8 +22,14 @@ public class RestaurantSearch implements Serializable {
 	private String priceLevel;
 	private String ratings;
 	private String imageURL;
+	private int restaurantId;
 	
-	
+	public int getRestaurantId() {
+		return restaurantId;
+	}
+	public void setRestaurantId(int restaurantId) {
+		this.restaurantId = restaurantId;
+	}
 	public String getPlaceId() {
 		return placeId;
 	}

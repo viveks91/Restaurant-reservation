@@ -241,6 +241,7 @@ public class RestaurantSearchWebServiceClient implements Serializable {
 						restaurant.setRatings(rating);
 						restaurant.setPriceLevel(priceLevel);
 						restaurant.setImageURL(imageURL);
+						restaurant.setRestaurantId(-1);
 						
 						req.getSession().setAttribute("selectedRestaurant", restaurant);
 				}
