@@ -59,7 +59,8 @@
 %>
 
 	<div style="margin-left: 0.5cm;box-shadow: 0.5px 0.5px 3px #888888;margin-top: 0.3cm;background-color: white;width:650px;padding-top:10px;padding-bottom:10px;padding-left:10px; clear:left;position: relative;">
-	<div style="width:515px;float:left"><button class="btn btn-link" style='font-size:140%;outline:none;padding-right: 10px;' value ="<%=id %>" onclick="restaurantHandler(value)"> <%=name %></button><br>
+	<div style="width:515px;float:left">
+	<button class="btn btn-link" style='font-size:140%;outline:none;padding-right: 10px;' value ="<%=id %>" onclick="restaurantHandler(value)"> <%=name %></button><br>
 		<p style="text-indent:14px;font-size:120%; "><%= street %>, <%= city %>, <%= state %></p>
 		<p style="text-indent:14px;font-size:120%;font-style: italic; ">My rating: <%= ratings %></p></div>
 		<image style="content:url(<%=imageURL%>);" width= "100" height="100"></image>
