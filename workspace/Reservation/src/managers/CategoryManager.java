@@ -38,14 +38,5 @@ public class CategoryManager implements Serializable {
 		if(findCategoryByType(type) == null) return;
 		catgry_dao.deleteByType(type);
 	}
-	
-/*	public static void main(String[] args)
-	{
-
-		CategoryManager mgr = new CategoryManager();
-		Category ctr = new Category("Indian");
-		mgr.removeCategoryByType("Chinese");
-
-	}*/
 
 }

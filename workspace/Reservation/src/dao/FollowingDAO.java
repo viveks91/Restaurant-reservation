@@ -63,18 +63,5 @@ public class FollowingDAO {
 		else a=true;
 		return a;
 	}
-	
-	
-/*	public static void main(String[] args) {
-		FollowingDAO dao = new FollowingDAO();
-		Following f1 = new Following("pre284", "pre2718");
-		dao.create(f1);
-		Following f2 = new Following("pre284", "pre2712");
-		dao.create(f2);
-		//dao.deleteByUserNameAndFollowing("pre284", "pre2718");
-		boolean f3 = dao.findBy2UserName("vivek","vidhya");
-		System.out.println(f3);
-
-	}*/
 
 }

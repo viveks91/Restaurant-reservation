@@ -117,7 +117,7 @@ public class ReservationDAO implements Serializable {
 		reservation.setTime(time);
 		em.merge(reservation);
 		em.getTransaction().commit();
-		return id;
+		return reservation.getId();
 	}
 	
 	/**
@@ -137,6 +137,4 @@ public class ReservationDAO implements Serializable {
 		ReservationDAO reservDao = new ReservationDAO();
 		reservDao.create(reservation);
 	}
-
-
 }

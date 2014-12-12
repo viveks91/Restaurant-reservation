@@ -87,17 +87,6 @@ public class PersonDAO {
 
 	public static void main(String[] args) {
 		PersonDAO dao = new PersonDAO();
-		
-		/*Person d1 = new Person ("pre2712", "jack12", "jack","pager");
-		dao.create(d1);*/
-		//List<Person> p1 =	dao.findByFirstName("Alice");
-		//System.out.println(p1);
-	//	dao.updateFirstNameByUserName("pre27", "Rio");
-		
-			//dao.deleteByUserName("pre2736");
 		System.out.println(dao.findByUserName("gsdz").getPassword());
-		
-
 	}
-
 }

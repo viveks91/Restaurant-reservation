@@ -57,12 +57,11 @@ public class RestaurantSearchWebServiceClient implements Serializable {
 	public void setContext(WebServiceContext context) {
 		this.context = context;
 	}
-
+	
 	private String urlAPIPlaces = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={NAME}+restaurants+in+{LOCATION}&key=AIzaSyApupOnC2_qT2S_5Sw82cLtMxX3Y7fWPUY";
 	private String urlAPIPlaceDetails ="https://maps.googleapis.com/maps/api/place/details/json?placeid={PLACE}&key=AIzaSyCTxX10Hznx4ta5ZvlCS1BFXxDOwNJlQ-s";
-	private String urlAPIPhoto="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={PHOTO_REF}&key=AIzaSyBK7757GStqJx2Xudqnm5IMViOBmGIdJFM";
-	
-	
+	private String urlAPIPhoto="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={PHOTO_REF}&key=AIzaSyApupOnC2_qT2S_5Sw82cLtMxX3Y7fWPUY";
+
 	@GET
 	@Path("/{searchParameters}")
 	public void getParameters(@PathParam("searchParameters") String searchParameters, @Context HttpServletRequest req){
@@ -81,7 +80,6 @@ public class RestaurantSearchWebServiceClient implements Serializable {
 	}
 	
 	public List<RestaurantSearch> getRestaurantByNameAndLocation(String name, String location) {
-		// Correct the input parameters,required for the URL pattern
 		name = name.replace(" ", "+");
 		location = location.replace(" ", "+");
 		
@@ -323,11 +321,4 @@ public class RestaurantSearchWebServiceClient implements Serializable {
 		
 	}
 	
-	
-/*	public static void main (String args[])
-	{
-		String a = ",asd";
-		String b[] = a.split(",");
-		System.out.println(b.length);
-	}*/
 }

@@ -30,8 +30,8 @@
 </div>
   
 <div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurants</a></p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF"> Search restaurants</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reservation.jsp" style="color:#FFF"> My reservations</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/favorites.jsp" style="color:#FFF"> My favorites</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reviews.jsp" style="color:#FFF"> My reviews</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/following.jsp" style="color:#FFF"> Following</a> </p>
@@ -71,7 +71,7 @@
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Phone Number</label>
     <div class="col-sm-9">
-      <INPUT style="font-size:17px" TYPE="text" id="phoneNo" value= "<%=user.getPhoneNo()%>" class="form-control" maxlength="12"/>
+      <INPUT style="font-size:17px" TYPE="text" id="phoneNo" value= "<%=user.getPhoneNo()%>" class="form-control" maxlength="19"/>
     </div>
   </div>
   

@@ -58,7 +58,6 @@ function handleLogin(login) {
 		async : false,
 		contentType : "application/json",
 		success : function(response) {
-			//alert(response.status == "pass");
 			  if(response == "pass") location.href = "/Reservation/home.jsp";
 				else alert("Username/Password is incorrect"); 
 		}

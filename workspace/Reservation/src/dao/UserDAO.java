@@ -33,7 +33,7 @@ public class UserDAO implements Serializable {
 		em.getTransaction().commit();
 	}
 	
-	public String updateByUserName(String userName, String phoneNo, String emailId, int addressId) {
+	public User updateByUserName(String userName, String phoneNo, String emailId, int addressId) {
 		em.getTransaction().begin();
 		User user = em.find(User.class, userName);
 		user.setPhoneNo(phoneNo);
@@ -41,7 +41,7 @@ public class UserDAO implements Serializable {
 		user.setAddressId(addressId);
 		em.merge(user);
 		em.getTransaction().commit();
-		return user.getUserName();
+		return user;
 	}
 	
 	public User findByUserName(String userName) {
@@ -50,21 +50,5 @@ public class UserDAO implements Serializable {
 		em.getTransaction().commit();
 		return user;
 	}
-	
-/*	public List<Object[]> find(int aid){
-		em.getTransaction().begin();
-		Query q = em.createNamedQuery("User.testing");
-		q.setParameter("aId", aid);
-		List<Object[]> data = (List<Object[]>)q.getResultList();
-		em.getTransaction().commit();
-		return data;
-	}*/
-
-/*	public static void main(String[] args) {
-		UserDAO dao = new UserDAO();
-		User user = dao.findByUserName("asdda");
-		System.out.println(user);
-		
-	}*/
 
 }

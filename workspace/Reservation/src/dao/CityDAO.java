@@ -40,12 +40,5 @@ public class CityDAO implements Serializable {
 		em.getTransaction().commit();
 		return found_city;
 	}
-	
-/*	public static void main(String[] args) {
-		CityDAO dao = new CityDAO();
-		City city = new City("seattle");
-		
-		System.out.println(dao.findByType("sdg"));
-	}*/
 
 }

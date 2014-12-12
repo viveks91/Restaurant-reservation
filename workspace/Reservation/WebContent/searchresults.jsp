@@ -34,8 +34,8 @@
 </div>
   
 <div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurants</a></p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF"> Search restaurants</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reservation.jsp" style="color:#FFF"> My reservations</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/favorites.jsp" style="color:#FFF"> My favorites</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reviews.jsp" style="color:#FFF"> My reviews</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/following.jsp" style="color:#FFF"> Following</a> </p>
@@ -61,7 +61,7 @@ for(int i=0;i<results.size();i++){
 <div style="width:545px;float:left;padding-right: 10px;">
 <button class="btn btn-link" style="font-size:170%;outline:none;" value ="<%= results.get(i).getPlaceId() %>" onclick="restaurantHandler(value)">
 <%= results.get(i).getName() %></button><br>
-<p style="float:left; margin-left:0.5cm; font-size:130%">Rating:<%= results.get(i).getRatings() %></p>
+<p style="float:left; margin-left:0.5cm; font-size:130%">Rating: <%= results.get(i).getRatings() %></p>
 <p style="float:left; margin-left:1.5cm; font-size:130%">Price Level: <%= results.get(i).getPriceLevel() %></p><br>
 <p style="clear:left; margin-left:0.5cm"><%= results.get(i).getAddress() %></p>
 </div><image style="content:url(<%=results.get(i).getImageURL() %>);margin-top:5px" width= "100" height="100"></image></div>

@@ -35,11 +35,12 @@ import javax.persistence.TemporalType;
 			query="delete from Reservation r where r.userName = :username"),
 	@NamedQuery(
 			name="Reservation.findReservationsAndDetailsByUserName", 
-			query="select rt.name,r.people_count,r.time,r.date from Reservation r, "
+			query="select rt.name ,r.people_count,r.time,r.date,r.id,rt.imageURL, rt.id from Reservation r, "
 					+ "Restaurant rt where r.userName = :username and r.restaurantId = rt.id"),
 	@NamedQuery(
 			name="Reservation.deleteReservationsByRestaurantId", 
 			query="delete from Reservation r where r.restaurantId = :rId")})
+
 public class Reservation implements Serializable {
 	@Id
 	private int id;

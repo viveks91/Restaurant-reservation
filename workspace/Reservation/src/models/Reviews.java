@@ -46,9 +46,9 @@ import javax.persistence.TemporalType;
 		),
 	@NamedQuery(
 				name="Reviews.findFollowingUserReviews",
-				query="select r.name, rev.comments,f.following, p.firstName,r.id,r.imageURL from Restaurant r, Reviews rev, Following f, Person p"
-						+ " where rev.userName = f.following and f.userName= :userName and f.following = p.userName"
-		),
+				query="select r.name,rev.comments,p.userName,p.firstName,r.id,r.imageURL from Following f, Person p, Reviews rev, Restaurant r"
+						+ " where f.userName = :userName and f.following=p.userName and rev.userName = f.following and rev.restaurantId=r.id"
+		)
 })
 
 public class Reviews {

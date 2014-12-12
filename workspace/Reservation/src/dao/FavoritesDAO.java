@@ -43,21 +43,11 @@ public class FavoritesDAO {
 		em.getTransaction().commit();
 	}
 	
-	/*public List<Favorites> findByUserName(String userName) {
-		em.getTransaction().begin();
-		Query q = em.createNamedQuery("Favorites.findByUserName");//FavoritesRestaurants.findByUserName
-		q.setParameter("userName", userName);
-		List<Favorites> favorites = q.getResultList();
-		em.getTransaction().commit();
-		return favorites;
-	}*/
-	
 	public List<Object[]> findByUserName(String userName) {
 		em.getTransaction().begin();
 		Query q = em.createNamedQuery("FavoritesRestaurants.findByUserName");
 		q.setParameter("userName", userName);
 		List<Object[]> favorites = q.getResultList();
-	//	favorites.add(q.getFirstResult());
 		em.getTransaction().commit();
 		return favorites;
 	}
@@ -72,18 +62,4 @@ public class FavoritesDAO {
 		if (favorites.isEmpty()) return false;
 		else return true;
 	}
-	
-/*	public static void main(String[] args) {
-		FavoritesDAO dao = new FavoritesDAO();
-		List<Integer> fav = dao.findByUserName("vivek");
-		System.out.println(fav.size());
-
-		//Favorites f1 = new Favorites("pre284", 1);
-		//dao.create(f1);
-	//	Favorites f2 = new Favorites("pre284", 2);
-		//dao.create(f2);
-	//	dao.deleteByUserNameAndFavorites("pre284", 1);
-		//List<Favorites> f3 = dao.findByUserName("pre284");
-	}*/
-
 }

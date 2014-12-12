@@ -72,7 +72,7 @@
   <div class="form-group form-group-lg">
     <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Phone Number</label>
     <div class="col-sm-9">
-      <INPUT style="font-size:17px" TYPE="text" id="phoneNo" placeholder="Enter your phone number" class="form-control" maxlength="12"/>
+      <INPUT style="font-size:17px" TYPE="text" id="phoneNo" placeholder="Enter your phone number" class="form-control" maxlength="19"/>
     </div>
   </div>
   

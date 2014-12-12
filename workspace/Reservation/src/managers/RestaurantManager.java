@@ -21,7 +21,6 @@ public class RestaurantManager implements Serializable{
 	 * @return id
 	 */
 	public int createRestaurant (Restaurant restaurant) {
-		// Create only if the restaurant does not already exists
 		List<Restaurant> resultList =  restrnt_dao.findByRestaurant(restaurant);
 		if(resultList.isEmpty()) 
 			{ 
@@ -77,14 +76,4 @@ public class RestaurantManager implements Serializable{
 		addr_dao.deleteById(rstnt.getAddressId());
 		restrnt_dao.deleteById(id);
 	}
-	
-/*	public static void main(String[] args)
-	{
-		Restaurant a1 = new Restaurant("Asdfa", "345", "ASDA",
-				"SGSG", "Hsab", 1, "asd",
-				1, "Sfgsfg", 1, "4.3");
-		RestaurantManager manager = new RestaurantManager();
-		int i = manager.createRestaurant(a1);
-		System.out.println(i);
-	}*/
 }

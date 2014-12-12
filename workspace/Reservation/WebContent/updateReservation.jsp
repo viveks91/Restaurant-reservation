@@ -1,18 +1,25 @@
+<%@page import="dao.FavoritesDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="models.User,models.Address, models.Reservation,  models.Restaurant,managers.RestaurantManager, managers.AddressManager"%>
+    pageEncoding="ISO-8859-1" import="managers.ReservationManager,models.Reservation,java.util.*,java.text.*,dao.ReviewsDAO,models.User,models.Address,rest.RestaurantSearch, models.Restaurant, managers.RestaurantManager, managers.AddressManager"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>update reservation</title>
+<title>Edit account</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet"/>
 </head>
 <%
 User user = (User)session.getAttribute("user");
-Reservation res = (Reservation)session.getAttribute("reservationDetails");
-Restaurant rest = (Restaurant)session.getAttribute("populateRestaurant");
-int pathId = (Integer)session.getAttribute("path");
+Reservation currentReservation = (Reservation)session.getAttribute("reservationDetails");
+RestaurantManager restaurantMgr = new RestaurantManager();
+Restaurant selected = restaurantMgr.findRestaurantById(currentReservation.getRestaurantId());
+AddressManager addrMgr = new AddressManager();
+Address address = addrMgr.findAddressById(selected.getAddressId());
+String restaurantAddress=address.getapt_No()+" "+address.getStreet()+", "+address.getCity()+", "+address.getState()+" "+address.getZip();
+DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+Date date = new Date();
+
 %>
 
 <body style= "background-color:#F3F3F3;">
@@ -30,113 +37,107 @@ int pathId = (Integer)session.getAttribute("path");
   </span>
 </div>
   
-<div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:250px;float: left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/home.jsp" style="color:#FFF"> Make a reservation</a></p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
+<div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF"> Search restaurants</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reservation.jsp" style="color:#FFF"> My reservations</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/favorites.jsp" style="color:#FFF"> My favorites</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reviews</a> </p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editProfile.jsp" style="color:#FFF"> Edit profile</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reviews.jsp" style="color:#FFF"> My reviews</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/following.jsp" style="color:#FFF"> Following</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/finduser.jsp" style="color:#FFF"> Find a user</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/editprofile.jsp" style="color:#FFF"> Edit profile</a> </p>
 </div>
-<div style="margin-left: 0.7cm;float: left;" class="col-lg-6">
-<h1 style="font-size:300%;text-indent: 30px;">Update Reservation</h1><hr style="height:1px;background-color:#DDD;">
+<div style="margin-left: 1.2cm;margin-top: 0.1cm;float: left;width:800px;" >
+<h1 style="font-size:300%;text-indent: 15px;">Make Reservation</h1><hr style="height:1px;background-color:#DDD;">
+
 
 <form class="form-horizontal" role="form">
-<input type="hidden" name="customerTime" value="<%=res.getTime()%>" />
   <div class="form-group form-group-lg">
-    <label class="col-sm-3 control-label" for="lg">Number of people:</label>
+    <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Restaurant Details</label>
+    <div class="col-sm-9" style="margin-left:0.4cm;width:590px;box-shadow: 0.5px 0.5px 3px #888888;background-color: white;padding-top:10px;padding-bottom:10px;padding-left:10px; position: relative;">
+      <p style="height: 1cm;font-size:17px"><span style="font-size:120%"><%= selected.getName()%></span><br> <%= restaurantAddress%> </p>
+    </div>
+  </div>
+
+  <div class="form-group form-group-lg">
+    <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Number of people</label>
     <div class="col-sm-9">
-      <INPUT TYPE="text" id="people_count" value= "<%=res.getPeople_count()%>" class="form-control" maxlength="225"/>
+      <INPUT TYPE="text" id="people_count" placeholder="eg. 5" class="form-control" maxlength="225" style="height: 1cm;font-size:17px" value="<%=currentReservation.getPeople_count() %>"/>
     </div>
   </div>
   
   <div class="form-group form-group-lg">
-    <label class="col-sm-3 control-label" for="lg">Date</label>
+    <label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Date</label>
     <div class="col-sm-9">
-      <INPUT TYPE="date" id="datepicker" value= "<%=res.getDate()%>" class="form-control" maxlength="225"/>
+      <INPUT TYPE="date" id="datepicker" min="<%=dateFormat.format(date).toString() %>" style="width:590px;height: 1cm;font-size:17px"/>
     </div>
   </div>
   
-  
   <div class="form-group form-group-lg">
-  
- 	<label class="col-sm-3 control-label" for="lg">Time</label>
- 	
+ 	<label class="col-sm-3 control-label" for="lg" style="height: 1cm;font-size:17px">Time Slot</label>
  		<div class="col-sm-9">
- 			<select   id = "timepicker" class="form-control" maxlength="225">
+ 			<select id="timepicker"  class="form-control" maxlength="225" style="height: 1cm;font-size:17px">
 				<option value="18:00">06:00 PM - 07:00 PM</option>
 				<option value="19:00">07:00 PM - 08:00 PM</option>
 				<option value="20:00">08:00 PM - 09:00 PM</option>
 				<option value="21:00">09:00 PM - 10:00 PM</option>
 				
-			</select>
-		</div>
+			</select><hr style="height:1px;background-color:#DDD;">
+			<button class="btn btn-warning btn-block" id="makeit" style="height: 1cm;font-size:17px" onclick="return confirm('Confirm your reservation?')">Update Reservation</button>
+		</div>	
  </div>
-  
+
 </form>
- <div style="margin-left: 50%;">
-         <button class="btn btn-warning col-xs-5" id="updateRev" style="width:232px;">Update Reservation</button>
-         
- </div>
-  
+
   <script>
   $(function(){
-		alert("helooooooo");
-		$("#updateRev").click(updateReservationHandler);
+		
+		$("#makeit").click(updateReservationHandler);
+		$("#logout").click(logoutHandler);
+		
 	});
-  
-  function updateReservationHandler() {
-	  
-		var addrId = "<%= user.getAddressId()%>";
-		var ppCount = $("#people_count").val();
-		 alert("ppCount" +ppCount);
-		var id = "<%= res.getId() %>";
-		var booking = document.getElementById("datepicker").value;
-		var currentdate = new Date(); 
-		var datewhole = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate() ;
-	     //alert(currentdate.getDate());
-		var hoursvalidate = currentdate.getHours();
-		var minutesvalidate = currentdate.getMinutes();
-		var time = document.getElementById("timepicker").value;
-		if(datewhole == booking && hoursvalidate > 16 && minutesvalidate > 00)
-			{
-				window.alert("Sorry, booking is open till 4:00 pm only");
-			}
-		else{
-			
-		var newReservation = {
-				"id": "<%= res.getId() %>",
-				"people_count":$("#people_count").val(),
-				"date": document.getElementById("datepicker").value,
-				"time": document.getElementById("timepicker").value,
-				
-				};
-		
-		updateReservation(newReservation);
-			
-		}
-	}
-		
-	function updateReservation(newReservation) {
+
+function logoutHandler(){
 		
 		$.ajax({
-			
-			url : "http://localhost:8080/Reservation/rest/user/updateReservation"+newReservation,
+			url : "http://localhost:8080/Reservation/rest/user/logout",
 			type : "post",
+		});
+		
+		location.href= "/Reservation/login.jsp";
+}
+  
+function updateReservationHandler() {
+			
+		var newReservation = {
+				"id": "<%= currentReservation.getId() %>",
+				"userName": "<%= currentReservation.getUserName()%>",
+				"restaurantId" : "<%=currentReservation.getRestaurantId() %>",
+				"people_count":$("#people_count").val(),
+				"date": $("#datepicker").val(),
+				"time": $("#timepicker").val(),
+				};
+		updateReservation(newReservation);
+		return false;
+}
+
+		
+	function updateReservation(newReservation) {
+
+		$.ajax({
+			url : "http://localhost:8080/Reservation/rest/user/updatereservation",
+			type : "put",
 			data : JSON.stringify(newReservation),
-			dataType : 'text',
 			contentType : "application/json",
 			async : false,
-			success : function(response) {
-				alert("successsssss");
-				location.href = "/Reservation/reservation.jsp";
-				//return false;
-		    }
-		
+			success : responseHandler
 		});
 		
 	}
 	
-	
+	function responseHandler() {
+		alert("Update successful");
+		location.href = "/Reservation/reservation.jsp";
+	}
   
   </script>
 </div>

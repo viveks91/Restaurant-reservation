@@ -13,6 +13,7 @@ import javax.ws.rs.core.Context;
 import javax.xml.ws.WebServiceContext;
 
 import managers.AddressManager;
+import managers.ReservationManager;
 import managers.RestaurantManager;
 import models.Address;
 import models.Person;
@@ -37,6 +38,8 @@ public class UserWebService {
 	UserDAO usrDao = new UserDAO();
 	PersonDAO psnDao = new PersonDAO();
 	FollowingDAO follDao = new FollowingDAO();
+	ReservationManager reservationMgr = new ReservationManager();
+	ReservationDAO reservationDao = new ReservationDAO();
 	
 	@Resource
 	private WebServiceContext context;
@@ -61,9 +64,6 @@ public class UserWebService {
 			return "fail";
 		}
 		else if (prsn.getPassword().equals(password)){
-			/*MessageContext ctx = context.getMessageContext();
-			HttpSession session =((javax.servlet.http.HttpServletRequest)ctx.get(MessageContext.SERVLET_REQUEST)).getSession();
-			session.setAttribute("user", prsn);*/
 			req.getSession().setAttribute("user", prsn);
 			return "pass";
 		}
@@ -145,10 +145,11 @@ public class UserWebService {
 	@Path("/update")
 	@Consumes("application/json")
 	public void updateUser(User newUser, @Context HttpServletRequest req) {
-		Person person = (Person)req.getSession().getAttribute("user");
-		psnDao.updateFirstNameByUserName(person.getUserName(),newUser.getFirstName());
-		psnDao.updateLastNameByUserName(person.getUserName(), newUser.getLastName());
-		usrDao.updateByUserName(newUser.getUserName(), newUser.getPhoneNo(), newUser.getEmailId(), newUser.getAddressId());
+		psnDao.updateFirstNameByUserName(newUser.getUserName(),newUser.getFirstName());
+		psnDao.updateLastNameByUserName(newUser.getUserName(), newUser.getLastName());
+		User updated = usrDao.updateByUserName(newUser.getUserName(), newUser.getPhoneNo(), newUser.getEmailId(), newUser.getAddressId());
+		req.getSession().invalidate();
+		req.getSession().setAttribute("user", updated);
 	}
 	
 	@POST
@@ -157,12 +158,11 @@ public class UserWebService {
 	public String createReservationAndRestaurant(Reservation reservation,
 			@Context HttpServletRequest req) {
 
-		// Restaurant res = restDao.create(restaurant)
 		Address address1 = new Address();
 		AddressManager addrmgr = new AddressManager();
 		Restaurant restaurant = new Restaurant();
 		RestaurantManager restaurantMgr = new RestaurantManager();
-		ReservationDAO reservationDao = new ReservationDAO();
+		reservationDao = new ReservationDAO();
 
 		RestaurantSearch selected = (RestaurantSearch)req.getSession()
 				.getAttribute("selectedRestaurant");
@@ -216,4 +216,26 @@ public class UserWebService {
 		return "Reservation booked";
 
 	}
+	
+	@DELETE
+	@Path("/reservation/{id}")
+	public void getmyReservations(@PathParam("id") int id, @Context HttpServletRequest req) {
+	reservationMgr.removeReservationById(id);
+	}
+	
+	@PUT
+	@Path("/forupdateReservation/{id}")
+	public void forupdateReservations(@PathParam("id") int id, @Context HttpServletRequest req) {
+	Reservation reserv= reservationMgr.findReservationById(id);
+	req.getSession().setAttribute("reservationDetails", reserv);
+	}
+
+	@PUT
+	@Path("/updatereservation")
+	public void updateReservations(Reservation reservation, @Context HttpServletRequest req) {
+	reservationMgr.updateReservationById(reservation.getId(), reservation.getPeople_count(), reservation.getTime(), reservation.getDate());
+
+	}
+
+
 }

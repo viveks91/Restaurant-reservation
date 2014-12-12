@@ -12,7 +12,6 @@
 <%
 User user = (User)session.getAttribute("user");
 RestaurantSearch selected = (RestaurantSearch)session.getAttribute("selectedRestaurant");
-//Restaurant rest = (Restaurant)session.getAttribute("populateRestaurant");
 int path = (Integer)session.getAttribute("path");
 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 Date date = new Date();
@@ -35,8 +34,8 @@ Date date = new Date();
 </div>
   
 <div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurants</a></p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF"> Search restaurants</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reservation.jsp" style="color:#FFF"> My reservations</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/favorites.jsp" style="color:#FFF"> My favorites</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reviews.jsp" style="color:#FFF"> My reviews</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/following.jsp" style="color:#FFF"> Following</a> </p>
@@ -111,7 +110,6 @@ function makeReservationHandler() {
 				"date": $("#datepicker").val(),
 				"time": $("#timepicker").val(),
 				};
-		//alert($("#timepicker").val());
 		createReservation(newReservation);
 		return false;
 }

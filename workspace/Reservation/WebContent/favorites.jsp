@@ -31,8 +31,8 @@
 </div>
   
 <div style= "background-color: #83888E;padding-right:10px;padding-top:20px;padding-bottom:5px; width:200px; height:330px;float:left;"> 
-<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF">Search restaurants</a></p>
-<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/home.jsp" style="color:#FFF"> My reservations</a> </p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;"><a href="/Reservation/search.jsp" style="color:#FFF"> Search restaurants</a></p>
+<p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reservation.jsp" style="color:#FFF"> My reservations</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/favorites.jsp" style="color:#FFF"> My favorites</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/reviews.jsp" style="color:#FFF"> My reviews</a> </p>
 <p style="text-indent:20px;font-size:120%;font-weight: bold;padding-top:5px;"> <a href="/Reservation/following.jsp" style="color:#FFF"> Following</a> </p>
@@ -63,7 +63,7 @@
 	<div style="width:515px;float:left">
 	<button class="btn btn-link" style='font-size:140%;outline:none;padding-right: 10px;' value ="<%=id %>" onclick="restaurantHandler(value)"> <%=name %></button><br>
 		<p style="text-indent:14px;font-size:120%; "><%= street %>, <%= city %>, <%= state %></p>
-		<p style="text-indent:14px;font-size:120%;font-style: italic; ">My rating: <%= ratings %></p></div>
+		<p style="text-indent:14px;font-size:120%;font-style: italic; ">Rating: <%= ratings %></p></div>
 		<image style="content:url(<%=imageURL%>);" width= "100" height="100"></image>
 	</div>
 
@@ -104,7 +104,6 @@
 	
 	
 	function findFavorites(userName) {
-		//alert("calling findFavorites api for username " + userName);
 		
 		$.ajax({
 			url : "http://localhost:8080/Reservation/rest/user/"+userName,
